@@ -14,4 +14,36 @@ One of the services being provided by AWS is Client VPN Endpoint. It helps to cr
 
 ## Step 1 : Create an AWS Account
 
-So the first step would be creating an AWS account. We need to have a working AWS account to create resources on the platform.  
+> If you already have a working AWS account, you can skip to [Step 3](#Step-4-:-Navigate-to-Client-VPN-Endpoint).
+
+So the first step would be creating an AWS account. We need to have a working AWS account to create resources on the platform. Go to [the sign-up website](https://portal.aws.amazon.com/billing/signup#/start) to create a free account. 
+
+![the sign-up website](aws-signup.png)
+
+> Note that by creating a free AWS account, you are automatically granted free access to some of its services for the first year following the sign-up date. Go to [this page](https://aws.amazon.com/free) to get more information. Fill in the information forms as instructed. 
+
+## Step 2 : Sign in to the Console with your AWS account.
+
+Sign in to the AWS Management Console with the account you just created on [on this page](https://console.aws.amazon.com/). Select **"Root User"** and enter the email address, then click "Next". Enter the password on the following page and click "Sign in".
+
+![the sign-in page](aws-signin.png)
+
+You should be on this page after signing in. This is the main page of the AWS Management Console where you can find the index of all the services on this platform.
+
+![AWS Management Console](aws-management-console.png)
+
+## Step 4 : Navigate to Client VPN Endpoint
+
+Scroll down the page to find **"VPC"** under the category of **"Networking & Content Delivery"** and open the link. 
+
+![the VPC item](vpc.png)
+
+![the VPC console](vpn-console.png)
+
+Find and open **"Client VPN Endpoints"** on the side panel on the left.
+
+![Client VPN Endpoint](client-vpn-endpoint.png)
+
+You should be on this page following the last action.
+
+![Client VPN Endpoint page](client-vpn-endpoint-page.png)
