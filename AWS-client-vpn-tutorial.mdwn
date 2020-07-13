@@ -22,7 +22,7 @@ So the first step would be creating an AWS account. We need to have a working AW
 
 > Note that by creating a free AWS account, you are automatically granted free access to some of its services for the first year following the sign-up date. Go to [this page](https://aws.amazon.com/free) to get more information. Fill in the information forms as instructed. 
 
-## Step 2 : Sign in to the Console with your AWS account.
+## Step 2 : Sign in to the Console with your AWS account
 
 Sign in to the AWS Management Console with the account you just created on [on this page](https://console.aws.amazon.com/). Select **"Root User"** and enter the email address, then click "Next". Enter the password on the following page and click "Sign in".
 
@@ -31,6 +31,8 @@ Sign in to the AWS Management Console with the account you just created on [on t
 You should be on this page after signing in. This is the main page of the AWS Management Console where you can find the index of all the services on this platform.
 
 ![AWS Management Console](aws-management-console.png)
+
+## Step 3 : Select the Region in which You Want to Set up Your Service
 
 ## Step 4 : Navigate to Client VPN Endpoint
 
