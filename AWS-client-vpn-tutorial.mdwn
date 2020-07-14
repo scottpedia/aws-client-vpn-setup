@@ -67,9 +67,9 @@ Also, for a lot of Chinese users, the VPN is used to bypass the [GFW](https://en
 
 For simply encrypting the web traffic, the endpoint that is closest to you would be ideal as the latency is minimized.
 
-## Step 4 : Create the certificates for clients and servers for AWS Certificate Manager
+## Step 4 : Create the server and client certificates for AWS Certificate Manager
 
-We need to create the certificates for both the clients and the servers. And we do this with the AWS Certificate Manager. We are going to first generate the keys and the certificates locally on our computer and then uploading them to the Certificate Manager via either the web console or AWS CLI. 
+We need to create the certificates for both the clients and the server. We are going to first generate the keys and the certificates locally on our computer and then uploading them to the Certificate Manager via either the web console or AWS CLI. 
 
 > For now, this article only demonstrates how to create keys and certificates on computers running **Unix-like systems**. For how to create keys and certificates for AWS Certificate Manager on Windows, see **[this page](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/client-authentication.html#windows)**. 
 
