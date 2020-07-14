@@ -8,7 +8,7 @@ Amazon Web Service(AWS) is a cloud computing platform by Amazon founded in 2006.
 
 One of the services being provided by AWS is Client VPN Endpoint. It helps to create an endpoint to which you can directly access the resources(like virtual machines) within a VPC via an OpenVPN connection to the designated subnet.
 
-**However, with some modifications to the configuration, we can turn that service into a working VPN server that allows us to anonymously access the public internet with incredible performance!** The figure below briefly explains how the client VPN endpoint intends to work.   
+**However, with some modifications to the configuration, we can turn that service into a working VPN server that allows us to anonymously access the public internet with** ***incredible performance!*** The figure below briefly explains how the client VPN endpoint intends to work.   
 
 ![how aws client vpn endpoint works](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/images/architecture.png)
 
@@ -75,7 +75,7 @@ We need to create the certificates for both the clients and the servers. And we 
 
 **To generate the server and client certificates and keys and upload them to ACM(AWS Certificate Manager)**
 
-1. Open your favorite terminal and select a directory you want to use. Clone the OpenVPN `easy-rsa` repo to your local computer and navigate to the `easy-rsa/easyrsa3` folder. 
+1. Open your favorite terminal emulator and select a directory you want to use. Clone the OpenVPN `easy-rsa` repo to your local computer and navigate to the `easy-rsa/easyrsa3` folder. 
 
     `$ git clone https://github.com/OpenVPN/easy-rsa.git`
 
