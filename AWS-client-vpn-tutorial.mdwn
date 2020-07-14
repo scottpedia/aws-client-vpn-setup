@@ -55,6 +55,18 @@ Please notice that most of the AWS services are regional-independent. That means
 - Europe (London)
 - Europe (Stockholm)
 
+And you can select the region from the list bar at the top right corner.
+
+![Select the region you prefer](region-selection.png)
+
+### **How to select a region for your VPN Service?**
+
+Usually, it highly depends on your current geolocation and that of the destination you want to access. For example, I am now living in Canada and wanting to access a Japanese video website that is exclusive to users in Japan. In that case, I would certainly select Asia Pacific (Tokyo) as my VPN region. 
+
+Also, for a lot of Chinese users, the VPN is used to bypass the [GFW](https://en.wikipedia.org/wiki/Great_Firewall)(Great Firewall). So simply all the regions are suitable for this scenario, as the ones closer to China may have lower latencies. 
+
+For simply encrypting the web traffic, the endpoint that is closest to you would be ideal as the latency is minimized.
+
 ## Step 4 : Navigate to Client VPN Endpoint
 
 Scroll down the page to find **"VPC"** under the category of **"Networking & Content Delivery"** and open the link. 
