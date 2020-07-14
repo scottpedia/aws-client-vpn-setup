@@ -1,4 +1,4 @@
-## Create Your Private OpenVPN Service with AWS Client VPN Endpoint
+# Create Your Private OpenVPN Service with AWS Client VPN Endpoint
 
 In this article, I am going to teach you how to create your own private OpenVPN service with AWS Client VPN Endpoint.
 
