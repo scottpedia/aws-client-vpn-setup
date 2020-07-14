@@ -67,6 +67,66 @@ Also, for a lot of Chinese users, the VPN is used to bypass the [GFW](https://en
 
 For simply encrypting the web traffic, the endpoint that is closest to you would be ideal as the latency is minimized.
 
+## Step 4 : Create the certificates for clients and servers for AWS Certificate Manager
+
+We need to create the certificates for both the clients and the servers. And we do this with the AWS Certificate Manager. We are going to first generate the keys and the certificates locally on our computer and then uploading them to the Certificate Manager via either the web console or AWS CLI. 
+
+> For now, this article only demonstrates how to create keys and certificates on computers running **Unix-like systems**. For how to create keys and certificates for AWS Certificate Manager on Windows, see **[this page](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/client-authentication.html#windows)**. 
+
+**To generate the server and client certificates and keys and upload them to ACM(AWS Certificate Manager)**
+
+1. Open your favorite terminal and select a directory you want to use. Clone the OpenVPN `easy-rsa` repo to your local computer and navigate to the `easy-rsa/easyrsa3` folder. 
+
+    `$ git clone https://github.com/OpenVPN/easy-rsa.git`
+
+    `$ cd easy-rsa/easyrsa3`
+
+2. Initialize a new PKI environment.
+
+    `$ ./easyrsa init-pki`
+
+3. Build a new certificate authority(CA).
+
+    `$ ./easyrsa build-ca nopass`
+
+    Follow the prompts to build the CA.
+
+4. Generate the server certificate and key.
+
+    `$  ./easyrsa build-server-full server nopass`
+
+5. Generate the client certificate and key.
+
+    > **Make sure to save the client certificate and key because you will need them later to configure the client.**
+
+    `$ ./easyrsa build-client-full client1.domain.tld nopass`
+
+6. Copy the server certificate and key and the client certificate and key to a custom folder and then navigate into the custom folder.   
+
+    Before you copy the certificates and keys, create the custom folder by using the `mkdir` command. The following example creates a custom folder in your home directory. 
+
+    ```bash
+    $ mkdir ~/custom_folder/
+    $ cp pki/ca.crt ~/custom_folder/
+    $ cp pki/issued/server.crt ~/custom_folder/
+    $ cp pki/private/server.key ~/custom_folder/
+    $ cp pki/issued/client1.domain.tld.crt ~/custom_folder
+    $ cp pki/private/client1.domain.tld.key ~/custom_folder/
+    $ cd ~/custom_folder/
+	```
+
+7. Go to **AWS Certificate Manager** on the web console.
+
+    ![Find Certification Manager](find-certificate-manager.png)
+
+    Click on **"Get Started"**.
+
+    ![Click Get Started](get-started-acm.png)
+
+    Click on **"Import a certificate"**.
+
+    ![Click Import a certificate](import-a-certificate-acm.png)
+
 ## Step 4 : Navigate to Client VPN Endpoint
 
 Scroll down the page to find **"VPC"** under the category of **"Networking & Content Delivery"** and open the link. 
@@ -79,6 +139,6 @@ Find and open **"Client VPN Endpoints"** on the side panel on the left.
 
 ![Client VPN Endpoint](client-vpn-endpoint.png)
 
-You should be on this page following the last action.
+You should be on this page following the last action. 
 
 ![Client VPN Endpoint page](client-vpn-endpoint-page.png)
