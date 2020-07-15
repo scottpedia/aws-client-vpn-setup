@@ -185,7 +185,7 @@ We need to create the certificates for both the clients and the server. We are g
 We now have the certificates ready for our Client VPN Endpoints.
 
 
-## Step 4 : Navigate to Client VPN Endpoint
+## Step 4 : Create the Client VPN Endpoint
 
 Scroll down the page to find **"VPC"** under the category of **"Networking & Content Delivery"** and open the link. 
 
@@ -193,10 +193,39 @@ Scroll down the page to find **"VPC"** under the category of **"Networking & Con
 
 ![the VPC console](vpn-console.png)
 
-Find and open **"Client VPN Endpoints"** on the side panel on the left.
+Find and open **"Client VPN Endpoints"** from the side panel on the left.
 
 ![Client VPN Endpoint](client-vpn-endpoint.png)
 
 You should be on this page following the last action. 
 
 ![Client VPN Endpoint page](client-vpn-endpoint-page.png)
+
+**To create a Client VPN Endpoint**
+
+1. Click **"Create Client VPN Endpoint"** on the top.
+
+2. Enter the friendly name you choose into the **"Name Tag"**. (Optional)
+
+3. Write a description for your endpoint into the **"Description"**. (Optional)
+
+4. Enter the Client IPv4 CIDR into the **"Client IPv4 CIDR"**
+
+    > **Note that the IP address range cannot overlap with the target network or any of the routes that will be associated with the Client VPN endpoint. The client CIDR range must have a block size that is between /12 and /22 and not overlap with VPC CIDR or any other route in the route table. You cannot change the IP address range after you create the Client VPN endpoint.**
+
+    The sample values are shown in the image below.
+
+![VPN endpoint 1](vpn-endpoint-creation-1.png)
+
+5. Select the server certificate we just created for **"Server certificate ARN"**. In this case, the name of our certificate is **"server"**.
+
+![VPN endpoint 2](endpoint-select-server-certificate.png)
+
+6. Check **"Use mutual authentication"**.
+
+7. Select the client certificate we just created for **"Client certificate ARN"**. In this case, the name of the certificate is **"client1.domain.tld"**.
+
+![VPN endpoind 3](endpoint-select-client-certificate.png)
+
+8. Select **"No"** for **"Do you want to log the details on client connections?"**.
+
