@@ -114,6 +114,7 @@ We need to create the certificates for both the clients and the server. We are g
     $ cp pki/private/client1.domain.tld.key ~/custom_folder/
     $ cd ~/custom_folder/
 	```
+    You should be getting a directory layout like this:
 
     ```
     custom_folder
@@ -134,9 +135,55 @@ We need to create the certificates for both the clients and the server. We are g
 
     ![Click Get Started](get-started-acm.png)
 
-    Click on **"Import a certificate"**.
+8. Import the certificates for both the server and client.
 
+    Click on **"Import a certificate"**.
+    
     ![Click Import a certificate](import-a-certificate-acm.png)
+
+    **To import the key and certificate for the server**
+
+    > To view the content of these files, use your favorite text editor.
+    > Simply use "TextEdit" if you are on macOS.
+
+    - Copy the content of `server.crt` into the **1st** text field **"Certificate Body"**.
+
+    - Copy the content of `server.key` into the **2nd** text field **"Certificate Private Key"**.
+
+    - Copy the content of `ca.crt` into the **3rd** text field **"Certificate Chain"**
+
+    - Click **"Next"** to proceed.
+
+    ![import the key and certificate for the server](import-server-certificate.png)
+
+    - Click **"Review and import"** on the next page.
+
+    - And click **"Import"** to complete the process.
+
+    **To do the same for the client**
+
+    - Click **"Import a certificate"** on the next page.
+
+    - Copy the content of `client1.domain.tld.crt` into the **1st** text field **"Certificate Body"**.
+
+    - Copy the content of `client1.domain.tld.key` into the **2nd** text field **"Certificate Private Key"**.
+
+    - Copy the content of `ca.crt` into the **3rd** text field **"Certificate Chain"**
+
+    - Click **"Next"** to proceed.
+
+    ![import the key and certificate for the client](import-client-certificate.png)
+
+    - Click **"Review and import"** on the next page.
+
+    - And click **"Import"** to complete the process.
+
+    Now, you should be getting two available certificates returning to ACM's main page.
+
+    ![final ACM console](acm-console.png)
+
+We now have the certificates ready for our Client VPN Endpoints.
+
 
 ## Step 4 : Navigate to Client VPN Endpoint
 
