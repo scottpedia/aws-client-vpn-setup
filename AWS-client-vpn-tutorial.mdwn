@@ -185,7 +185,7 @@ We need to create the certificates for both the clients and the server. We are g
 We now have the certificates ready for our Client VPN Endpoints.
 
 
-## Step 4 : Create the Client VPN Endpoint
+## Step 5 : Create the Client VPN Endpoint
 
 Scroll down the page to find **"VPC"** under the category of **"Networking & Content Delivery"** and open the link. 
 
@@ -225,7 +225,73 @@ You should be on this page following the last action.
 
 7. Select the client certificate we just created for **"Client certificate ARN"**. In this case, the name of the certificate is **"client1.domain.tld"**.
 
-![VPN endpoind 3](endpoint-select-client-certificate.png)
+![VPN endpoint 3](endpoint-select-client-certificate.png)
 
 8. Select **"No"** for **"Do you want to log the details on client connections?"**.
+
+9. Leave blank the DNS server addresses and go to the next step.
+
+10. Select **"UPD"** as the default transporting protocol.
+
+11. Enable [**"Split Tunnel"**](https://en.wikipedia.org/wiki/Split_tunneling) to allow access to the resources in your own Local Area Network(LAN) while connected to the VPN.
+
+    > The split-tunnel connection pushes the route table of the VPN endpoint to the client so that only part of the traffic goes through the VPN endpoint. 
+
+12. Select the VPC from which the subnets will be associating with the endpoint.
+
+13. Select **443** for **"VPN port"**.
+
+14. Click **"Create Client VPN Endpoint"** to proceed.
+
+You then should be able to see this page. Click **"Close"** to go back to the **"Client VPN Endpoints"** panel.
+
+![creation successful](vpn-endpoint-creation-2.png)
+
+Now you have created an operable Client VPN Endpoint in your desired AWS region.
+
+## How to manage the Client VPN Endpoint
+
+Now we need to know how to use the Client VPN Endpoint that we have just created. The VPN endpoint that we just created is not intended for common uses(encrypting the web traffic, hide your IP address...), so it may not be as convenient to manage as for ordinary users. Extra steps are needed to turn on/off the server. Let's now go through how to turn it **ON** and **OFF**.
+
+**To turn ON the VPN server**
+
+- First, we go to the Client VPN Endpoint control panel.
+
+    ![The Control Panel](client-vpn-endpoint-control-panel.png)
+
+- Then we go to the **"Association"** tab under the selected VPN endpoint. This is where we manage the subnets associated with the endpoint. There should be no Client VPN Target Networks.
+
+    ![The association tab](association-tab.png)
+
+- Click **"Associate"** to associate the endpoint with a target network(a VPC subnet). 
+
+    1. Select the VPC where the target network is from.
+
+    2. Select the subnet to associate with.
+
+    3. Click **"Associate"** to make the association.
+
+    ![Associate target network](associate-target-network.png)
+
+    4. Click **"Close"** to return to the control panel.
+
+    ![association success](association-success.png)
+
+- Now we go to the **"Authorization"** tab.
+
+    ![authorization](endpoint-authorization.png)
+
+    1. Click **"Authorize Ingress"** to make a new rule.
+
+    2. Enter **"0.0.0.0/0"** for **"Destination network to enable"**.
+
+        > In doing so, we authorize all the users with the certificate to connect to the endpoint, regardless of their public IP addresses. You can also enter a specific IP range in CIDR citation to authorize the users. For example, you may enter the IP range of your house to only allow the connections from there.
+
+    ![make a new authorization](add-authorization-rule.png)
+
+    3. Click **"Add authorization rule"** to add the rule.
+
+- Go back to the control panel and go to the **"Route Table"** tab.
+
+
 
