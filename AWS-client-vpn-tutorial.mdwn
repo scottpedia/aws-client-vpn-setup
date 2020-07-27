@@ -245,6 +245,8 @@ You should be on this page following the last action.
 
     You then should be able to see this page. Click **"Close"** to go back to the **"Client VPN Endpoints"** panel.
 
+    ![creation successful](vpn-endpoint-creation-2.png)
+
 15. Now we go to the **"Authorization"** tab.
 
     ![authorization](endpoint-authorization.png)
@@ -259,13 +261,11 @@ You should be on this page following the last action.
 
 18. Click **"Add authorization rule"** to add the rule.
 
-    ![creation successful](vpn-endpoint-creation-2.png)
-
 Now you have created a Client VPN Endpoint that is ready to go in your desirable AWS region.
 
 ## How to manage the Client VPN Endpoint
 
-Now we need to know how to use the Client VPN Endpoint that we have just created. The VPN endpoint that we just created is not intended for common uses(encrypting the web traffic, hide your IP address...), so it may not be as convenient to manage as for ordinary users. Extra steps are needed to turn on/off the server. Let's now go through how to turn it **ON** and **OFF**.
+Now we need to know how to use the Client VPN Endpoint that we have just created. The VPN endpoint that we just created is not intended for common uses(encrypting the web traffic, hide your IP address...) as [mentioned previously](#What-are-AWS-and-AWS-Client-VPN-Endpoint?), so it may not be as convenient to manage as for ordinary users. Extra steps are needed to turn on/off the server. Let's now go through how to turn it **ON** and **OFF**.
 
 **To turn ON the VPN server**
 
@@ -273,7 +273,7 @@ Now we need to know how to use the Client VPN Endpoint that we have just created
 
     ![The Control Panel](client-vpn-endpoint-control-panel.png)
 
-- Then we go to the **"Association"** tab under the selected VPN endpoint. This is where we manage the subnets associated with the endpoint. There should be no Client VPN Target Networks.
+- Then we go to the **"Association"** tab under the selected VPN endpoint. This is where we manage the subnets associated with the endpoint. There should be no Client VPN Target Networks here.
 
     ![The association tab](association-tab.png)
 
@@ -289,9 +289,37 @@ Now we need to know how to use the Client VPN Endpoint that we have just created
 
     4. Click **"Close"** to return to the control panel.
 
+        It usually takes less than ten minutes for the server to finish the association. So the endpoint status will not change immediately following this action.
+
     ![association success](association-success.png)
 
 - Go back to the control panel and go to the **"Route Table"** tab.
+
+    1. We are now going to modify the endpoint's route table, adding an additional rule that defines the flow of the internet traffic within the target network. By doing this, we can later access the internet when connected to the VPN endpoint.
+
+    ![create one additional route](create-additional-route.png)
+
+    2. Click **"Create Route"** on the side panel. 
+
+    3. Enter **"0.0.0.0/0"** for **"Route destination"**, and select the subnet that you want to associate with the VPN endpoint. The **"Description"** is optional, so we are going to leave it blank for now.
+
+    ![create additional route](create-additional-route-2.png)
+
+    4. Click **"Create Route"** to proceed.
+
+    ![finish creating the route](create-additional-route-3.png)
+
+    You should be able to see two routes being created now.
+
+    ![routes being created](routes-being-created.png)
+
+- Now the subnet is being associated. And the state of the endpoint remains **"Pending-associate"** until the endpoint to ready to accept incoming connections. It usually takes less than 10 minutes to complete the association.
+
+    When the endpoint is fully associated and 'turned on' in our case, the state of the endpoint will become **"Available"** with a green indicator on the control panel.
+
+    ![endpoint available](endpoint-available.png)
+
+    By the time it becomes ready, the endpoint is ready to establish connections with the clients. 
 
 
 
