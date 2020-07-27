@@ -243,11 +243,25 @@ You should be on this page following the last action.
 
 14. Click **"Create Client VPN Endpoint"** to proceed.
 
-You then should be able to see this page. Click **"Close"** to go back to the **"Client VPN Endpoints"** panel.
+    You then should be able to see this page. Click **"Close"** to go back to the **"Client VPN Endpoints"** panel.
 
-![creation successful](vpn-endpoint-creation-2.png)
+15. Now we go to the **"Authorization"** tab.
 
-Now you have created an operable Client VPN Endpoint in your desired AWS region.
+    ![authorization](endpoint-authorization.png)
+
+16. Click **"Authorize Ingress"** to make a new rule.
+
+17. Enter **"0.0.0.0/0"** for **"Destination network to enable"**.
+
+    > In doing so, we authorize all the users with the certificate to connect to the endpoint, regardless of their public IP addresses. You can also enter a specific IP range in CIDR citation to authorize the users. For example, you may enter the IP range of your house to only allow the connections from there.
+
+    ![make a new authorization](add-authorization-rule.png)
+
+18. Click **"Add authorization rule"** to add the rule.
+
+    ![creation successful](vpn-endpoint-creation-2.png)
+
+Now you have created a Client VPN Endpoint that is ready to go in your desirable AWS region.
 
 ## How to manage the Client VPN Endpoint
 
@@ -276,20 +290,6 @@ Now we need to know how to use the Client VPN Endpoint that we have just created
     4. Click **"Close"** to return to the control panel.
 
     ![association success](association-success.png)
-
-- Now we go to the **"Authorization"** tab.
-
-    ![authorization](endpoint-authorization.png)
-
-    1. Click **"Authorize Ingress"** to make a new rule.
-
-    2. Enter **"0.0.0.0/0"** for **"Destination network to enable"**.
-
-        > In doing so, we authorize all the users with the certificate to connect to the endpoint, regardless of their public IP addresses. You can also enter a specific IP range in CIDR citation to authorize the users. For example, you may enter the IP range of your house to only allow the connections from there.
-
-    ![make a new authorization](add-authorization-rule.png)
-
-    3. Click **"Add authorization rule"** to add the rule.
 
 - Go back to the control panel and go to the **"Route Table"** tab.
 
