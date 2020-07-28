@@ -7,7 +7,6 @@ Table of Contents
 
 <!--ts-->
    * [Create Your Private OpenVPN Service with AWS Client VPN Endpoint](#create-your-private-openvpn-service-with-aws-client-vpn-endpoint)
-   * [Table of Contents](#table-of-contents)
       * [What are AWS and AWS Client VPN Endpoint?](#what-are-aws-and-aws-client-vpn-endpoint)
       * [Step 1 : Create an AWS Account](#step-1--create-an-aws-account)
       * [Step 2 : Sign in to the Console with your AWS account](#step-2--sign-in-to-the-console-with-your-aws-account)
@@ -20,7 +19,7 @@ Table of Contents
          * [<strong>To turn ON the VPN server</strong>](#to-turn-on-the-vpn-server)
          * [<strong>To turn OFF the VPN server</strong>](#to-turn-off-the-vpn-server)
 
-<!-- Added by: black, at: Mon Jul 27 23:27:55 EDT 2020 -->
+<!-- Added by: black, at: Mon Jul 27 23:21:01 EDT 2020 -->
 
 <!--te-->
 
