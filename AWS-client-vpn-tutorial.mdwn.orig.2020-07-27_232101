@@ -13,10 +13,8 @@ In this article, I am going to teach you how to create your own private OpenVPN 
       * [Step 4 : Create the server and client certificates for AWS Certificate Manager](#step-4--create-the-server-and-client-certificates-for-aws-certificate-manager)
       * [Step 5 : Create the Client VPN Endpoint](#step-5--create-the-client-vpn-endpoint)
       * [How to manage the Client VPN Endpoint](#how-to-manage-the-client-vpn-endpoint)
-         * [<strong>To turn ON the VPN server</strong>](#to-turn-on-the-vpn-server)
-         * [<strong>To turn OFF the VPN server</strong>](#to-turn-off-the-vpn-server)
 
-<!-- Added by: black, at: Mon Jul 27 23:21:01 EDT 2020 -->
+<!-- Added by: black, at: Mon Jul 27 23:18:59 EDT 2020 -->
 
 <!--te-->
 
