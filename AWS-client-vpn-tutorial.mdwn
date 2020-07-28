@@ -269,6 +269,10 @@ Now we need to know how to use the Client VPN Endpoint that we have just created
 
 **To turn ON the VPN server**
 
+Because of the special nature of the Client VPN Endpoint, the server needs to be manually turned on and off. Though you can leave if on all the time, you will be billed more for the extra time when the endpoint is associated. We will be talking about the cost later in this article. 
+
+To turn on the server, we need to first associate the target network with the endpoint and then create an extra route to enable the Internet access when connected to the endpoint.
+
 - First, we go to the Client VPN Endpoint control panel.
 
     ![The Control Panel](client-vpn-endpoint-control-panel.png)
@@ -313,13 +317,39 @@ Now we need to know how to use the Client VPN Endpoint that we have just created
 
     ![routes being created](routes-being-created.png)
 
-- Now the subnet is being associated. And the state of the endpoint remains **"Pending-associate"** until the endpoint to ready to accept incoming connections. It usually takes less than 10 minutes to complete the association.
+- Now the subnet is being associated. And the state of the endpoint remains **"Pending-associate"** until the endpoint is ready to accept incoming connections. It usually takes less than 10 minutes to complete the association.
 
-    When the endpoint is fully associated and 'turned on' in our case, the state of the endpoint will become **"Available"** with a green indicator on the control panel.
+    When the endpoint is fully associated and 'turned on' in our case, the state of the endpoint will become **"Available"** with a green indicator next to the caption.
 
     ![endpoint available](endpoint-available.png)
 
     By the time it becomes ready, the endpoint is ready to establish connections with the clients. 
 
+**To turn OFF the VPN server**
 
+We now assume that the current state of the VPN endpoint is **"Available"**, which means that it is **"ON"** in our case. And the route table of the endpoint should contain two rules, one of which is an additional one that defines the flow of the internet traffic within the target network.
+
+To **"turn off"** the server, we only need to disassociate the target subnet from the endpoint. The additional route that we created will be automatically deleted following the disassociation. However, that nature of the endpoint requires us to create the additional route every time when we try to turn on the server. 
+
+The following section walks you through how to **"turn off"** of the server. **(disassociate the target subnet)**
+
+- We first go to the control panel and navigate to the **"Association"** tab. 
+
+    ![Association tab](to-disassociate-subnet.png)
+
+- Select the one association that you see on the list by clicking the checkbox at the left of the row.
+
+- And then click **"Disassociate"**.
+
+    ![the Disassociation](to-disassociate-subnet-2.png)
+
+- Click **"Yes, Disassociate"** to confirm the disassociation when being prompted. 
+    
+    ![Disassociation prompt](disassociation-prompt.png)
+
+- By then we have just **"turned off"** the VPN service. You do not need to worry about the route we created as it is now being deleted automatically following the disassociation of the target network, as shown in the picture below. 
+
+    ![Routes being deleted](deleting-routes.png)
+
+- By then, we have successfully **"turned off"** the VPN server.
 
