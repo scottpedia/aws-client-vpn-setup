@@ -1,6 +1,6 @@
 # Create Your Private OpenVPN Service with AWS Client VPN Endpoint
 
-In this article, I am going to teach you how to create your own private OpenVPN service with AWS Client VPN Endpoint. And how to connect to the endpoint with **TunnelBlick** on macOS.
+In this article, I am going to teach you how to create your own private OpenVPN service with AWS Client VPN Endpoint. And how to connect to the endpoint with *TunnelBlick* on macOS.
 
 Table of Contents
 =================
@@ -300,7 +300,7 @@ Now we need to know how to use the Client VPN Endpoint that we have just created
 
 Because of the special nature of the Client VPN Endpoint, the server needs to be manually turned on and off. Though you can leave if on all the time, you will be billed more for the extra time when the endpoint is associated. We will be talking about the cost later in this article. 
 
-To turn on the server, we need to first associate the target network with the endpoint and then create an extra route to enable the Internet access when connected to the endpoint.
+To turn on the server, we need to first associate the target network with the endpoint and then create an extra route to enable Internet access when connected to the endpoint.
 
 - First, we go to the Client VPN Endpoint control panel.
 
