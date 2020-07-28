@@ -34,9 +34,10 @@ One of the services being provided by AWS is Client VPN Endpoint. It helps to cr
 
 ![how aws client vpn endpoint works](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/images/architecture.png)
 
+
 ## Step 1 : Create an AWS Account
 
-> If you already have a working AWS account, you can skip to [Step 3](#Step-4-:-Navigate-to-Client-VPN-Endpoint).
+> If you already have a working AWS account, you can skip to [Step 3](#step-3--select-the-region-in-which-you-want-to-set-up-your-service)).
 
 So the first step would be creating an AWS account. We need to have a working AWS account to create resources on the platform. Go to [the sign-up website](https://portal.aws.amazon.com/billing/signup#/start) to create a free account. 
 
@@ -62,6 +63,9 @@ Please notice that most of the AWS services are regional-independent. That means
 
 ### The AWS Regions where Client VPN Endpoints are Available
 
+<details>
+<summary>Click to expand the list.</summary>
+
 - US East (N. Virginia)
 - US East (Ohio)
 - US West (N. California)
@@ -76,6 +80,7 @@ Please notice that most of the AWS services are regional-independent. That means
 - Europe (Ireland)
 - Europe (London)
 - Europe (Stockholm)
+</details>
 
 And you can select the region from the list bar at the top right corner. Please do this **BEFORE** creating the endpoint.
 
@@ -88,6 +93,8 @@ Usually, it highly depends on your current geolocation and that of the destinati
 Also, for a lot of Chinese users, the VPN is used to bypass the [GFW](https://en.wikipedia.org/wiki/Great_Firewall)(Great Firewall). So simply all the regions are suitable for this scenario, as the ones closer to China may have lower latencies. 
 
 For simply encrypting the web traffic, the endpoint that is closest to you would be ideal as the latency is minimized.
+
+**In this tutorial, we are going to create the VPN endpoint in the AWS region of Oregon. (US-West-2)**
 
 ## Step 4 : Create the server and client certificates for AWS Certificate Manager
 
@@ -237,17 +244,17 @@ You should be on this page following the last action.
 
     The sample values are shown in the image below.
 
-![VPN endpoint 1](vpn-endpoint-creation-1.png)
+    ![VPN endpoint 1](vpn-endpoint-creation-1.png)
 
 5. Select the server certificate we just created for **"Server certificate ARN"**. In this case, the name of our certificate is **"server"**.
 
-![VPN endpoint 2](endpoint-select-server-certificate.png)
+    ![VPN endpoint 2](endpoint-select-server-certificate.png)
 
 6. Check **"Use mutual authentication"**.
 
 7. Select the client certificate we just created for **"Client certificate ARN"**. In this case, the name of the certificate is **"client1.domain.tld"**.
 
-![VPN endpoint 3](endpoint-select-client-certificate.png)
+    ![VPN endpoint 3](endpoint-select-client-certificate.png)
 
 8. Select **"No"** for **"Do you want to log the details on client connections?"**.
 
@@ -311,33 +318,33 @@ To turn on the server, we need to first associate the target network with the en
 
     3. Click **"Associate"** to make the association.
 
-    ![Associate target network](associate-target-network.png)
+        ![Associate target network](associate-target-network.png)
 
     4. Click **"Close"** to return to the control panel.
 
         It usually takes less than ten minutes for the server to finish the association. So the endpoint status will not change immediately following this action.
 
-    ![association success](association-success.png)
+        ![association success](association-success.png)
 
 - Go back to the control panel and go to the **"Route Table"** tab.
 
     1. We are now going to modify the endpoint's route table, adding an additional rule that defines the flow of the internet traffic within the target network. By doing this, we can later access the internet when connected to the VPN endpoint.
 
-    ![create one additional route](create-additional-route.png)
+        ![create one additional route](create-additional-route.png)
 
     2. Click **"Create Route"** on the side panel. 
 
     3. Enter **"0.0.0.0/0"** for **"Route destination"**, and select the subnet that you want to associate with the VPN endpoint. The **"Description"** is optional, so we are going to leave it blank for now.
 
-    ![create additional route](create-additional-route-2.png)
+        ![create additional route](create-additional-route-2.png)
 
     4. Click **"Create Route"** to proceed.
 
-    ![finish creating the route](create-additional-route-3.png)
+        ![finish creating the route](create-additional-route-3.png)
 
-    You should be able to see two routes being created now.
+        You should be able to see two routes being created now.
 
-    ![routes being created](routes-being-created.png)
+        ![routes being created](routes-being-created.png)
 
 - Now the subnet is being associated. And the state of the endpoint remains **"Pending-associate"** until the endpoint is ready to accept incoming connections. It usually takes less than 10 minutes to complete the association.
 
