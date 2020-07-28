@@ -255,7 +255,7 @@ You should be on this page following the last action.
 
 17. Enter **"0.0.0.0/0"** for **"Destination network to enable"**.
 
-    > In doing so, we authorize all the users with the certificate to connect to the endpoint, regardless of their public IP addresses. You can also enter a specific IP range in CIDR citation to authorize the users. For example, you may enter the IP range of your house to only allow the connections from there.
+    > In doing so, we authorize all the users with the certificate to connect to the endpoint, regardless of their public IP addresses. You can also enter a specific IP range in CIDR citation to authorize the users within a specific networking environment. For example, you may enter the IP range of your house to only allow the connections from there.
 
     ![make a new authorization](add-authorization-rule.png)
 
