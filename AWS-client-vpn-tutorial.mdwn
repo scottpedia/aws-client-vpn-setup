@@ -2,6 +2,9 @@
 
 In this article, I am going to teach you how to create your own private OpenVPN service with AWS Client VPN Endpoint.
 
+<!--ts-->
+<!--te-->
+
 ## What are AWS and AWS Client VPN Endpoint?
 
 Amazon Web Service(AWS) is a cloud computing platform by Amazon founded in 2006. It is now one of the largest and most popular cloud computing platforms in the world. It provides a variety of services like Virtual Machine, Managed Database, etc.
@@ -350,6 +353,3 @@ The following section walks you through how to **"turn off"** of the server. **(
 - By then we have just **"turned off"** the VPN service. You do not need to worry about the route we created as it is now being deleted automatically following the disassociation of the target network, as shown in the picture below. 
 
     ![Routes being deleted](deleting-routes.png)
-
-- By then, we have successfully **"turned off"** the VPN server.
-
