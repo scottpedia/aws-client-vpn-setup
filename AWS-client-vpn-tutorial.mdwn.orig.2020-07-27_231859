@@ -3,19 +3,6 @@
 In this article, I am going to teach you how to create your own private OpenVPN service with AWS Client VPN Endpoint.
 
 <!--ts-->
-   * [Create Your Private OpenVPN Service with AWS Client VPN Endpoint](#create-your-private-openvpn-service-with-aws-client-vpn-endpoint)
-      * [What are AWS and AWS Client VPN Endpoint?](#what-are-aws-and-aws-client-vpn-endpoint)
-      * [Step 1 : Create an AWS Account](#step-1--create-an-aws-account)
-      * [Step 2 : Sign in to the Console with your AWS account](#step-2--sign-in-to-the-console-with-your-aws-account)
-      * [Step 3 : Select the Region in which You Want to Set up Your Service](#step-3--select-the-region-in-which-you-want-to-set-up-your-service)
-         * [The AWS Regions where Client VPN Endpoints are Available](#the-aws-regions-where-client-vpn-endpoints-are-available)
-         * [<strong>How to select a region for your VPN Service?</strong>](#how-to-select-a-region-for-your-vpn-service)
-      * [Step 4 : Create the server and client certificates for AWS Certificate Manager](#step-4--create-the-server-and-client-certificates-for-aws-certificate-manager)
-      * [Step 5 : Create the Client VPN Endpoint](#step-5--create-the-client-vpn-endpoint)
-      * [How to manage the Client VPN Endpoint](#how-to-manage-the-client-vpn-endpoint)
-
-<!-- Added by: black, at: Mon Jul 27 23:18:59 EDT 2020 -->
-
 <!--te-->
 
 ## What are AWS and AWS Client VPN Endpoint?
