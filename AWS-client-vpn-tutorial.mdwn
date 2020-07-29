@@ -20,10 +20,12 @@ Table of Contents
          * [<strong>To turn ON the VPN server</strong>](#to-turn-on-the-vpn-server)
          * [<strong>To turn OFF the VPN server</strong>](#to-turn-off-the-vpn-server)
       * [How to set up the client for the VPN server?](#how-to-set-up-the-client-for-the-vpn-server)
-         * [To install Tunnelblick](#to-install-tunnelblick)
-         * [To export the configuration file](#to-export-the-configuration-file)
+         * [Install Tunnelblick](#install-tunnelblick)
+         * [Export the Configuration File](#export-the-configuration-file)
+         * [Install the configuration](#install-the-configuration)
+         * [Connect to the Endpoint](#connect-to-the-endpoint)
 
-<!-- Added by: black, at: Tue Jul 28 17:26:41 EDT 2020 -->
+<!-- Added by: black, at: Wed Jul 29 11:26:17 EDT 2020 -->
 
 <!--te-->
 
@@ -387,11 +389,11 @@ The following section walks you through how to **"turn off"** of the server. **(
 
 After the server is set up, we need to do some work to enable the client to connect to the server. In this case, we are going to use **TunnelBlick** as the client software.  Go to its [website](https://tunnelblick.net/) to get the latest release. If you are a Windows user who happened to be here, you can visit this [page](https://docs.aws.amazon.com/vpn/latest/clientvpn-user/windows.html) to get more information on VPN client softwares for Windows.
 
-### To install Tunnelblick
+### Install Tunnelblick
 
 > For a detailed walk-through of the installation process, see this [page](https://tunnelblick.net/cInstall.html) on `tunnelblick.net`. Get back to this page after completing the installation.
 
-### To export the configuration file
+### Export the Configuration File
 
 We need to have a configuration file in order to connect to the VPN endpoint with our client software. The following section focuses on how to export the OpenVPN configuration file of our VPN endpoint. 
 
@@ -464,7 +466,7 @@ We need to have a configuration file in order to connect to the VPN endpoint wit
 
 > Make sure that you have your configuration file properly saved. And go to visit [this page](https://tunnelblick.net/cInstallConfigurations.html) on `tunnelblick.net` for more details on installing OVPN configurations.
 
-### Connecting to the Endpoint
+### Connect to the Endpoint
 
 - **Make sure that the Endpoint is "turned on".**
 
@@ -503,3 +505,7 @@ We need to have a configuration file in order to connect to the VPN endpoint wit
         ![WHOIS](img/whois-cmd.png)
 
         We can now see that our current IP address belongs to Amazon.com, Inc. That means that we are properly connected.
+
+        You may also see your **"Apparent Public IP Address"** on Tunnelblick's drop-down menu after connecting to the endpoint.
+
+        ![Screenshot](img/connect-screen.png)
