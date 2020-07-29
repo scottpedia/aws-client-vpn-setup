@@ -6,21 +6,24 @@ Table of Contents
 =================
 
 <!--ts-->
-   * [Create Your Private OpenVPN Service with AWS Client VPN Endpoint](AWS-client-vpn-tutorial.mdwn#create-your-private-openvpn-service-with-aws-client-vpn-endpoint)
-   * [Table of Contents](AWS-client-vpn-tutorial.mdwn#table-of-contents)
-      * [What are AWS and AWS Client VPN Endpoint?](AWS-client-vpn-tutorial.mdwn#what-are-aws-and-aws-client-vpn-endpoint)
-      * [Step 1 : Create an AWS Account](AWS-client-vpn-tutorial.mdwn#step-1--create-an-aws-account)
-      * [Step 2 : Sign in to the Console with your AWS account](AWS-client-vpn-tutorial.mdwn#step-2--sign-in-to-the-console-with-your-aws-account)
-      * [Step 3 : Select the Region in which You Want to Set up Your Service](AWS-client-vpn-tutorial.mdwn#step-3--select-the-region-in-which-you-want-to-set-up-your-service)
-         * [The AWS Regions where Client VPN Endpoints are Available](AWS-client-vpn-tutorial.mdwn#the-aws-regions-where-client-vpn-endpoints-are-available)
-         * [<strong>How to select a region for your VPN Service?</strong>](AWS-client-vpn-tutorial.mdwn#how-to-select-a-region-for-your-vpn-service)
-      * [Step 4 : Create the server and client certificates for AWS Certificate Manager](AWS-client-vpn-tutorial.mdwn#step-4--create-the-server-and-client-certificates-for-aws-certificate-manager)
-      * [Step 5 : Create the Client VPN Endpoint](AWS-client-vpn-tutorial.mdwn#step-5--create-the-client-vpn-endpoint)
-      * [How to manage the Client VPN Endpoint](AWS-client-vpn-tutorial.mdwn#how-to-manage-the-client-vpn-endpoint)
-         * [<strong>To turn ON the VPN server</strong>](AWS-client-vpn-tutorial.mdwn#to-turn-on-the-vpn-server)
-         * [<strong>To turn OFF the VPN server</strong>](AWS-client-vpn-tutorial.mdwn#to-turn-off-the-vpn-server)
+   * [Create Your Private OpenVPN Service with AWS Client VPN Endpoint](#create-your-private-openvpn-service-with-aws-client-vpn-endpoint)
+   * [Table of Contents](#table-of-contents)
+      * [What are AWS and AWS Client VPN Endpoint?](#what-are-aws-and-aws-client-vpn-endpoint)
+      * [Step 1 : Create an AWS Account](#step-1--create-an-aws-account)
+      * [Step 2 : Sign in to the Console with your AWS account](#step-2--sign-in-to-the-console-with-your-aws-account)
+      * [Step 3 : Select the Region in which You Want to Set up Your Service](#step-3--select-the-region-in-which-you-want-to-set-up-your-service)
+         * [The AWS Regions where Client VPN Endpoints are Available](#the-aws-regions-where-client-vpn-endpoints-are-available)
+         * [<strong>How to select a region for your VPN Service?</strong>](#how-to-select-a-region-for-your-vpn-service)
+      * [Step 4 : Create the server and client certificates for AWS Certificate Manager](#step-4--create-the-server-and-client-certificates-for-aws-certificate-manager)
+      * [Step 5 : Create the Client VPN Endpoint](#step-5--create-the-client-vpn-endpoint)
+      * [How to manage the Client VPN Endpoint](#how-to-manage-the-client-vpn-endpoint)
+         * [<strong>To turn ON the VPN server</strong>](#to-turn-on-the-vpn-server)
+         * [<strong>To turn OFF the VPN server</strong>](#to-turn-off-the-vpn-server)
+      * [How to set up the client for the VPN server?](#how-to-set-up-the-client-for-the-vpn-server)
+         * [To install Tunnelblick](#to-install-tunnelblick)
+         * [To export the configuration file](#to-export-the-configuration-file)
 
-<!-- Added by: black, at: Tue Jul 28 13:16:58 EDT 2020 -->
+<!-- Added by: black, at: Tue Jul 28 17:26:41 EDT 2020 -->
 
 <!--te-->
 
@@ -207,7 +210,7 @@ We need to create the certificates for both the clients and the server. We are g
 
     - And click **"Import"** to complete the process.
 
-    Now, you should be getting two available certificates returning to ACM's main page.
+    Now, you should be getting two available certificates after returning to ACM's main page.
 
     ![final ACM console](img/acm-console.png)
 
@@ -348,7 +351,7 @@ To turn on the server, we need to first associate the target network with the en
 
 - Now the subnet is being associated. And the state of the endpoint remains **"Pending-associate"** until the endpoint is ready to accept incoming connections. It usually takes less than 10 minutes to complete the association.
 
-    When the endpoint is fully associated and 'turned on' in our case, the state of the endpoint will become **"Available"** with a green indicator next to the caption.
+    When the endpoint is fully associated or 'turned on' in our case, the state of the endpoint will become **"Available"** with a green indicator next to the caption.
 
     ![endpoint available](img/endpoint-available.png)
 
@@ -379,3 +382,124 @@ The following section walks you through how to **"turn off"** of the server. **(
 - By then we have just **"turned off"** the VPN service. You do not need to worry about the route we created as it is now being deleted automatically following the disassociation of the target network, as shown in the picture below. 
 
     ![Routes being deleted](img/deleting-routes.png)
+
+## How to set up the client for the VPN server?
+
+After the server is set up, we need to do some work to enable the client to connect to the server. In this case, we are going to use **TunnelBlick** as the client software.  Go to its [website](https://tunnelblick.net/) to get the latest release. If you are a Windows user who happened to be here, you can visit this [page](https://docs.aws.amazon.com/vpn/latest/clientvpn-user/windows.html) to get more information on VPN client softwares for Windows.
+
+### To install Tunnelblick
+
+> For a detailed walk-through of the installation process, see this [page](https://tunnelblick.net/cInstall.html) on `tunnelblick.net`. Get back to this page after completing the installation.
+
+### To export the configuration file
+
+We need to have a configuration file in order to connect to the VPN endpoint with our client software. The following section focuses on how to export the OpenVPN configuration file of our VPN endpoint. 
+
+- Go to the AWS Client VPN Endpoint control panel where your existing endpoint is located. Select the endpoint that we just created. And Click **"Download Client Configuration"**. 
+
+    ![Download configuration](img/download-configuration.png)
+
+- Click **"Download"** when prompted.
+
+    ![Click Download](img/click-download.png)
+
+- The downloaded file looks like this:
+
+    > The configuration file downloaded from AWS will always have the same name(downloaded-client-config.ovpn) no matter what. So you can optionally change the name of the configuration file so it is recognized easier. 
+
+    ![Downloaded file](img/downloaded-configuration.png)
+
+- Now, we need the **CLIENT KEY AND CERTIFICATE** which we [previously](#step-4--create-the-server-and-client-certificates-for-aws-certificate-manager) created with easy-rsa, specifically, `client1.domain.tld.key` and `client1.domain.tld.crt`.
+
+    1. Open the downloaded configuration file with your favorite text editor. In this case, I am using `nano`.
+
+    2. Create `<cert></cert>` and `<key></key>` before the line `reneg-sec 0` in the configuration file. Here is an example:
+
+        ```conf
+        client
+        dev tun
+        proto udp
+        remote asdf.cvpn-endpoint-0011abcabcabcabc1.prod.clientvpn.eu-west-2.amazonaws.com 443
+        remote-random-hostname
+        resolv-retry infinite
+        nobind
+        persist-key
+        persist-tun
+        remote-cert-tls server
+        cipher AES-256-GCM
+        verb 3
+
+        <ca>
+        ... ... ...
+        </ca>
+
+        <cert>
+        
+        </cert>
+
+        <key>
+        
+        </key>
+
+        reneg-sec 0
+        ```
+    
+    3. Add the contents of the client certificate between `<cert></cert>` tags and the contents of the private key between `<key></key>` tags to the configuration file.
+
+        ```
+        <cert>
+        Contents of client certificate (.crt) file
+        </cert>
+
+        <key>
+        Contents of private key (.key) file
+        </key>
+        ```
+
+    4. Save the configuration file. 
+
+- We now have a working configuration file for the client.
+
+### Install the configuration
+
+> Make sure that you have your configuration file properly saved. And go to visit [this page](https://tunnelblick.net/cInstallConfigurations.html) on `tunnelblick.net` for more details on installing OVPN configurations.
+
+### Connecting to the Endpoint
+
+- **Make sure that the Endpoint is "turned on".**
+
+- Click the Tunnelblick icon on the menu bar and select your VPN profile to connect to the endpoint.
+
+    ![Menubar Connect](img/menubar-connect.png)
+
+- You should be able to see a status window at the right top corner of the screen when the client is connecting. Wait until it turns green.
+
+    ![Authorizing](img/authorizing-status.png)
+
+    ![Connected](img/connected-status.png)
+
+- Now, we are connected to the endpoint. Let's do some tests.
+
+    1. First let's see if our public IP address changed with `curl`.
+
+        ```bash
+        $ curl api.ipify.org
+        ```
+
+        This is our original public IP address.
+
+        ![Original IP](img/ipify-original-cmd.png)
+
+        This is our current public IP address.
+
+        ![Current IP](img/ipify-cmd.png)
+
+    2. Let's check the owner of this IP with `whois`.
+
+        ```bash
+        $ whois $(curl api.ipify.org) | less
+        ```
+
+        ![WHOIS](img/whois-cmd.png)
+
+        We can now see that our current IP address belongs to Amazon.com, Inc. That means that we are properly connected.
