@@ -36,7 +36,7 @@ Table of Contents
 
 Amazon Web Service(AWS) is a cloud computing platform by Amazon founded in 2006. It is now one of the largest and most popular cloud computing platforms in the world. It provides a variety of services like Virtual Machine, Managed Database, etc.
 
-One of the services being provided by AWS is Client VPN Endpoint. It helps to create an endpoint to which you can directly access the resources(like virtual machines) within a VPC via an OpenVPN connection to the designated subnet.
+One of the services being provided by AWS is Client VPN Endpoint. It helps to create an endpoint with which you can directly access the resources(like virtual machines) within a VPC via an OpenVPN connection to the designated subnet.
 
 **However, with some modifications to the configuration, we can turn that service into a working VPN server that allows us to anonymously access the public internet with** ***incredible performance!*** The figure below briefly explains how the client VPN endpoint intends to work.   
 
