@@ -475,12 +475,12 @@ We need to have a configuration file in order to connect to the VPN endpoint wit
 
 - Click the Tunnelblick icon on the menu bar and select your VPN profile to connect to the endpoint.
 
-    <img src="img/menubar-connect.png" width="50%" height="50%">
+    <img src="img/menubar-connect.png" width="25%" height="25%">
 
 - You should be able to see a status window at the right top corner of the screen when the client is connecting. Wait until it turns green.
 
-    <img src="img/connected-status.png" width="50%" height="50%">
-    <img src="img/authorizing-status.png" width="50%" height="50%">
+    <img src="img/authorizing-status.png" width="25%" height="25%">
+    <img src="img/connected-status.png" width="25%" height="25%">
 
 - Now, we are connected to the endpoint. Let's do some tests.
 
