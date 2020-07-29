@@ -13,7 +13,7 @@ Table of Contents
       * [Step 2 : Sign in to the Console with your AWS account](#step-2--sign-in-to-the-console-with-your-aws-account)
       * [Step 3 : Select the Region in which You Want to Set up Your Service](#step-3--select-the-region-in-which-you-want-to-set-up-your-service)
          * [The AWS Regions where Client VPN Endpoints are Available](#the-aws-regions-where-client-vpn-endpoints-are-available)
-         * [<strong>How to select a region for your VPN Service?</strong>](#how-to-select-a-region-for-your-vpn-service)
+         * [<strong>How to select the region for your VPN Service?</strong>](#how-to-select-the-region-for-your-vpn-service)
       * [Step 4 : Create the server and client certificates for AWS Certificate Manager](#step-4--create-the-server-and-client-certificates-for-aws-certificate-manager)
       * [Step 5 : Create the Client VPN Endpoint](#step-5--create-the-client-vpn-endpoint)
       * [How to manage the Client VPN Endpoint](#how-to-manage-the-client-vpn-endpoint)
@@ -24,8 +24,11 @@ Table of Contents
          * [Export the Configuration File](#export-the-configuration-file)
          * [Install the configuration](#install-the-configuration)
          * [Connect to the Endpoint](#connect-to-the-endpoint)
+      * [The Pricing for AWS Client VPN Endpoint](#the-pricing-for-aws-client-vpn-endpoint)
+      * [Conclusion](#conclusion)
+      * [References](#references)
 
-<!-- Added by: black, at: Wed Jul 29 11:26:17 EDT 2020 -->
+<!-- Added by: black, at: Wed Jul 29 16:31:44 EDT 2020 -->
 
 <!--te-->
 
@@ -91,7 +94,7 @@ And you can select the region from the list bar at the top right corner. Please 
 
 ![Select the region you prefer](img/region-selection.png)
 
-### **How to select a region for your VPN Service?**
+### **How to select the region for your VPN Service?**
 
 Usually, it highly depends on your current geolocation and that of the destination you want to access. For example, I am now living in Canada and wanting to access a Japanese video website that is exclusive to users in Japan. In that case, I would certainly select Asia Pacific (Tokyo) as my VPN region. 
 
@@ -509,3 +512,35 @@ We need to have a configuration file in order to connect to the VPN endpoint wit
         You may also see your **"Apparent Public IP Address"** on Tunnelblick's drop-down menu after connecting to the endpoint.
 
         ![Screenshot](img/connect-screen.png)
+
+## The Pricing for AWS Client VPN Endpoint
+
+We can find the pricing information of AWS Client VPN Endpoint on [this page](https://aws.amazon.com/vpn/pricing/). 
+
+[![AWS VPN Pricing](img/aws-vpn-pricing.png)](https://aws.amazon.com/vpn/pricing/)
+
+> **In AWS Client VPN you are charged for the number of active client connections per hour and the number of subnets that are associated to Client VPN per hour.** You start by creating a Client VPN endpoint and associating subnets to that endpoint. You can associate multiple subnets from within an Amazon Virtual Public Cloud (Amazon VPC) to a Client VPN endpoint as long as they are all part of the same AWS account. Each subnet associated with the Client VPN endpoint has to belong to a different Availability Zone and we will bill the Amazon VPC account owner. Billing starts once the subnet association is made and each partial hour consumed is pro-rated for the hour. The next step is to connect users to the Client VPN endpoint. **This can happen dynamically as users need the service and you are charged a second fee based on the number of active clients that are connected to the Client VPC endpoint, per hour. Any client connection that is less than an hour is also pro-rated for the hour.**
+
+**Because we are accessing the Internet with the VPN for our purpose, we are also billed for the outbound data transfer made. You can check out data transfer pricings in different AWS regions [here](https://aws.amazon.com/ec2/pricing/on-demand/#Data_Transfer).**
+
+[![Data Transfer](img/data-transfer-rate.png)](https://aws.amazon.com/ec2/pricing/on-demand/#Data_Transfer)
+
+## Conclusion
+
+**According to my own experience, the setup of VPN is very cost-efficient as you only pay as you go without any subscription.** It is also much cheaper than building a VPN server with an EC2 instance. But it is more complex than conventional VPN services. The long time it takes to boot up is a very bad trait. It is highly recommended to turn off the server every time you stop using it. You will be billed extensively if you leave the endpoint available for long durations without using it. 
+
+**It is also a very high-performance solution.** The available bandwidth of the VPN directly depends on that of your internet connection. I have personally not experienced the bandwidth of the VPN being throttled, as it is being described on the AWS website:
+<a href="https://aws.amazon.com/vpn/features/#AWS_Client_VPN_features">
+> It is elastic, and automatically scales to meet your demand. </a>
+
+**For the users in China who wish to bypass the GFW**, this is a very good option as well, as there is absolutely no way the government can ban the DNS and IP addresses of public cloud platforms like AWS. So it is a very stable solution. Its performance, according to my experience using it in China, is not bad. Both downlink and uplink bandwidth can go up to 5MB/s easily with a good Internet connection.
+
+I will try to write a script to simplify the process to set up a VPN like this, and also to easily turn it on and off as well.
+
+## References
+
+* [AWS Client VPN User Guide](https://docs.aws.amazon.com/vpn/latest/clientvpn-user/index.html)
+* [AWS Client VPN Administrator Guide](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/index.html)
+* [AWS Client VPN features](https://aws.amazon.com/vpn/features/#AWS_Client_VPN_features)
+* [AWS VPN pricing](https://aws.amazon.com/vpn/pricing/)
+* [Tunnelblick Documentation](https://tunnelblick.net/documents.html)
