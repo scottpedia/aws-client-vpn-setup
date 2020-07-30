@@ -45,7 +45,7 @@ One of the services being provided by AWS is Client VPN Endpoint. It helps to cr
 
 ## Step 1 : Create an AWS Account
 
-> If you already have a working AWS account, you can skip to [Step 3](#step-3--select-the-region-in-which-you-want-to-set-up-your-service)).
+> If you already have a working AWS account, you can skip to [Step 3](#step-3--select-the-region-in-which-you-want-to-set-up-your-service).
 
 So the first step would be creating an AWS account. We need to have a working AWS account to create resources on the platform. Go to [the sign-up website](https://portal.aws.amazon.com/billing/signup#/start) to create a free account. 
 
