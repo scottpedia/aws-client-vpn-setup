@@ -268,7 +268,7 @@ You should be on this page following the last action.
 
 9. Leave blank the DNS server addresses and go to the next step.
 
-10. Select **"UPD"** as the default transporting protocol.
+10. Select **"UDP"** as the default transporting protocol.
 
 11. Enable [**"Split Tunnel"**](https://en.wikipedia.org/wiki/Split_tunneling) to allow access to the resources in your own Local Area Network(LAN) while connected to the VPN.
 
@@ -467,7 +467,7 @@ We need to have a configuration file in order to connect to the VPN endpoint wit
 
 ### Install the configuration
 
-> Make sure that you have your configuration file properly saved. And go to visit [this page](https://tunnelblick.net/cInstallConfigurations.html) on `tunnelblick.net` for more details on installing OVPN configurations.
+> Make sure that you have your configuration file properly saved. To install the configuration, launch Tunnelblick if it is not already running, and drag the configuration file and drop it onto the Tunnelblick icon in the menu bar. And go to visit [this page](https://tunnelblick.net/cInstallConfigurations.html) on `tunnelblick.net` for more details on installing OVPN configurations.
 
 ### Connect to the Endpoint
 
