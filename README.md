@@ -414,6 +414,22 @@ We need to have a configuration file in order to connect to the VPN endpoint wit
 
     ![Downloaded file](img/downloaded-configuration.png)
 
+- We need to make some edits to the raw configuration file downloaded from AWS before we can use it to connect to the endpoint. First, we need to **prepend a random string to the endpoint URL** in the configuration file. This is an effort by AWS to prevent DNS caching of the endpoint domains. Here is an example.
+
+    1. Open the `.ovpn` configuration file with your favorite text editor.
+
+    2. You should be able to find a line starting with **`remote`**, something like this.
+
+        <code>
+            remote cvpn-endpoint-0011abcabcabcabc1.prod.clientvpn.eu-west-2.amazonaws.com 443
+        </code>
+
+    3. Add a random string before the URL.
+
+        <code>
+            remote <font color="red">rad0mstr1nghere</font>.cvpn-endpoint-0011abcabcabcabc1.prod.clientvpn.eu-west-2.amazonaws.com 443
+        </code>
+
 - Now, we need the **CLIENT KEY AND CERTIFICATE** which we [previously](#step-4--create-the-server-and-client-certificates-for-aws-certificate-manager) created with easy-rsa, specifically, `client1.domain.tld.key` and `client1.domain.tld.crt`.
 
     1. Open the downloaded configuration file with your favorite text editor. In this case, I am using `nano`.
