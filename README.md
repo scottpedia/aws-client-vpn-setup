@@ -38,7 +38,7 @@ Amazon Web Service(AWS) is a cloud computing platform by Amazon founded in 2006.
 
 One of the services being provided by AWS is Client VPN Endpoint. It helps to create an endpoint with which you can directly access the resources(like virtual machines) within a VPC via an OpenVPN connection to the designated subnet.
 
-**However, with some modifications to the configuration, we can turn that service into a working VPN server that allows us to anonymously access the public internet with** ***incredible performance!*** The figure below briefly explains how the client VPN endpoint intends to work.   
+**However, with some modifications to the configuration, we can turn that service into a working VPN server that allows us to anonymously access the public internet with** <font color="red">**incredible performance!**</font> The figure below briefly explains how the client VPN endpoint intends to work.   
 
 ![how aws client vpn endpoint works](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/images/architecture.png)
 
@@ -548,7 +548,7 @@ We can find the pricing information of AWS Client VPN Endpoint on [this page](ht
 <a href="https://aws.amazon.com/vpn/features/#AWS_Client_VPN_features">
 > It is elastic, and automatically scales to meet your demand. </a>
 
-**For the users in China who wish to bypass the GFW**, this is a very good option as well, as there is absolutely no way the government can ban the DNS and IP addresses of public cloud platforms like AWS. So it is a very stable solution. Its performance, according to my experience using it in China, is not bad. Both downlink and uplink bandwidth can go up to 5MB/s easily with a good Internet connection.
+<font color="red">**For the users in China who wish to bypass the GFW**</font>, this is a very good option as well, as there is absolutely no way the government can ban the DNS and IP addresses of public cloud platforms like AWS. So it is a very stable solution. Its performance, according to my experience using it in China, is not bad. Both downlink and uplink bandwidth can go up to **5MB/s** easily with a good Internet connection.
 
 I will try to write a script to simplify the process to set up a VPN like this, and also to easily turn it on and off as well.
 
