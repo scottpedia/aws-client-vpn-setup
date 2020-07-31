@@ -45,13 +45,13 @@ One of the services being provided by AWS is Client VPN Endpoint. It helps to cr
 
 ## Step 1 : Create an AWS Account
 
-> If you already have a working AWS account, you can skip to [Step 3](#step-3--select-the-region-in-which-you-want-to-set-up-your-service)).
+> If you already have a working AWS account, you can skip to [Step 3](#step-3--select-the-region-in-which-you-want-to-set-up-your-service).
 
-So the first step would be creating an AWS account. We need to have a working AWS account to create resources on the platform. Go to [the sign-up website](https://portal.aws.amazon.com/billing/signup#/start) to create a free account. 
+So the first step would be creating an AWS account. We need to have a working AWS account to create resources on the platform. Go to [the sign-up website](https://portal.aws.amazon.com/billing/signup#/start) to create a free account. Fill in the information forms as instructed.
 
 ![the sign-up website](img/aws-signup.png)
 
-> Note that by creating a free AWS account, you are automatically granted free access to some of its services for the first year following the sign-up date. Go to [this page](https://aws.amazon.com/free) to get more information. Fill in the information forms as instructed. 
+> Note that by creating a free AWS account, you are automatically granted free access to some of its services for the first year following the sign-up date. Go to [this page](https://aws.amazon.com/free) to get more information.  
 
 ## Step 2 : Sign in to the Console with your AWS account
 
@@ -268,7 +268,7 @@ You should be on this page following the last action.
 
 9. Leave blank the DNS server addresses and go to the next step.
 
-10. Select **"UPD"** as the default transporting protocol.
+10. Select **"UDP"** as the default transporting protocol.
 
 11. Enable [**"Split Tunnel"**](https://en.wikipedia.org/wiki/Split_tunneling) to allow access to the resources in your own Local Area Network(LAN) while connected to the VPN.
 
@@ -467,7 +467,7 @@ We need to have a configuration file in order to connect to the VPN endpoint wit
 
 ### Install the configuration
 
-> Make sure that you have your configuration file properly saved. And go to visit [this page](https://tunnelblick.net/cInstallConfigurations.html) on `tunnelblick.net` for more details on installing OVPN configurations.
+> Make sure that you have your configuration file properly saved. To install the configuration, launch Tunnelblick if it is not already running, and drag the configuration file and drop it onto the Tunnelblick icon in the menu bar. And go to visit [this page](https://tunnelblick.net/cInstallConfigurations.html) on `tunnelblick.net` for more details on installing OVPN configurations.
 
 ### Connect to the Endpoint
 
