@@ -134,7 +134,7 @@ We need to create the certificates for both the clients and the server. We are g
 
 5. Generate the client certificate and key.
 
-    > **Make sure to save the client certificate and key because you will need them later to configure the client.**
+    > **Make sure to save the client certificate and key because you will need them [later](#export-the-configuration-file) to configure the client.**
 
     `$ ./easyrsa build-client-full client1.domain.tld nopass`
 
