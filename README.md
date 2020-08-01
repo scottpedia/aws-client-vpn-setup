@@ -5,6 +5,9 @@ In this article, I am going to teach you how to create your own private OpenVPN 
 Table of Contents
 =================
 
+<img src="img/openvpn-icon.png" width="20%" align="right">
+
+
 <!--ts-->
    * [Create Your Private OpenVPN Service with AWS Client VPN Endpoint](#create-your-private-openvpn-service-with-aws-client-vpn-endpoint)
    * [Table of Contents](#table-of-contents)
@@ -32,9 +35,13 @@ Table of Contents
 
 <!--te-->
 
+<a href="https://aws.amazon.com/vpn/"><img src="img/client-vpn.png" width="40" align="right"></a>
+
 ## What are AWS and AWS Client VPN Endpoint?
 
 Amazon Web Service(AWS) is a cloud computing platform by Amazon founded in 2006. It is now one of the largest and most popular cloud computing platforms in the world. It provides a variety of services like Virtual Machine, Managed Database, etc.
+
+<a href="https://aws.amazon.com/"><img src="img/aws-logo.png" width="120" align="right"></a>
 
 One of the services being provided by AWS is Client VPN Endpoint. It helps to create an endpoint with which you can directly access the resources(like virtual machines) within a VPC via an OpenVPN connection to the designated subnet.
 
