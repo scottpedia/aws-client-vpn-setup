@@ -142,7 +142,7 @@ We need to create the certificates for both the clients and the server. We are g
 
     Before you copy the certificates and keys, create the custom folder by using the `mkdir` command. The following example creates a custom folder in your home directory. 
 
-    ```bash
+    ```shell
     $ mkdir ~/custom_folder/
     $ cp pki/ca.crt ~/custom_folder/
     $ cp pki/issued/server.crt ~/custom_folder/
@@ -153,7 +153,7 @@ We need to create the certificates for both the clients and the server. We are g
 	```
     You should be getting a directory layout like this:
 
-    ```
+    ```shell
     custom_folder
     ├── ca.crt
     ├── client1.domain.tld.crt
