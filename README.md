@@ -399,7 +399,7 @@ The following section walks you through how to **"turn off"** of the server. **(
 
 After the server is set up, we need to do some work to enable the client to connect to the server. In this case, we are going to use **TunnelBlick** as the client software.  Go to its [website](https://tunnelblick.net/) to get the latest release. If you are a Windows user who happened to be here, you can visit this [page](https://docs.aws.amazon.com/vpn/latest/clientvpn-user/windows.html) to get more information on VPN client softwares for Windows.
 
-<img src="img/tunnelblick.png" height="80" align="right" ></img>
+<a href="https://tunnelblick.net/"><img src="img/tunnelblick.png" height="80" align="right" ></img></a>
 
 ### Install Tunnelblick
 
