@@ -401,6 +401,8 @@ After the server is set up, we need to do some work to enable the client to conn
 
 <a href="https://tunnelblick.net/"><img src="img/tunnelblick.png" height="80" align="right" ></img></a>
 
+<a href="https://tunnelblick.net/"><img src="img/tunnelblick.png" height="80" align="right" ></img></a>
+
 ### Install Tunnelblick
 
 > For a detailed walk-through of the installation process, see this [page](https://tunnelblick.net/cInstall.html) on `tunnelblick.net`. Get back to this page after completing the installation.
