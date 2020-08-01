@@ -5,7 +5,7 @@ In this article, I am going to teach you how to create your own private OpenVPN 
 Table of Contents
 =================
 
-<img src="img/openvpn-icon.png" width="20%" align="right">
+<a href="https://openvpn.net/"><img src="img/openvpn-icon.png" width="20%" align="right"></a>
 
 
 <!--ts-->
