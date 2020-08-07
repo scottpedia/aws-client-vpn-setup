@@ -232,7 +232,10 @@ We now have the certificates ready for our Client VPN Endpoints.
 ## Step 5 : Create the Client VPN Endpoint
 
 > **Note:** You can now complete this step automatically with AWS Cloudformation. Simply click on the icon below to initiate the launching sequence. Follow the prompts after opening the new window.   
-[![fff](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?templateURL=https://vpn-tutorial-template.s3.ca-central-1.amazonaws.com/cloudformation-template)
+[![launch-stack icon](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?templateURL=https://vpn-tutorial-template.s3.ca-central-1.amazonaws.com/cloudformation-template)<br>
+For the instructions to create VPN endpoint with AWS Cloudformation, go to this section below.
+
+### To Create the VPN endpoint manually.
 
 Scroll down the page to find **"VPC"** under the category of **"Networking & Content Delivery"** and open the link. 
 
@@ -309,6 +312,11 @@ You should be on this page following the last action.
 18. Click **"Add authorization rule"** to add the rule.
 
 Now you have created a Client VPN Endpoint that is ready to go in your desirable AWS region.
+
+### To create the VPN endpoint with AWS Cloudformation.
+
+I have created a Cloudformation template with which you can set up the VPN endpoint on the cloud with a few clicks. It's like a deployment package where cloud resources and parameters are defined. The template itself is in  `json` format as a file, which you can find as `cloudformation-template` at the [github repository](https://github.com/Scottpedia/aws-client-vpn-setup) hosting this article. You can click this icon below to start the launching sequence.   
+[![launch-stack icon](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?templateURL=https://vpn-tutorial-template.s3.ca-central-1.amazonaws.com/cloudformation-template)
 
 ## How to manage the Client VPN Endpoint
 
