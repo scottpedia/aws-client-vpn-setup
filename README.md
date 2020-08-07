@@ -231,7 +231,7 @@ We now have the certificates ready for our Client VPN Endpoints.
 
 ## Step 5 : Create the Client VPN Endpoint
 
-> **Note:** You can now complete this step automatically with AWS Cloudformation. Simply click on the icon below to initiate the launching sequence. Follow the prompts after opening the new window.   
+> **Note:** You can now complete this step with a few clicks with AWS Cloudformation. Simply click on the icon below to initiate the launching sequence. Follow the prompts after opening the new window.   
 [![launch-stack icon](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?templateURL=https://vpn-tutorial-template.s3.ca-central-1.amazonaws.com/cloudformation-template)<br>
 For the instructions to create VPN endpoint with AWS Cloudformation, go to this section below.
 
