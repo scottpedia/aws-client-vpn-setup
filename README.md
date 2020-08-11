@@ -329,7 +329,7 @@ And I am also here to go through the process of creating the endpoint with AWS C
 
     ![Cloudformation login](img/cloudformation-login.png)
 
-- You should then see this page to begin creating the stack. Click **"Next"** to proceed.
+- You should then see this page to begin creating the stack with. Click **"Next"** to proceed.
 
     ![Cloudformation Create Stack](img/cloudformation-create-stack.png)
 
@@ -337,9 +337,9 @@ And I am also here to go through the process of creating the endpoint with AWS C
 
     ![Cloudformation Specify Parameters](img/cloudformation-specify-parameters.png)
 
-    1. Come up with a name for the stack being created and enter it to the first field.
+    1. Come up with a name for the stack about to be created and enter it to the first field.
 
-    2. Go to [ACM](https://console.aws.amazon.com/acm/home) to find the ARNs of the certificates imported. Follow the instructions in the image below, and do the same to your server certificate.
+    2. Go to [ACM](https://console.aws.amazon.com/acm/home) to find the ARNs of the certificates imported. Follow the instructions in the image below, and do the same with your server certificate.
 
         ![Cloudformation Find the ARNs](img/cloudformation-find-arns.png)
 
@@ -347,19 +347,19 @@ And I am also here to go through the process of creating the endpoint with AWS C
 
         ![Cloudformation ARNs](img/cloudformation-arns.png)
 
-    4. **For "EndpointTransportProtocol"**, in most cases, we use **UDP** as the default protocol to communicate with the VPN endpoint while some users may have special needs. Leave the default value there if you do not know what it is.
+    4. **For "EndpointTransportProtocol"**, in most cases, we use **UDP** as the default protocol to communicate with the VPN endpoint while some users may have special needs. Leave the default value if you do not know what it is.
 
     5. **For "isSplitTunnelled"**, choose **"true"** if you want to communicate with interfaces in your LAN(Local Area Network) while connected to the VPN. For more information, see [Split Tunnel](https://en.wikipedia.org/wiki/Split_tunneling) on `wikipedia.org`.
 
-    6. After filling in all the options, click **"Next"** to proceed.
+    6. After filling in all the parameters, click **"Next"** to proceed.
 
-- You should be on the page to configure stack options.
+- You should be on this page to configure the stack options.
 
     You do not need to do anything on this page if you do not have any special needs. If so, click **"Next"** at the bottom to proceed.
 
     ![Page to configure stack options](img/cloudformation-stack-options.png)
 
-- Review the settings for the stack and then click **"Create Stack"** to initiate the launching sequence.
+- Review the settings of the stack and then click **"Create Stack"** to initiate the launching sequence.
 
     ![Cloudformation review](img/cloudformation-review.png)
 
@@ -377,7 +377,7 @@ And I am also here to go through the process of creating the endpoint with AWS C
 
     ![Cloudformation endpoint](img/cloudformation-endpoint.png)
 
-    > **Note:** The Cloudformation template provided creates an independent VPC with its subnet and all the necessary resources. That is an effort to prevent conflicts between the endpoint and the other resources inside an existing VPC or Subnet if an endpoint is created there. The attached here is a diagram from Cloudformation template designer. Click on the image to view this template in Cloudformation designer. **You are very welcome to help improve the template.**<br>
+    > **Note:** The Cloudformation template provided here creates an independent VPC and all other necessary resources in it. That is an effort to prevent conflicts between the endpoint and the other resources inside an existing VPC or Subnet if an endpoint is created there. The attached here is a diagram from Cloudformation template designer. Click on the image to view this template in Cloudformation designer. **You are very welcome to help improve the template.**<br>
     > <details><summary>Expand this section to see the diagram.</summary>
     >
     >[![designer](img/cloudformation-template-designer.png)](https://us-west-2.console.aws.amazon.com/cloudformation/designer/home?region=us-west-2&templateURL=https://vpn-tutorial-template.s3.ca-central-1.amazonaws.com/cloudformation-template)
