@@ -19,6 +19,8 @@ Table of Contents
          * [<strong>How to select the region for your VPN Service?</strong>](#how-to-select-the-region-for-your-vpn-service)
       * [Step 4 : Create the server and client certificates for AWS Certificate Manager](#step-4--create-the-server-and-client-certificates-for-aws-certificate-manager)
       * [Step 5 : Create the Client VPN Endpoint](#step-5--create-the-client-vpn-endpoint)
+         * [To Create the VPN endpoint manually.](#to-create-the-vpn-endpoint-manually)
+         * [To create the VPN endpoint with AWS Cloudformation.](#to-create-the-vpn-endpoint-with-aws-cloudformation)
       * [How to manage the Client VPN Endpoint](#how-to-manage-the-client-vpn-endpoint)
          * [<strong>To turn ON the VPN server</strong>](#to-turn-on-the-vpn-server)
          * [<strong>To turn OFF the VPN server</strong>](#to-turn-off-the-vpn-server)
@@ -31,7 +33,7 @@ Table of Contents
       * [Conclusion](#conclusion)
       * [References](#references)
 
-<!-- Added by: black, at: Sat Aug  1 11:08:33 EDT 2020 -->
+<!-- Added by: black, at: Mon Aug 10 22:36:25 EDT 2020 -->
 
 <!--te-->
 
