@@ -521,7 +521,7 @@ We need to have a configuration file in order to connect to the VPN endpoint wit
 
     2. Create `<cert></cert>` and `<key></key>` before the line `reneg-sec 0` in the configuration file. Here is an example:
 
-        ```conf
+        ```xml
         client
         dev tun
         proto udp
@@ -552,7 +552,7 @@ We need to have a configuration file in order to connect to the VPN endpoint wit
     
     3. Add the contents of the client certificate between `<cert></cert>` tags and the contents of the private key between `<key></key>` tags to the configuration file.
 
-        ```
+        ```xml
         <cert>
         Contents of client certificate (.crt) file
         </cert>
