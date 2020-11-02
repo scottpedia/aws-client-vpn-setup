@@ -647,4 +647,4 @@ I will try to write a script to simplify the process to set up a VPN like this, 
 
 -----------------------------------------
 
-<a href="https://clustrmaps.com/site/1be60"  title="Visit tracker"><img src="//www.clustrmaps.com/map_v2.png?d=FXyoSPyd-pGgVKvqeqoHngEiI3va6Myp2OCh70z_lbg&cl=ffffff" /></a>
+<a href="https://clustrmaps.com/site/1be60"  title="Visit tracker"><img src="https://www.clustrmaps.com/map_v2.png?d=FXyoSPyd-pGgVKvqeqoHngEiI3va6Myp2OCh70z_lbg&cl=ffffff" /></a>
