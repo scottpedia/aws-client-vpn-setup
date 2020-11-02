@@ -644,3 +644,5 @@ I will try to write a script to simplify the process to set up a VPN like this, 
 * [AWS Client VPN features](https://aws.amazon.com/vpn/features/#AWS_Client_VPN_features)
 * [AWS VPN pricing](https://aws.amazon.com/vpn/pricing/)
 * [Tunnelblick Documentation](https://tunnelblick.net/documents.html)
+
+<script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=FXyoSPyd-pGgVKvqeqoHngEiI3va6Myp2OCh70z_lbg&cl=ffffff&w=a"></script>
