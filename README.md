@@ -5,6 +5,12 @@
 
 In this article, I am going to teach you how to create your own private OpenVPN service with AWS Client VPN Endpoint. And how to connect to the endpoint with *TunnelBlick* on macOS.
 
+# Overview
+
+Traditionally, people build their own VPN servers with VMs on the cloud.(e.g. AWS EC2, Azure VMs, etc). In that context, we need to run installation and setup scripts directly on the server. And we are billed according to the hours the VM has been running, and the outbound data. The instance type determines the computing power(number of simultaneous users) and also the internet bandwidth(the bandwidth of the VPN).
+
+This approach, however, utilizes AWS Client VPN Endpoint, a service already integrated into AWS VPC. There are many advantages of this approach. First, we are billed for the outbound data usage the same way as the VM-based VPN Services while we enjoy almost unlimited bandwidth of AWS networking infrastructures. Also, the service has better reliability as it is managed by AWS. We are only billed for the connection time, not the active VM uptime in the traditional method.
+
 Table of Contents
 =================
 
@@ -13,6 +19,7 @@ Table of Contents
 
 <!--ts-->
    * [Create Your Private OpenVPN Service with AWS Client VPN Endpoint](#create-your-private-openvpn-service-with-aws-client-vpn-endpoint)
+   * [Overview](#overview)
    * [Table of Contents](#table-of-contents)
       * [What are AWS and AWS Client VPN Endpoint?](#what-are-aws-and-aws-client-vpn-endpoint)
       * [Step 1 : Create an AWS Account](#step-1--create-an-aws-account)
@@ -36,7 +43,7 @@ Table of Contents
       * [Conclusion](#conclusion)
       * [References](#references)
 
-<!-- Added by: black, at: Mon Aug 10 22:36:25 EDT 2020 -->
+<!-- Added by: black, at: Wed Nov 11 14:25:05 EST 2020 -->
 
 <!--te-->
 
