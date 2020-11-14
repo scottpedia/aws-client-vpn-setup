@@ -38,6 +38,6 @@ $ aws configure
 
 - The endpoint is by default turned off right after the script is run. To activate the endpoint, use the management feature of the script. See this [section](#To-manage-an-existing-OVPN-endpoint) for more into about the management feature.
 
-- After the endpoint is turned on, you can connect to the endpoint with your client software. See this [section](../README.md##how-to-set-up-the-client-for-the-vpn-server) from the main article for how to setup the client software on macOS.
+- After the endpoint is turned on, you can connect to the endpoint with your client software. See this [section](../README.md#how-to-set-up-the-client-for-the-vpn-server) from the main article for how to setup the client software on macOS.
 
 
