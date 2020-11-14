@@ -483,7 +483,7 @@ def save_the_setup_results():
     print('Done.\n')
     print(DATA_TO_STORE)
     print(f"Saving the file as \'{USER_SETTINGS['friendlyName']}-{saveTime}.ovpnsetup\' ...")
-    _f = open(f"{USER_SETTINGS['friendlyName']}-{saveTime}.ovpnsetup",'w+')
+    _f = open(f"{USER_SETTINGS['region']}-{USER_SETTINGS['friendlyName']}-{saveTime}.ovpnsetup",'w+')
     _f.write(dumps(DATA_TO_STORE))
     _f.close()
     print('Done.\n')
