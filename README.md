@@ -1,6 +1,6 @@
 # Create Your Private OpenVPN Service with AWS Client VPN Endpoint
 
-> # An auto-deployment script is now available. It automatically deploys a ready-to-go OpenVPN endpoint on AWS. It also manages the service via the command line.(turn-on, turn-off...) Please check out [this page](docs/deployment-script.md) for more info!
+> # An auto-deployment script is now available. It automatically deploys a ready-to-go OpenVPN endpoint on AWS. It also manages the deployed endpoints via the command line.(turn-on, turn-off...) Please check out [this page](docs/deployment-script.md) for more info!
 
 <a href="https://trackgit.com"><img src="https://sfy.cx/u/xqO" alt="trackgit-views" /></a>
 <a href="#to-create-the-vpn-endpoint-with-aws-cloudformation"><img src="https://img.shields.io/badge/deploy%20to-AWS-orange" /></a>
