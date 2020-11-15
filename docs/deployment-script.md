@@ -40,4 +40,27 @@ $ aws configure
 
 - After the endpoint is turned on, you can connect to the endpoint with your client software. See this [section](../README.md#how-to-set-up-the-client-for-the-vpn-server) from the main article for how to setup the client software on macOS.
 
+## To Manage an Existing OVPN Endpoint.
 
+```shell
+Usage: ./client-vpn-manager [command] -f [the_config_file]
+The python script to deploy and manage the vpn service based on AWS Client VPN Endpoints.
+
+NOTE: PLEASE HAVE YOUR AWS CLI SETUP WITH YOUR AWS ACCOUNT BEFORE YOU RUN THIS SCRIPT.
+      THE SCRIPT WILL NOT RUN WITHOUT AN AWS ACCOUNT SETUP WITH THE CLI.
+
+***TO DEPLOY A NEW VPN SERVICE, please run the script without any command or option.***
+
+***TO MANAGE AN EXISTING ENDPOINT, please use the following commands:***
+    status  :   Output the current status of the specified VPN Endpoint.
+    on      :   Turn on the VPN
+    off     :   Turn off the VPN
+    toggle  :   Toggle the VPN
+   *help    :   Output the help
+
+    -f [Filename] (Optional)
+    You can use the optional -f flag to specify the file which contains the profile of a specific VPN deployment(*.ovpnsetup).
+    Thus you can have multiple deployments active at the same time, and manage each of them with its profile.
+    If the file is not speficied, the program will automatically look for one under the current working directory.
+    Should multiple profiles are found, the one most recently created will be used.
+```
