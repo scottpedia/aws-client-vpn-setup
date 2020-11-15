@@ -54,15 +54,16 @@ NOTE: PLEASE HAVE YOUR AWS CLI SETUP WITH YOUR AWS ACCOUNT BEFORE YOU RUN THIS S
 ***TO DEPLOY A NEW VPN SERVICE, please run the script without any command or option.***
 
 ***TO MANAGE AN EXISTING ENDPOINT, please use the following commands:***
-    status  :   Output the current status of the specified VPN Endpoint.
-    on      :   Turn on the VPN
-    off     :   Turn off the VPN
-    toggle  :   Toggle the VPN
-   *help    :   Output the help
+    status    :   Output the current status of the specified VPN Endpoint.
+    on        :   Turn on the VPN
+    off       :   Turn off the VPN
+    toggle    :   Toggle the VPN
+    terminate :   Terminate the selected OVPN setup on AWS.
+   *help      :   Output the help
 
     -f [Filename] (Optional)
     You can use the optional -f flag to specify the file which contains the profile of a specific VPN deployment(*.ovpnsetup).
     Thus you can have multiple deployments active at the same time, and manage each of them with its profile.
     If the file is not speficied, the program will automatically look for one under the current working directory.
-    Should multiple profiles are found, the one most recently created will be used.
+    If multiple profiles are found under the CWD, should the most recent one be used.
 ```
