@@ -41,11 +41,12 @@ NOTE: PLEASE HAVE YOUR AWS CLI SETUP WITH YOUR AWS ACCOUNT BEFORE YOU RUN THIS S
 ***TO DEPLOY A NEW VPN SERVICE, please run the script without any command or option.***
 
 ***TO MANAGE AN EXISTING ENDPOINT, please use the following commands:***
-    status  :   Output the current status of the specified VPN Endpoint.
-    on      :   Turn on the VPN
-    off     :   Turn off the VPN
-    toggle  :   Toggle the VPN
-   *help    :   Output the help
+    status    :   Output the current status of the specified VPN Endpoint.
+    on        :   Turn on the VPN
+    off       :   Turn off the VPN
+    toggle    :   Toggle the VPN
+    terminate :   Terminate the selected OVPN setup on AWS.
+   *help      :   Output the help
 
     -f [Filename] (Optional)
     You can use the optional -f flag to specify the file which contains the profile of a specific VPN deployment(*.ovpnsetup).
@@ -138,14 +139,13 @@ def turn_on() -> None:
     print("The program will check the association state every 10 seconds. The association generally takes 10 minutes to complete...")
     print("The timeout is 20 minutes.")
     for _i in range(100):
-        print('>',end='')
+        print('>', end='')
         if get_association_state() != 'pending-associate':
             print("\nThe target subnet is now associated with the endpoint. You can now connect to the endpoint with your client software.\n")
             break
         time.sleep(10)
     else:
         print("Timeout. Program exits.\n")
-
 
 
 def get_status() -> None:
@@ -164,6 +164,45 @@ def disassociate() -> None:
     disassociate_target_network()
     print("Done.")
 
+
+def terminate_endpoint() -> None:
+    print('We are now going to terminate endpoint deployment {} \nlocated at {}'.format(
+        PROPERTIES['friendlyName'], PROPERTIES['region']))
+    while True:
+        yon = input('DO WE PROCEED? <Yy for yes, Nn for no> ')
+        if yon.lower() == 'y':
+            break
+        elif yon.lower() == 'n':
+            sys.exit(0)
+        else:
+            print("Unexpected answer detected. Please enter again.")
+    print('\nTerminating the cloudformation deployment...')
+    client_cf.delete_stack(
+        StackName='ovpn-{}'.format(PROPERTIES['friendlyName'])
+    )
+    for i in range(12):
+        print('>', end='')
+        if client_cf.describe_stacks(StackName=PROPERTIES['cloudformationStackId'])["Stacks"][0]['StackStatus'] == 'DELETE_COMPLETE':
+            print('\nDone\n')
+            break
+        time.sleep(10)
+    else:
+        print('Timeout. Failed to delete the cloudformation stack.', file=sys.stderr)
+        raise TimeoutError()
+
+    print("Deleting ACM Certificates...")
+    client_acm.delete_certificate(
+        CertificateArn=PROPERTIES['serverCertificateArn']
+    )
+    client_acm.delete_certificate(
+        CertificateArn=PROPERTIES['clientCertificateArn']
+    )
+    print('Done.\n')
+
+    print("Deleting ovpn profiles...")
+    subprocess.run(f"rm -rf {PROPERTIES['region']}-{PROPERTIES['friendlyName']}.ovpn {PROPERTIES['region']}-{PROPERTIES['friendlyName']}.ovpnsetup".split(' '), check=True)
+    print("Done.\n")
+    print(f"Successfully terminated {PROPERTIES['friendlyName']}.")
 
 def get_configuration():
     global PROPERTIES
@@ -213,6 +252,8 @@ def manage():
             turn_on()
         else:
             disassociate()
+    elif commandInput == "terminate":
+        terminate_endpoint()
     elif commandInput == "help":
         print(HELP_SCRIPT)
     else:
@@ -467,7 +508,7 @@ def deploy_cloudformation_template():
             print("The stack deployment failed.")
             raise Exception("The stack deployment failed.")
         elif response["Stacks"][0]['StackStatus'] == 'CREATE_IN_PROGRESS':
-            print('>',end='') # As a progress bar
+            print('>', end='')  # As a progress bar
         else:
             raise Exception("Unexpected stack status detected.")
     else:
