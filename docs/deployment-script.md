@@ -1,5 +1,7 @@
 # [client-vpn-aio.py](../client-vpn-aio.py)
 
+> ## Note: The current setup script is working but still experimental. There are many potential errors and vulnerabilities. Any help to test the script is highly welcomed! If you have used the script to deploy an endpoint, any feedback will be appreciated!
+
 This is a python script that automatically deploys a ready-to-go OVPN endpoint in your desired AWS region. It also acts as a CLI tool to help you manage the Client VPN Endpoints.
 
 ## Requirements
