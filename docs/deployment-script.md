@@ -65,5 +65,5 @@ NOTE: PLEASE HAVE YOUR AWS CLI SETUP WITH YOUR AWS ACCOUNT BEFORE YOU RUN THIS S
     You can use the optional -f flag to specify the file which contains the profile of a specific VPN deployment(*.ovpnsetup).
     Thus you can have multiple deployments active at the same time, and manage each of them with its profile.
     If the file is not speficied, the program will automatically look for one under the current working directory.
-    If multiple profiles are found under the CWD, should the most recent one be used.
+    If multiple profiles are found under the CWD, the one most recently created will be used.
 ```
