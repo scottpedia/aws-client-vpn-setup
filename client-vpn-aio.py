@@ -48,7 +48,7 @@ NOTE: PLEASE HAVE YOUR AWS CLI SETUP WITH YOUR AWS ACCOUNT BEFORE YOU RUN THIS S
    *help    :   Output the help
 
     -f [Filename] (Optional)
-    You can use the optional -f flag to specify the file which contains the profile of a specific VPN deployment.
+    You can use the optional -f flag to specify the file which contains the profile of a specific VPN deployment(*.ovpnsetup).
     Thus you can have multiple deployments active at the same time, and manage each of them with its profile.
     If the file is not speficied, the program will automatically look for one under the current working directory.
     If multiple profiles are found under the CWD, should the most recent one be used.
@@ -409,7 +409,7 @@ def download_cloudformation_template():
             TEMPLATE_CONTENT = cfTemplate.open('r').read()
             break
         else:
-            subprocess.run("wget \'https://raw.githubusercontent.com/Scottpedia/vpn-toggle-utility/setup-script/cloudformation-template\' -O cloudformation-template".split(
+            subprocess.run("wget \'https://raw.githubusercontent.com/Scottpedia/vpn-toggle-utility/master/cloudformation-template\' -O cloudformation-template".split(
                 ' '), check=True, stdout=sys.stdout)
     else:
         raise Exception(
