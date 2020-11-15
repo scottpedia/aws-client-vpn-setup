@@ -8,22 +8,26 @@ import string
 import random
 import subprocess
 from pathlib import Path
-from json import dumps
+from json import load, dumps
+import os
+import glob
 
 client_ec2 = None
 client_acm = None
 client_cf = None
 
-'''
-So please leave these values below blank if you want to specify the ids with system environment variables.
-Otherwise, the values specified here would override the environment variables.
-'''
-CLOUDFORMATION_STACK_ID = ""
-CLIENT_VPN_ENDPOINT_ID = ""
-SERVER_CERTIFICATE_ARN = ""
-CLIENT_CERTIFICATE_ARN = ""
-SUBNET_ID = ""
-USER_SETTINGS = {}
+PROPERTIES = {
+    'friendlyName': '',
+    'isSplitTunneled': False,
+    'region': '',
+    'cloudformationStackId': '',
+    'clientVpnEndpointId': '',
+    'serverCertificateArn': '',
+    'clientCertificateArn': '',
+    'subnetId': '',
+    'dateOfCreation': ''
+}
+
 TEMPLATE_CONTENT = ''
 CLIENT_CERT = ''
 CLIENT_KEY = ''
@@ -41,7 +45,7 @@ NOTE: PLEASE HAVE YOUR AWS CLI SETUP WITH YOUR AWS ACCOUNT BEFORE YOU RUN THIS S
     on      :   Turn on the VPN
     off     :   Turn off the VPN
     toggle  :   Toggle the VPN
-   *help    :   Output the help 
+   *help    :   Output the help
 
     -f [Filename] (Optional)
     You can use the optional -f flag to specify the file which contains the profile of a specific VPN deployment.
@@ -56,7 +60,7 @@ NOTE: PLEASE HAVE YOUR AWS CLI SETUP WITH YOUR AWS ACCOUNT BEFORE YOU RUN THIS S
 def get_association_state():
     response = client_ec2.describe_client_vpn_endpoints(
         ClientVpnEndpointIds=[
-            CLIENT_VPN_ENDPOINT_ID,
+            PROPERTIES['clientVpnEndpointId'],
         ]
     )
     if len(response['ClientVpnEndpoints']) > 0:
@@ -79,8 +83,8 @@ def is_associated():
 
 def associate_target_network() -> None:
     response = client_ec2.associate_client_vpn_target_network(
-        ClientVpnEndpointId=CLIENT_VPN_ENDPOINT_ID,
-        SubnetId=SUBNET_ID,
+        ClientVpnEndpointId=PROPERTIES['clientVpnEndpointId'],
+        SubnetId=PROPERTIES['subnetId'],
     )
     if response["Status"]["Code"] != 'associating':
         raise Exception("Unexpected association state detected : {}".format(
@@ -89,10 +93,10 @@ def associate_target_network() -> None:
 
 def create_internet_routing_rule() -> None:
     response = client_ec2.create_client_vpn_route(
-        ClientVpnEndpointId=CLIENT_VPN_ENDPOINT_ID,
+        ClientVpnEndpointId=PROPERTIES['clientVpnEndpointId'],
         # The CIDR block that allows the traffic in and out of the public internet.
         DestinationCidrBlock='0.0.0.0/0',
-        TargetVpcSubnetId=SUBNET_ID,
+        TargetVpcSubnetId=PROPERTIES['subnetId'],
     )
     if response['Status']['Code'] != 'creating':
         raise Exception("Unexpected state detected after creating the route : {}".format(
@@ -101,7 +105,7 @@ def create_internet_routing_rule() -> None:
 
 def get_current_association_id():
     response = client_ec2.describe_client_vpn_target_networks(
-        ClientVpnEndpointId=CLIENT_VPN_ENDPOINT_ID
+        ClientVpnEndpointId=PROPERTIES['clientVpnEndpointId']
     )
     if len(response['ClientVpnTargetNetworks']) > 0:
         return response['ClientVpnTargetNetworks'][0]['AssociationId']
@@ -113,7 +117,7 @@ def get_current_association_id():
 def disassociate_target_network() -> None:
     associationId = get_current_association_id()
     response = client_ec2.response = client_ec2.disassociate_client_vpn_target_network(
-        ClientVpnEndpointId=CLIENT_VPN_ENDPOINT_ID,
+        ClientVpnEndpointId=PROPERTIES['clientVpnEndpointId'],
         AssociationId=associationId,
     )
     if response['Status']['Code'] != 'disassociating':
@@ -123,17 +127,31 @@ def disassociate_target_network() -> None:
 
 def turn_on() -> None:
     print(
-        f"Associating the target subnet({SUBNET_ID}) and creating the new route(0.0.0.0/0).")
+        f"Associating the target subnet({PROPERTIES['subnetId']}) and creating the new route(0.0.0.0/0).")
     print("... ... ...")
     associate_target_network()
     print("... ... ...")
     create_internet_routing_rule()
-    print("Done.")
+    print("Done.\n")
+
+    print("The target subnet is being associated...")
+    print("The program will check the association state every 10 seconds. The association generally takes 10 minutes to complete...")
+    print("The timeout is 20 minutes.")
+    for _i in range(100):
+        if get_association_state() != 'pending-associate':
+            print("The target subnet is now associated with the endpoint. You can now connect to the endpoint with your client software.\n")
+            break
+        else:
+            print('>',end='')
+        time.sleep(10)
+    else:
+        print("Timeout. Program exits.\n")
+
 
 
 def get_status() -> None:
     print("Getting the association state of the client vpn endpoint : \n{}".format(
-        CLIENT_VPN_ENDPOINT_ID))
+        PROPERTIES['clientVpnEndpointId']))
     print("... ... ...")
     print("Currently, and state of association is : \n{}".format(
         get_association_state()))
@@ -142,16 +160,48 @@ def get_status() -> None:
 
 def disassociate() -> None:
     print(
-        f"Disassociating the target subnet({SUBNET_ID})\nfrom the client vpn endpoint({CLIENT_VPN_ENDPOINT_ID}).")
+        f"Disassociating the target subnet({PROPERTIES['subnetId']})\nfrom the client vpn endpoint({PROPERTIES['clientVpnEndpointId']}).")
     print("... ... ...")
     disassociate_target_network()
     print("Done.")
 
 
+def get_configuration():
+    global PROPERTIES
+    if sys.argv.count('-f') is 0:
+        print("No filename specified, looking up the lastest one under the CWD...")
+        # no profile specified.
+        files = glob.glob(f"{os.getcwd()}/*.ovpnsetup")
+        if len(files) == 0:
+            print(
+                "No .ovpnsetup file found under the current working directory.", file=sys.stderr)
+            sys.exit(1)
+        configs = []
+        for f in files:
+            configs.append(load(open(f, 'r')))
+        configs.sort(key=lambda x: x['dateOfCreation'])
+        theLatestConfig = configs[-1]
+        PROPERTIES = theLatestConfig
+    else:
+        # profile specified via -f flag.
+        try:
+            fileName = sys.argv[sys.argv.index('-f')]
+        except IndexError:
+            print('No filename found.', file=sys.stderr)
+            traceback.print_exc()
+            sys.exit(1)
+        try:
+            PROPERTIES = load(open(fileName, 'r'))
+        except:
+            print("Failed to parse the profile specified.", file=sys.stderr)
+            traceback.print_exc()
+            sys.exit(1)
+    print("Profile obtained.\nDone.\n")
+
+
 def manage():
     # The function is executed when the user wants to manage an existing VPN service.
-    global CLIENT_VPN_ENDPOINT_ID
-    global SUBNET_ID
+    global PROPERTIES
     commandInput = sys.argv[1]
     if commandInput == "status":
         get_status()
@@ -159,6 +209,11 @@ def manage():
         disassociate()
     elif commandInput == "on":
         turn_on()
+    elif commandInput == "toggle":
+        if get_association_state() == "pending-associate":
+            turn_on()
+        else:
+            disassociate()
     elif commandInput == "help":
         print(HELP_SCRIPT)
     else:
@@ -169,14 +224,9 @@ def manage():
 # *** THE DEPLOYMENT CODE SECTION STARTS ***
 
 
-def get_user_settings():
+def get_properties():
     # The function gets the required deployment settings from the user.
-    global USER_SETTINGS
-    USER_SETTINGS = {
-        'friendlyName': '',
-        'isSplitTunneled': False,
-        'region': ''
-    }
+    global PROPERTIES
     print("Getting user settings...")
     friendlyName = input(
         "Please give your new VPN Service a friendly name:\n[Default: auto-generated random characters]> ")
@@ -187,21 +237,21 @@ def get_user_settings():
         print(friendlyName)
     else:
         print("Your current VPN friendly name is:\n{}".format(friendlyName))
-    USER_SETTINGS['friendlyName'] = friendlyName
+    PROPERTIES['friendlyName'] = friendlyName
 
     isSplitTunneled = input(
         "Do you want to enable split tunnel for your VPN?\n[Default: Nn] <Yy or Nn> ").capitalize()
     while True:
         if isSplitTunneled == 'Y':
-            USER_SETTINGS['isSplitTunneled'] = True
+            PROPERTIES['isSplitTunneled'] = True
             print("The VPN will be split-tunnel enabled.")
             break
         elif isSplitTunneled == 'N':
-            USER_SETTINGS['isSplitTunneled'] = False
+            PROPERTIES['isSplitTunneled'] = False
             print("The VPN will be split-tunnel disabled.")
             break
         elif isSplitTunneled == '':
-            USER_SETTINGS['isSplitTunneled'] = False
+            PROPERTIES['isSplitTunneled'] = False
             print("The VPN will be split-tunnel disabled as default.")
             break
         else:
@@ -250,17 +300,17 @@ def get_user_settings():
         try:
             regionNumberInteger = int(regionNumber)
             if regionNumberInteger <= 14 and regionNumberInteger >= 1:
-                USER_SETTINGS['region'] = regionsMapping[regionNumberInteger]
+                PROPERTIES['region'] = regionsMapping[regionNumberInteger]
             else:
                 raise Exception(
                     "Value ({}) not found. Please re-enter your region number.".format(regionNumber))
         except Exception as e:
             print(e)
         else:
-            print("Your choice is {}".format(USER_SETTINGS['region']))
+            print("Your choice is {}".format(PROPERTIES['region']))
             break
 
-    print("Please review your settings:\n {}".format(USER_SETTINGS))
+    print("Please review your settings:\n {}".format(PROPERTIES))
     if input("Please press ENTER to proceed, any other key to abort.\n> ").capitalize() != "":
         print("Abort.")
         sys.exit(1)
@@ -272,30 +322,31 @@ def generate_credentials():
     # After that, it uploads the credentials to ACM.
     global CLIENT_CERT
     global CLIENT_KEY
+    global PROPERTIES
     print("Generating credentials...")
     input("In the process, you will be prompted to enter the DN for your CA. You can just leave it blank and press enter.\nPlease type enter to confirm > ")
     commandsToRun = [
         'git clone https://github.com/openvpn/easy-rsa.git .easy-rsa-{}'.format(
-            USER_SETTINGS['friendlyName']),
+            PROPERTIES['friendlyName']),
         '.easy-rsa-{}/easyrsa3/easyrsa init-pki'.format(
-            USER_SETTINGS['friendlyName']),
+            PROPERTIES['friendlyName']),
         '.easy-rsa-{}/easyrsa3/easyrsa build-ca nopass'.format(
-            USER_SETTINGS['friendlyName']),
+            PROPERTIES['friendlyName']),
         '.easy-rsa-{}/easyrsa3/easyrsa build-server-full server-{} nopass'.format(
-            USER_SETTINGS['friendlyName'], USER_SETTINGS['friendlyName']),
+            PROPERTIES['friendlyName'], PROPERTIES['friendlyName']),
         '.easy-rsa-{}/easyrsa3/easyrsa build-client-full {}.domain.tld nopass'.format(
-            USER_SETTINGS['friendlyName'], USER_SETTINGS['friendlyName']),
-        'mkdir {}.ovpnsetup'.format(USER_SETTINGS['friendlyName']),
-        'cp pki/ca.crt ./{}.ovpnsetup'.format(USER_SETTINGS['friendlyName']),
+            PROPERTIES['friendlyName'], PROPERTIES['friendlyName']),
+        'mkdir {}.ovpnsetup'.format(PROPERTIES['friendlyName']),
+        'cp pki/ca.crt ./{}.ovpnsetup'.format(PROPERTIES['friendlyName']),
         'cp pki/issued/server-{}.crt ./{}.ovpnsetup'.format(
-            USER_SETTINGS['friendlyName'], USER_SETTINGS['friendlyName']),
+            PROPERTIES['friendlyName'], PROPERTIES['friendlyName']),
         'cp pki/private/server-{}.key ./{}.ovpnsetup'.format(
-            USER_SETTINGS['friendlyName'], USER_SETTINGS['friendlyName']),
+            PROPERTIES['friendlyName'], PROPERTIES['friendlyName']),
         'cp pki/issued/{}.domain.tld.crt ./{}.ovpnsetup'.format(
-            USER_SETTINGS['friendlyName'], USER_SETTINGS['friendlyName']),
+            PROPERTIES['friendlyName'], PROPERTIES['friendlyName']),
         'cp pki/private/{}.domain.tld.key ./{}.ovpnsetup'.format(
-            USER_SETTINGS['friendlyName'], USER_SETTINGS['friendlyName']),
-        'rm -rf .easy-rsa-{}'.format(USER_SETTINGS['friendlyName']),
+            PROPERTIES['friendlyName'], PROPERTIES['friendlyName']),
+        'rm -rf .easy-rsa-{}'.format(PROPERTIES['friendlyName']),
         'rm -rf pki'
     ]
     for command in commandsToRun:
@@ -306,45 +357,44 @@ def generate_credentials():
     # pre-load the certificates into the memory.
     print("Retrieving the certificates...")
     CA_CERT = open(
-        f"./{USER_SETTINGS['friendlyName']}.ovpnsetup/ca.crt", "r").read().encode('UTF-8')
+        f"./{PROPERTIES['friendlyName']}.ovpnsetup/ca.crt", "r").read().encode('UTF-8')
     SERVER_CERT = open(
-        f"./{USER_SETTINGS['friendlyName']}.ovpnsetup/server-{USER_SETTINGS['friendlyName']}.crt", "r").read().encode('UTF-8')
+        f"./{PROPERTIES['friendlyName']}.ovpnsetup/server-{PROPERTIES['friendlyName']}.crt", "r").read().encode('UTF-8')
     SERVER_KEY = open(
-        f"./{USER_SETTINGS['friendlyName']}.ovpnsetup/server-{USER_SETTINGS['friendlyName']}.key", "r").read().encode('UTF-8')
+        f"./{PROPERTIES['friendlyName']}.ovpnsetup/server-{PROPERTIES['friendlyName']}.key", "r").read().encode('UTF-8')
     CLIENT_CERT = open(
-        f"./{USER_SETTINGS['friendlyName']}.ovpnsetup/{USER_SETTINGS['friendlyName']}.domain.tld.crt", "r").read().encode('UTF-8')
+        f"./{PROPERTIES['friendlyName']}.ovpnsetup/{PROPERTIES['friendlyName']}.domain.tld.crt", "r").read().encode('UTF-8')
     CLIENT_KEY = open(
-        f"./{USER_SETTINGS['friendlyName']}.ovpnsetup/{USER_SETTINGS['friendlyName']}.domain.tld.key", "r").read().encode('UTF-8')
+        f"./{PROPERTIES['friendlyName']}.ovpnsetup/{PROPERTIES['friendlyName']}.domain.tld.key", "r").read().encode('UTF-8')
     print("Done.\n")
 
     # Delete the temporary configuration folder. (This process is unnecessary and complicated. It should be later simplified.)
-    subprocess.run(f"rm -rf {USER_SETTINGS['friendlyName']}-{}.ovpnsetup".split(' '), check=True)
+    subprocess.run(
+        f"rm -rf {PROPERTIES['friendlyName']}.ovpnsetup".split(' '), check=True)
 
     # Upload the certificates.
     # Import Server Certificate
     print("Uploading the certificates...")
-    global SERVER_CERTIFICATE_ARN
-    SERVER_CERTIFICATE_ARN = client_acm.import_certificate(
+    PROPERTIES['serverCertificateArn'] = client_acm.import_certificate(
         Certificate=SERVER_CERT,
         PrivateKey=SERVER_KEY,
         CertificateChain=CA_CERT,
         Tags=[
             {
                 "Key": "deploymentFriendlyName",
-                "Value": USER_SETTINGS['friendlyName']
+                "Value": PROPERTIES['friendlyName']
             }
         ]
     )['CertificateArn']
     # Import Client Certificate
-    global CLIENT_CERTIFICATE_ARN
-    CLIENT_CERTIFICATE_ARN = client_acm.import_certificate(
+    PROPERTIES['clientCertificateArn'] = client_acm.import_certificate(
         Certificate=CLIENT_CERT,
         PrivateKey=CLIENT_KEY,
         CertificateChain=CA_CERT,
         Tags=[
             {
                 "Key": "deploymentFriendlyName",
-                "Value": USER_SETTINGS['friendlyName']
+                "Value": PROPERTIES['friendlyName']
             }
         ]
     )['CertificateArn']
@@ -368,59 +418,57 @@ def download_cloudformation_template():
 
 
 def deploy_cloudformation_template():
+    global PROPERTIES
     print("Now we start to deploy the actual thing on AWS.")
     print("Deploying...")
     response = client_cf.create_stack(
-        StackName='ovpn-{}'.format(USER_SETTINGS['friendlyName']),
+        StackName='ovpn-{}'.format(PROPERTIES['friendlyName']),
         TemplateBody=TEMPLATE_CONTENT,
         Parameters=[
             {
                 'ParameterKey': 'ClientCertificateArn',
-                'ParameterValue': CLIENT_CERTIFICATE_ARN
+                'ParameterValue': PROPERTIES['clientCertificateArn']
             },
             {
                 'ParameterKey': 'ServerCertificateArn',
-                'ParameterValue': SERVER_CERTIFICATE_ARN
+                'ParameterValue': PROPERTIES['serverCertificateArn']
             },
             {
                 'ParameterKey': 'isSplitTunnelled',
-                'ParameterValue': str(USER_SETTINGS['isSplitTunneled']).lower()
+                'ParameterValue': str(PROPERTIES['isSplitTunneled']).lower()
             },
             {
                 'ParameterKey': 'FriendlyName',
-                'ParameterValue': USER_SETTINGS['friendlyName']
+                'ParameterValue': PROPERTIES['friendlyName']
             }
         ],
         TimeoutInMinutes=15,
         Tags=[
             {
                 "Key": "deploymentFriendlyName",
-                "Value": USER_SETTINGS['friendlyName']
+                "Value": PROPERTIES['friendlyName']
             }
         ]
     )
-    global CLOUDFORMATION_STACK_ID
-    global CLIENT_VPN_ENDPOINT_ID
-    global SUBNET_ID
-    CLOUDFORMATION_STACK_ID = response['StackId']
+    PROPERTIES['cloudformationStackId'] = response['StackId']
     print("Deployment initiated. The program will refresh every 3 seconds to check the progress of deployment. The timeout is 5 mimutes.")
     for i in range(100):
         time.sleep(3)
         response = client_cf.describe_stacks(
-            StackName='ovpn-{}'.format(USER_SETTINGS['friendlyName'])
+            StackName='ovpn-{}'.format(PROPERTIES['friendlyName'])
         )
         if response["Stacks"][0]['StackStatus'] == 'CREATE_COMPLETE':
             print("Stack is successfully created!")
             outputs = response["Stacks"][0]['Outputs']
-            outputs.sort(key=lambda x : x['OutputKey'])
-            CLIENT_VPN_ENDPOINT_ID = outputs[0]['OutputValue']
-            SUBNET_ID = outputs[1]['OutputValue']
+            outputs.sort(key=lambda x: x['OutputKey'])
+            PROPERTIES['clientVpnEndpointId'] = outputs[0]['OutputValue']
+            PROPERTIES['subnetId'] = outputs[1]['OutputValue']
             break
         elif response["Stacks"][0]['StackStatus'] == ('CREATE_FAILED' or 'ROLLBACK_IN_PROGRESS'):
             print("The stack deployment failed.")
             raise Exception("The stack deployment failed.")
         elif response["Stacks"][0]['StackStatus'] == 'CREATE_IN_PROGRESS':
-            pass
+            print('>',end='') # As a progress bar
         else:
             raise Exception("Unexpected stack status detected.")
     else:
@@ -430,7 +478,7 @@ def deploy_cloudformation_template():
 def download_connection_profile():
     print('Exporting the connection profile...')
     connConfig = client_ec2.export_client_vpn_client_configuration(
-        ClientVpnEndpointId=CLIENT_VPN_ENDPOINT_ID
+        ClientVpnEndpointId=PROPERTIES['clientVpnEndpointId']
     )
     print('Done.\n')
 
@@ -454,14 +502,15 @@ def download_connection_profile():
     ovpnConfig = '\n'.join(conn_fragments)
 
     ovpnFile = open(
-        f"{USER_SETTINGS['region']}-{USER_SETTINGS['friendlyName']}.ovpn", "w+")
+        f"{PROPERTIES['region']}-{PROPERTIES['friendlyName']}.ovpn", "w+")
     ovpnFile.write(ovpnConfig)
     ovpnFile.close()
     print('Done.\n')
-    print('Your .ovpn file is: ' + f"{USER_SETTINGS['region']}-{USER_SETTINGS['friendlyName']}.ovpn")
+    print('Your .ovpn file is: ' +
+          f"{PROPERTIES['region']}-{PROPERTIES['friendlyName']}.ovpn")
 
 
-# In the following function, we save the setup result as a file under the CWD for later use, 
+# In the following function, we save the setup result as a file under the CWD for later use,
 # that is, to identify the existing VPN endpoint that the user wants to manage.
 # Here is the list of attributes one profile has:
 # - Region
@@ -473,27 +522,28 @@ def download_connection_profile():
 def save_the_setup_results():
     print("Gathering Deployment attributes...")
     saveTime = int(time.time())
-    DATA_TO_STORE={
-        "AWS_REGION": USER_SETTINGS['region'],
-        "ENDPOINT_ID": CLIENT_VPN_ENDPOINT_ID,
-        "SUBNET_ID": SUBNET_ID,
-        "DATE_OF_CREATION": saveTime,
-        "FRIENDLY_NAME": USER_SETTINGS['friendlyName']
-    }
+    PROPERTIES['dateOfCreation'] = saveTime
     print('Done.\n')
-    print(DATA_TO_STORE)
-    print(f"Saving the file as \'{USER_SETTINGS['friendlyName']}-{saveTime}.ovpnsetup\' ...")
-    _f = open(f"{USER_SETTINGS['region']}-{USER_SETTINGS['friendlyName']}-{saveTime}.ovpnsetup",'w+')
-    _f.write(dumps(DATA_TO_STORE))
+    print(PROPERTIES)
+    print(
+        f"Saving the file as \'{PROPERTIES['friendlyName']}.ovpnsetup\' ...")
+    _f = open(
+        f"{PROPERTIES['region']}-{PROPERTIES['friendlyName']}.ovpnsetup", 'w+')
+    _f.write(dumps(PROPERTIES))
     _f.close()
     print('Done.\n')
-    
 
     # *** THE DEPLOYMENT CODE SECTION ENDS ***
 if __name__ == "__main__":
     if len(sys.argv) > 1:  # To see if the command is present.
         try:
-            # get_configuration()
+            get_configuration()
+            client_ec2 = boto3.client(
+                "ec2", region_name=PROPERTIES['region'])
+            client_acm = boto3.client(
+                "acm", region_name=PROPERTIES['region'])
+            client_cf = boto3.client(
+                "cloudformation", region_name=PROPERTIES['region'])
             manage()
         except Exception as e:
             print("Errors occured.", file=sys.stderr)
@@ -507,20 +557,20 @@ if __name__ == "__main__":
         # - the friendly name of this vpn service. (Default: timestampt/UUID)
         # - if the vpn service should be split-tunnelled. (Default: non-split-tunnel)
         # The user will be prompted to speficy these parameters. The job is done within the following function:
-        get_user_settings()
+        get_properties()
         try:
             client_ec2 = boto3.client(
-                "ec2", region_name=USER_SETTINGS['region'])
+                "ec2", region_name=PROPERTIES['region'])
             client_acm = boto3.client(
-                "acm", region_name=USER_SETTINGS['region'])
+                "acm", region_name=PROPERTIES['region'])
             client_cf = boto3.client(
-                "cloudformation", region_name=USER_SETTINGS['region'])
+                "cloudformation", region_name=PROPERTIES['region'])
             generate_credentials()
             download_cloudformation_template(),
             # save the aws-generated private keys at the same time.
             deploy_cloudformation_template()
             download_connection_profile()
-            # # Insert the generated credential into the .ovpn file.
+            # Insert the generated credential into the .ovpn file.
             save_the_setup_results()
         except Exception as e:
             print(
