@@ -6,13 +6,13 @@ This is a python script that automatically deploys a ready-to-go OVPN endpoint i
 
 ## Requirements
 
-Though it is a python script, there are bash commands called within the program, so it requires a Unix-like bash environment. Unfortunately, this script is not likely to be run natively in a Windows environment, since [rasy-rsa](https://github.com/openvpn/easy-rsa) can only be run in a unix-like environment. However, I think it can be run within [WSL(Windows Subsystem for Linux)](https://docs.microsoft.com/en-us/windows/wsl).
+Though it is a python script, there are bash commands called within the program, so it requires a Unix-like bash environment. Unfortunately, this script is not likely to be run natively in a Windows environment, since [rasy-rsa](https://github.com/openvpn/easy-rsa) can only be run in a unix-like environment. However, I think it can be run within [WSL(Windows Subsystem for Linux)](https://docs.microsoft.com/en-us/windows/wsl). The following are the prerequisites to be installed on the system:
 
 - git
 - python3
 - pip
 - aws cli
-- boto3
+- boto3 (python library)
 
 Also please note that you need to have your aws account set up with the aws cli before you can run this program. To do so, run the following command:
 ```shell
