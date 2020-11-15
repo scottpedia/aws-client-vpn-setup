@@ -6,7 +6,7 @@ This is a python script that automatically deploys a ready-to-go OVPN endpoint i
 
 ## Requirements
 
-Though it is a python script, there are bash commands called within the program, so it requires a Linux OS environment, with the following prerequisites installed:
+Though it is a python script, there are bash commands called within the program, so it requires a Unix-like bash environment. Unfortunately, this script is not likely to be run natively in a Windows environment, since [rasy-rsa](https://github.com/openvpn/easy-rsa) can only be run in a unix-like environment. However, I think it can be run within [WSL(Windows Subsystem for Linux)](https://docs.microsoft.com/en-us/windows/wsl).
 
 - git
 - python3
