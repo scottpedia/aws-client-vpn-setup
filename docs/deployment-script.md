@@ -42,7 +42,7 @@ $ aws configure
 
 ## To Manage an Existing OVPN Endpoint.
 
-```shell
+```
 Usage: ./client-vpn-manager [command] -f [the_config_file]
 The python script to deploy and manage the vpn service based on AWS Client VPN Endpoints.
 
