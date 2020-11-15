@@ -138,11 +138,10 @@ def turn_on() -> None:
     print("The program will check the association state every 10 seconds. The association generally takes 10 minutes to complete...")
     print("The timeout is 20 minutes.")
     for _i in range(100):
+        print('>',end='')
         if get_association_state() != 'pending-associate':
-            print("The target subnet is now associated with the endpoint. You can now connect to the endpoint with your client software.\n")
+            print("\nThe target subnet is now associated with the endpoint. You can now connect to the endpoint with your client software.\n")
             break
-        else:
-            print('>',end='')
         time.sleep(10)
     else:
         print("Timeout. Program exits.\n")
