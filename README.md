@@ -5,7 +5,9 @@
 <a href="https://trackgit.com"><img src="https://sfy.cx/u/xqO" alt="trackgit-views" /></a>
 <a href="#to-create-the-vpn-endpoint-with-aws-cloudformation"><img src="https://img.shields.io/badge/deploy%20to-AWS-orange" /></a>
 
-In this article, I am going to teach you how to create your own private OpenVPN service with AWS Client VPN Endpoint. And how to connect to the endpoint with *TunnelBlick* on macOS.
+This repo introduces you a new way to build your own OpenVPN server on AWS, which is more powerful and cost-efficient than traditional VM-based solution. It also offers a auto-setup script to help you deploy the cloud resources and manage the VPN server. Go [**here**](docs/development-script.md) to know more about the auto-setup script.
+
+If you want to know exactly how this works, please go ahead and expand the block below and read through the instruction manual.
 
 # Overview
 
@@ -13,7 +15,10 @@ Traditionally, people build their own VPN servers with VMs on the cloud.(e.g. AW
 
 This project, however, utilizes AWS Client VPN Endpoint, a service already integrated into AWS VPC. There are many advantages of that. First, we are billed for the outbound data usage the same way as the VM-based VPN Services while we enjoy almost unlimited bandwidth of AWS networking infrastructures. Also, the service has better reliability as it is managed by AWS. We are only billed for the connection time, not the active VM uptime as in the traditional method.
 
-Table of Contents
+<details>
+<summary>
+
+^^^Table of Contents(Click the triangle above to expand the block)
 =================
 
 <a href="https://openvpn.net/"><img src="img/openvpn-icon.png" width="20%" align="right"></a>
@@ -32,7 +37,6 @@ Table of Contents
       * [Step 4 : Create the server and client certificates for AWS Certificate Manager](#step-4--create-the-server-and-client-certificates-for-aws-certificate-manager)
       * [Step 5 : Create the Client VPN Endpoint](#step-5--create-the-client-vpn-endpoint)
          * [To Create the VPN endpoint manually.](#to-create-the-vpn-endpoint-manually)
-         * [To create the VPN endpoint with AWS Cloudformation.](#to-create-the-vpn-endpoint-with-aws-cloudformation)
       * [How to manage the Client VPN Endpoint](#how-to-manage-the-client-vpn-endpoint)
          * [<strong>To turn ON the VPN server</strong>](#to-turn-on-the-vpn-server)
          * [<strong>To turn OFF the VPN server</strong>](#to-turn-off-the-vpn-server)
@@ -48,6 +52,8 @@ Table of Contents
 <!-- Added by: black, at: Wed Nov 11 14:25:05 EST 2020 -->
 
 <!--te-->
+
+</summary>
 
 <a href="https://aws.amazon.com/vpn/"><img src="img/client-vpn.png" width="40" align="right"></a>
 
@@ -245,10 +251,6 @@ We now have the certificates ready for our Client VPN Endpoints.
 
 ## Step 5 : Create the Client VPN Endpoint
 
-> **Note:** You can now complete this step with a few clicks with AWS Cloudformation. Simply click on the icon below to initiate the launching sequence. Follow the prompts after opening the new window.   
-[![launch-stack icon](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?templateURL=https://vpn-tutorial-template.s3.ca-central-1.amazonaws.com/cloudformation-template)<br>
-For the instructions to create VPN endpoint with AWS Cloudformation, skip to [this section of the tutorial](#to-create-the-vpn-endpoint-with-aws-cloudformation).
-
 ### To Create the VPN endpoint manually.
 
 Scroll down the page to find **"VPC"** under the category of **"Networking & Content Delivery"** and open the link. 
@@ -326,74 +328,6 @@ You should be on this page following the last action.
 18. Click **"Add authorization rule"** to add the rule.
 
 Now you have created a Client VPN Endpoint that is ready to go in your desirable AWS region.
-
-### To create the VPN endpoint with AWS Cloudformation.
-
-I have created a Cloudformation template with which you can set up the VPN endpoint on the cloud with a few clicks. It's like a deployment package where cloud resources and parameters are defined. The template itself is in  `json` format as a file, which you can find as `cloudformation-template` at the [github repository](https://github.com/Scottpedia/aws-client-vpn-setup) hosting this article. You can click this icon below to start the launching sequence.   
-
-[![launch-stack icon](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home#/stacks/new?templateURL=https://vpn-tutorial-template.s3.ca-central-1.amazonaws.com/cloudformation-template)
-
-And I am also here to go through the process of creating the endpoint with AWS Cloudformation. 
-
-- Click on the **"Launch Stack"** icon above.
-
-- After opening the link above, you should be directed to AWS login page if you are not already logged in. Log in as usual with your AWS account or an IAM account given by your administrator.
-
-    ![Cloudformation login](img/cloudformation-login.png)
-
-- You should then see this page to begin creating the stack with. Click **"Next"** to proceed.
-
-    ![Cloudformation Create Stack](img/cloudformation-create-stack.png)
-
-- The next page asks you the detailed parameters of resources in the stack that you are going to create. Follow the instructions below to specify the parameters.
-
-    ![Cloudformation Specify Parameters](img/cloudformation-specify-parameters.png)
-
-    1. Come up with a name for the stack about to be created and enter it to the first field.
-
-    2. Go to [ACM](https://console.aws.amazon.com/acm/home) to find the ARNs of the certificates imported. Follow the instructions in the image below, and do the same with your server certificate.
-
-        ![Cloudformation Find the ARNs](img/cloudformation-find-arns.png)
-
-    3. Copy the ARNs of both server and client certificate and paste them into the text fields respectively. 
-
-        ![Cloudformation ARNs](img/cloudformation-arns.png)
-
-    4. **For "EndpointTransportProtocol"**, in most cases, we use **UDP** as the default protocol to communicate with the VPN endpoint while some users may have special needs. Leave the default value if you do not know what it is.
-
-    5. **For "isSplitTunnelled"**, choose **"true"** if you want to communicate with interfaces in your LAN(Local Area Network) while connected to the VPN. For more information, see [Split Tunnel](https://en.wikipedia.org/wiki/Split_tunneling) on `wikipedia.org`.
-
-    6. After filling in all the parameters, click **"Next"** to proceed.
-
-- You should be on this page to configure the stack options.
-
-    You do not need to do anything on this page if you do not have any special needs. If so, click **"Next"** at the bottom to proceed.
-
-    ![Page to configure stack options](img/cloudformation-stack-options.png)
-
-- Review the settings of the stack and then click **"Create Stack"** to initiate the launching sequence.
-
-    ![Cloudformation review](img/cloudformation-review.png)
-
-- The stack is now being created.
-
-    ![Cloudformation creation](img/cloudformation-creation-events.png)
-
-    ![Cloudformation creation](img/cloudformation-creation-overview.png)
-
-    Wait until you see a green caption **"CREATE_COMPLETE"** appears at your stack on the item bar on the left. That means that the stack has been successfully created.
-
-    ![Cloudformation creation](img/cloudformation-creation-completion.png)
-
-- Navigate to the Client VPN Endpoint Control Panel, and you now should see a newly-created Client VPN Endpoint.
-
-    ![Cloudformation endpoint](img/cloudformation-endpoint.png)
-
-    > **Note:** The Cloudformation template provided here creates an independent VPC and all other necessary resources in it. That is an effort to prevent conflicts between the endpoint and the other resources inside an existing VPC or Subnet if an endpoint is created there. The attached here is a diagram from Cloudformation template designer. Click on the image to view this template in Cloudformation designer. **You are very welcome to help improve the template.**<br>
-    > <details><summary>Expand this section to see the diagram.</summary>
-    >
-    >[![designer](img/cloudformation-template-designer.png)](https://us-west-2.console.aws.amazon.com/cloudformation/designer/home?region=us-west-2&templateURL=https://vpn-tutorial-template.s3.ca-central-1.amazonaws.com/cloudformation-template)
-    ></details>
 
 ## How to manage the Client VPN Endpoint
 
@@ -656,3 +590,5 @@ I will try to write a script to simplify the process to set up a VPN like this, 
 * [AWS Client VPN features](https://aws.amazon.com/vpn/features/#AWS_Client_VPN_features)
 * [AWS VPN pricing](https://aws.amazon.com/vpn/pricing/)
 * [Tunnelblick Documentation](https://tunnelblick.net/documents.html)
+
+</details>
