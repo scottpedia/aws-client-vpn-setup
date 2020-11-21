@@ -1,5 +1,7 @@
 # Create Your Private OpenVPN Service with AWS Client VPN Endpoint
 
+> **Any help to improve this project is welcomed!**
+
 <a href="https://trackgit.com"><img src="https://sfy.cx/u/xqO" alt="trackgit-views" /></a>
 
 An auto-deployment script to deploy and manage your own OpenVPN server with AWS Client VPN Endpoint.
