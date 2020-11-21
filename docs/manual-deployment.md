@@ -9,8 +9,7 @@ Table of Contents
 
 
 <!--ts-->
-   * [Create Your Private OpenVPN Service with AWS Client VPN Endpoint](#create-your-private-openvpn-service-with-aws-client-vpn-endpoint)
-   * [Overview](#overview)
+   * [How to manually deploy the OpenVPN server with AWS Client VPN Endpoint](#how-to-manually-deploy-the-openvpn-server-with-aws-client-vpn-endpoint)
    * [Table of Contents](#table-of-contents)
       * [What are AWS and AWS Client VPN Endpoint?](#what-are-aws-and-aws-client-vpn-endpoint)
       * [Step 1 : Create an AWS Account](#step-1--create-an-aws-account)
@@ -20,8 +19,6 @@ Table of Contents
          * [<strong>How to select the region for your VPN Service?</strong>](#how-to-select-the-region-for-your-vpn-service)
       * [Step 4 : Create the server and client certificates for AWS Certificate Manager](#step-4--create-the-server-and-client-certificates-for-aws-certificate-manager)
       * [Step 5 : Create the Client VPN Endpoint](#step-5--create-the-client-vpn-endpoint)
-         * [To Create the VPN endpoint manually.](#to-create-the-vpn-endpoint-manually)
-         * [To create the VPN endpoint with AWS Cloudformation.](#to-create-the-vpn-endpoint-with-aws-cloudformation)
       * [How to manage the Client VPN Endpoint](#how-to-manage-the-client-vpn-endpoint)
          * [<strong>To turn ON the VPN server</strong>](#to-turn-on-the-vpn-server)
          * [<strong>To turn OFF the VPN server</strong>](#to-turn-off-the-vpn-server)
@@ -34,7 +31,7 @@ Table of Contents
       * [Conclusion](#conclusion)
       * [References](#references)
 
-<!-- Added by: black, at: Wed Nov 11 14:25:05 EST 2020 -->
+<!-- Added by: black, at: Sat Nov 21 15:53:46 EST 2020 -->
 
 <!--te-->
 
