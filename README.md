@@ -7,7 +7,7 @@ An auto-deployment script to deploy and manage your own OpenVPN server with AWS 
 **To quickly deploy an OpenVPN server:**
 
 ```bash
-$ git clone https://github.com/scottpedia/aws-client-vpn-setup.git && cd aws-client-vpn-setup.git && python3 client-vpn-aio.py
+$ git clone https://github.com/scottpedia/aws-client-vpn-setup.git && cd aws-client-vpn-setup && python3 client-vpn-aio.py
 ```
 
 - **For more information about the script, please go to [this page](docs/deployment-script.md).**
