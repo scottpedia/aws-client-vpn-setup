@@ -200,9 +200,11 @@ def terminate_endpoint() -> None:
     print('Done.\n')
 
     print("Deleting ovpn profiles...")
-    subprocess.run(f"rm -rf {PROPERTIES['region']}-{PROPERTIES['friendlyName']}.ovpn {PROPERTIES['region']}-{PROPERTIES['friendlyName']}.ovpnsetup".split(' '), check=True)
+    subprocess.run(
+        f"rm -rf {PROPERTIES['region']}-{PROPERTIES['friendlyName']}.ovpn {PROPERTIES['region']}-{PROPERTIES['friendlyName']}.ovpnsetup".split(' '), check=True)
     print("Done.\n")
     print(f"Successfully terminated {PROPERTIES['friendlyName']}.")
+
 
 def get_configuration():
     global PROPERTIES
@@ -572,6 +574,7 @@ def save_the_setup_results():
     _f.write(dumps(PROPERTIES))
     _f.close()
     print('Done.\n')
+
 
     # *** THE DEPLOYMENT CODE SECTION ENDS ***
 if __name__ == "__main__":
