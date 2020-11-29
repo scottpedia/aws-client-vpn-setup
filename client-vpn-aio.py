@@ -28,6 +28,23 @@ PROPERTIES = {
     'dateOfCreation': ''
 }
 
+REGION_NAME_MAPPING = {
+    "us-east-1": 'virginia-us',
+    "us-east-2": 'ohio-us',
+    "us-west-1": 'california-us',
+    "us-west-2": 'oregon-us',
+    "ap-south-1": 'mumbai-in',
+    "ap-northeast-2": 'seoul-kr',
+    "ap-southeast-1": 'singapore-sg',
+    "ap-southeast-2": 'sydney-au',
+    "ap-northeast-1": 'tokyo-jp',
+    "ca-central-1": 'montreal-ca',
+    "eu-central-1": 'frankfurt-de',
+    "eu-west-1": 'dublin-ie',
+    "eu-west-2": 'london-uk',
+    "eu-north-1": 'stockholm-no'
+}
+
 TEMPLATE_CONTENT = ''
 CLIENT_CERT = ''
 CLIENT_KEY = ''
@@ -201,7 +218,7 @@ def terminate_endpoint() -> None:
 
     print("Deleting ovpn profiles...")
     subprocess.run(
-        f"rm -rf {PROPERTIES['region']}-{PROPERTIES['friendlyName']}.ovpn {PROPERTIES['region']}-{PROPERTIES['friendlyName']}.ovpnsetup".split(' '), check=True)
+        f"rm -rf {REGION_NAME_MAPPING[PROPERTIES['region']]}-{PROPERTIES['friendlyName']}.ovpn {REGION_NAME_MAPPING[PROPERTIES['region']]}-{PROPERTIES['friendlyName']}.ovpnsetup".split(' '), check=True)
     print("Done.\n")
     print(f"Successfully terminated {PROPERTIES['friendlyName']}.")
 
@@ -544,12 +561,12 @@ def download_connection_profile():
     ovpnConfig = '\n'.join(conn_fragments)
 
     ovpnFile = open(
-        f"{PROPERTIES['region']}-{PROPERTIES['friendlyName']}.ovpn", "w+")
+        f"{REGION_NAME_MAPPING[PROPERTIES['region']]}-{PROPERTIES['friendlyName']}.ovpn", "w+")
     ovpnFile.write(ovpnConfig)
     ovpnFile.close()
     print('Done.\n')
     print('Your .ovpn file is: ' +
-          f"{PROPERTIES['region']}-{PROPERTIES['friendlyName']}.ovpn")
+          f"{REGION_NAME_MAPPING[PROPERTIES['region']]}-{PROPERTIES['friendlyName']}.ovpn")
 
 
 # In the following function, we save the setup result as a file under the CWD for later use,
@@ -568,13 +585,12 @@ def save_the_setup_results():
     print('Done.\n')
     print(PROPERTIES)
     print(
-        f"Saving the file as \'{PROPERTIES['friendlyName']}.ovpnsetup\' ...")
+        f"Saving the file as \'{REGION_NAME_MAPPING[PROPERTIES['region']]}-{PROPERTIES['friendlyName']}.ovpnsetup\' ...")
     _f = open(
-        f"{PROPERTIES['region']}-{PROPERTIES['friendlyName']}.ovpnsetup", 'w+')
+        f"{REGION_NAME_MAPPING[PROPERTIES['region']]}-{PROPERTIES['friendlyName']}.ovpnsetup", 'w+')
     _f.write(dumps(PROPERTIES))
     _f.close()
     print('Done.\n')
-
 
     # *** THE DEPLOYMENT CODE SECTION ENDS ***
 if __name__ == "__main__":
