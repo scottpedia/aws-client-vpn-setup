@@ -25,7 +25,8 @@ PROPERTIES = {
     'serverCertificateArn': '',
     'clientCertificateArn': '',
     'subnetId': '',
-    'dateOfCreation': ''
+    'dateOfCreation': '',
+    'autoEnableAfterDeployment': False
 }
 
 REGION_NAME_MAPPING = {
@@ -225,6 +226,8 @@ def terminate_endpoint() -> None:
 
 def get_configuration():
     global PROPERTIES
+    if sys.argv.count('-a') is not 0:
+        PROPERTIES['autoEnableAfterDeployment'] = True
     if sys.argv.count('-f') is 0:
         print("No filename specified, looking up the lastest one under the CWD...")
         # no profile specified.
@@ -631,6 +634,9 @@ if __name__ == "__main__":
             download_connection_profile()
             # Insert the generated credential into the .ovpn file.
             save_the_setup_results()
+            # If the user chose to enable the VPN endpoint right after the deployment.
+            if PROPERTIES['autoEnableAfterDeployment'] == True:
+                turn_on()
         except Exception as e:
             print(
                 "Errors occured during the deployment process.\n Program Exits.", file=sys.stderr)
