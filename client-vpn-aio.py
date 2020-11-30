@@ -369,7 +369,7 @@ def get_properties():
             print("Your choice is {}".format(PROPERTIES['region']))
             break
 
-    print("Please review your settings:\n {}".format(PROPERTIES))
+    print("Please review your settings:\n {}".format(dumps(PROPERTIES, indent=1)))
     if input("Please press ENTER to proceed, any other key to abort.\n> ").capitalize() != "":
         print("Abort.")
         sys.exit(1)
@@ -583,7 +583,7 @@ def save_the_setup_results():
     saveTime = int(time.time())
     PROPERTIES['dateOfCreation'] = saveTime
     print('Done.\n')
-    print(PROPERTIES)
+    print(dumps(PROPERTIES, indent=1))
     print(
         f"Saving the file as \'{REGION_NAME_MAPPING[PROPERTIES['region']]}-{PROPERTIES['friendlyName']}.ovpnsetup\' ...")
     _f = open(
