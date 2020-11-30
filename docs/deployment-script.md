@@ -22,7 +22,7 @@ $ aws configure
 
 ## To Setup a New OVPN Endpoint.
 
-- Clone the repo and run the python script with **_no arguments_**.
+- Clone the repo and run the python script with **_no arguments_**. However, you can append flag `-a` to the command if you want to be able to connect to the endpoint immediately after deployment.(it may take longer this way)
 
   ```shell
   $ cd /THE_DIR_YOU_WANT_TO_USE
