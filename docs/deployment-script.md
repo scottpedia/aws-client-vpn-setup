@@ -1,4 +1,4 @@
-# [client-vpn-aio.py](../client-vpn-aio.py)
+# [client-vpn-aio](../client-vpn-aio)
 
 > ## Note: The current setup script is working but still experimental. There are many potential errors and vulnerabilities. Any help to test the script is highly welcomed! If you have used the script to deploy an endpoint, any feedback will be appreciated!
 
@@ -27,7 +27,7 @@ $ aws configure
     $ cd /THE_DIR_YOU_WANT_TO_USE
     $ git clone https://github.com/scottpedia/aws-client-vpn-setup.git
     $ cd aws-client-vpn-setup
-    $ python3 client-vpn-aio.py # no arguments
+    $ ./client-vpn-aio # no arguments
     ```
 
 - You will be then prompted to enter some info about the endpoint. You can leave some of them blank and the default values will be used.
@@ -38,7 +38,7 @@ $ aws configure
 
     - `xxxxx.ovpnsetup` is the file containing the properties of the deployed ovpn endpoint. This will be used to manage the OVPN endpoint it specifies.
 
-- The endpoint is by default turned off right after the script is run. To activate the endpoint, use the management feature of the script. Run `./client-vpn-aio.py on` to turn on the vpn endpoint. See this [section](#To-manage-an-existing-OVPN-endpoint) for more into about the management feature.
+- The endpoint is by default turned off right after the script is run. To activate the endpoint, use the management feature of the script. Run `./client-vpn-aio on` to turn on the vpn endpoint. See this [section](#To-manage-an-existing-OVPN-endpoint) for more into about the management feature.
 
 - After the endpoint is turned on, you can connect to the endpoint with your client software. See this [section](../README.md#how-to-set-up-the-client-for-the-vpn-server) from the main article for how to setup the client software on macOS.
 
