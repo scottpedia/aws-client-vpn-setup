@@ -50,7 +50,7 @@ TEMPLATE_CONTENT = ''
 CLIENT_CERT = ''
 CLIENT_KEY = ''
 HELP_SCRIPT = '''
-Usage: ./client-vpn-manager [command] -f [the_config_file]
+Usage: ./client-vpn-aio [command] -f [the_config_file]
 The python script to deploy and manage the vpn service based on AWS Client VPN Endpoints.
 
 NOTE: PLEASE HAVE YOUR AWS CLI SETUP WITH YOUR AWS ACCOUNT BEFORE YOU RUN THIS SCRIPT.
