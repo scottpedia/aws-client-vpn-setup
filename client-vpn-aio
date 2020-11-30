@@ -56,7 +56,11 @@ The python script to deploy and manage the vpn service based on AWS Client VPN E
 NOTE: PLEASE HAVE YOUR AWS CLI SETUP WITH YOUR AWS ACCOUNT BEFORE YOU RUN THIS SCRIPT.
       THE SCRIPT WILL NOT RUN WITHOUT AN AWS ACCOUNT SETUP WITH THE CLI.
 
-***TO DEPLOY A NEW VPN SERVICE, please run the script without any command or option.***
+***TO DEPLOY A NEW VPN SERVICE, please run the script without any command.***
+
+    -a
+    Add this flag to indicate that you want the endpoint to be enabled right after a successful deployment. 
+    By default, the endpoint is off upon a successful deployment.
 
 ***TO MANAGE AN EXISTING ENDPOINT, please use the following commands:***
     status    :   Output the current status of the specified VPN Endpoint.
