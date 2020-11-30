@@ -12,7 +12,9 @@ cd aws-client-vpn-setup && \
 ./client-vpn-aio -a
 ```
 
-- **For more information about the script, please go to [this page](docs/deployment-script.md).**
+Then wait for the script to complete. If it is successful, you can now connect to the endpoint with your client software. **Do not forget to turn the endpoint off after using it! Otherwise you will receive a huge bill over time.**
+
+- **For more information about the script(including how to turn off the endpoint with it), please go to [this page](docs/deployment-script.md).**
 
 - **For detailed instructions on how to create the OpenVPN Server manually, please refer to [this page](/docs/manual-deployment.md).**
 
