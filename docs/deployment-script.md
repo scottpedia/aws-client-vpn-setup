@@ -22,7 +22,7 @@ $ aws configure
 
 ## To Setup a New OVPN Endpoint.
 
-- Clone the repo and run the python script with **_no arguments_**. However, you can append flag `-a` to the command if you want to be able to connect to the endpoint immediately after deployment.(it may take longer this way)
+- Clone the repo and run the python script with **_no arguments_**. 
 
   ```shell
   $ cd /THE_DIR_YOU_WANT_TO_USE
@@ -52,11 +52,7 @@ The python script to deploy and manage the vpn service based on AWS Client VPN E
 NOTE: PLEASE HAVE YOUR AWS CLI SETUP WITH YOUR AWS ACCOUNT BEFORE YOU RUN THIS SCRIPT.
       THE SCRIPT WILL NOT RUN WITHOUT AN AWS ACCOUNT SETUP WITH THE CLI.
 
-***TO DEPLOY A NEW VPN SERVICE, please run the script without any command.***
-
-    -a
-    Add this flag to indicate that you want the endpoint to be enabled right after a successful deployment.
-    By default, the endpoint is off upon a successful deployment.
+***TO DEPLOY A NEW VPN SERVICE, please run the script without any option.***
 
 ***TO MANAGE AN EXISTING ENDPOINT, please use the following commands:***
     status    :   Output the current status of the specified VPN Endpoint.
