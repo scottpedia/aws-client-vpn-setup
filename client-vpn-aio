@@ -26,7 +26,6 @@ PROPERTIES = {
     'clientCertificateArn': '',
     'subnetId': '',
     'dateOfCreation': '',
-    'autoEnableAfterDeployment': False
 }
 
 REGION_NAME_MAPPING = {
@@ -230,8 +229,6 @@ def terminate_endpoint() -> None:
 
 def get_configuration():
     global PROPERTIES
-    if sys.argv.count('-a') is not 0:
-        PROPERTIES['autoEnableAfterDeployment'] = True
     if sys.argv.count('-f') is 0:
         print("No filename specified, looking up the lastest one under the CWD...")
         # no profile specified.
@@ -599,7 +596,20 @@ def save_the_setup_results():
     _f.close()
     print('Done.\n')
 
-    # *** THE DEPLOYMENT CODE SECTION ENDS ***
+# *** THE DEPLOYMENT CODE SECTION ENDS ***
+
+def check_commands():
+    try:
+        print("Searching for git in PATH...")
+        subprocess.run(['which','git'],check=True,stdout=sys.stdout)
+    except:
+        print("git installation not detected on your computer, please install git and try again.", file=sys.stderr)
+        traceback.print_exc()
+        sys.exit(1)
+    else:
+        print('git command found in PATH.')
+        print('Done.\n')
+
 if __name__ == "__main__":
     if len(sys.argv) > 1:  # To see if the command is present.
         try:
@@ -616,6 +626,7 @@ if __name__ == "__main__":
             traceback.print_exc()
     else:  # manage the vpn when there is no commands or options.
         print("No commands or options detected in the command line. Let's setup a brand-new VPN service!")
+        check_commands()
         input("Please note that this program will create several temporary & non-temporary files and directories under the current working direcory. \
             Be sure that you have the proper permission to write to the CWD and it is okay for such purposes!\nPlease press any key to proceed. > ")
         # Before we initiate the deployment sequence, we need to know the following parameters:
@@ -639,8 +650,6 @@ if __name__ == "__main__":
             # Insert the generated credential into the .ovpn file.
             save_the_setup_results()
             # If the user chose to enable the VPN endpoint right after the deployment.
-            if PROPERTIES['autoEnableAfterDeployment'] == True:
-                turn_on()
         except Exception as e:
             print(
                 "Errors occured during the deployment process.\n Program Exits.", file=sys.stderr)
