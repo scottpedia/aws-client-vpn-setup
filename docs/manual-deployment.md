@@ -74,33 +74,6 @@ You should be on this page after signing in. This is the main page of the AWS Ma
 
 Please notice that most of the AWS services are regional-independent. That means that two services of the same particular kind in two different regions are completely isolated. The same applies to the Client VPN Endpoints. So we need to decide which region you want you deploy your service to. 
 
-> Note that not all AWS regions provide Client VPN Endpoints.
-
-### The AWS Regions where Client VPN Endpoints are Available
-
-<details>
-<summary>Click to expand the list.</summary>
-
-- US East (N. Virginia)
-- US East (Ohio)
-- US West (N. California)
-- US West (Oregon)
-- Asia Pacific (Hong Kong)
-- Asia Pacific (Mumbai)
-- Asia Pacific (Seoul)
-- Aisa Pacific (Singapore)
-- Aisa Pacific (Sydney)
-- Asia Pacific (Tokyo)
-- Canada (Central)
-- Europe (Frankfurt)
-- Europe (Ireland)
-- Europe (Milan)
-- Europe (Paris)
-- Europe (London)
-- Europe (Stockholm)
-- Middle East (Bahrain)
-</details>
-
 And you can select the region from the list bar at the top right corner. Please do this **BEFORE** creating the endpoint.
 
 ![Select the region you prefer](../img/region-selection.png)
