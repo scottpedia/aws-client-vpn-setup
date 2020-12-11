@@ -33,6 +33,7 @@ REGION_NAME_MAPPING = {
     "us-east-2": 'ohio-us',
     "us-west-1": 'california-us',
     "us-west-2": 'oregon-us',
+    "ap-east-1": 'hongkong-hk',
     "ap-south-1": 'mumbai-in',
     "ap-northeast-2": 'seoul-kr',
     "ap-southeast-1": 'singapore-sg',
@@ -41,9 +42,11 @@ REGION_NAME_MAPPING = {
     "ca-central-1": 'montreal-ca',
     "eu-central-1": 'frankfurt-de',
     "eu-west-1": 'dublin-ie',
+    "eu-south-1": 'milan-it',
+    "eu-west-3": 'paris-fr',
     "eu-west-2": 'london-uk',
     "eu-north-1": 'stockholm-no',
-    "ap-east-1": 'hongkong-hk'
+    "me-south-1": 'bahrain-bh'
 }
 
 TEMPLATE_CONTENT = ''
@@ -329,17 +332,20 @@ def get_properties():
     2. US East (Ohio)
     3. US West (N. California)
     4. US West (Oregon)
-    5. Asia Pacific (Mumbai)
-    6. Asia Pacific (Seoul)
-    7. Aisa Pacific (Singapore)
-    8. Aisa Pacific (Sydney)
-    9. Asia Pacific (Tokyo)
-    10. Canada (Central)
-    11. Europe (Frankfurt)
-    12. Europe (Ireland)
-    13. Europe (London)
-    14. Europe (Stockholm)
-    15. Asia Pacific (Hong Kong)
+    5. Asia Pacific (Hong Kong)
+    6. Asia Pacific (Mumbai)
+    7. Asia Pacific (Seoul)
+    8. Aisa Pacific (Singapore)
+    9. Aisa Pacific (Sydney)
+    10. Asia Pacific (Tokyo)
+    11. Canada (Central)
+    12. Europe (Frankfurt)
+    13. Europe (Ireland)
+    14. Europe (Milan)
+    15. Europe (Paris)
+    16. Europe (London)
+    17. Europe (Stockholm)
+    18. Middle East (Bahrain)
     '''
     regionsMapping = [
         "",
@@ -347,6 +353,7 @@ def get_properties():
         "us-east-2",
         "us-west-1",
         "us-west-2",
+        "ap-east-1",
         "ap-south-1",
         "ap-northeast-2",
         "ap-southeast-1",
@@ -355,9 +362,11 @@ def get_properties():
         "ca-central-1",
         "eu-central-1",
         "eu-west-1",
+        "eu-south-1",
+        "eu-west-3",
         "eu-west-2",
         "eu-north-1",
-        "ap-east-1"
+        "me-south-1"
     ]
     print(availableRegions)
     while True:
@@ -471,7 +480,7 @@ def generate_credentials():
 def download_cloudformation_template():
     cfTemplate = Path('cloudformation-template')
     global TEMPLATE_CONTENT
-    for count in range(3):
+    for _ in range(3):
         if cfTemplate.exists():
             TEMPLATE_CONTENT = cfTemplate.open('r').read()
             break
@@ -601,10 +610,11 @@ def save_the_setup_results():
 
 # *** THE DEPLOYMENT CODE SECTION ENDS ***
 
+
 def check_commands():
     try:
         print("Searching for git in PATH...")
-        subprocess.run(['which','git'],check=True,stdout=sys.stdout)
+        subprocess.run(['which', 'git'], check=True, stdout=sys.stdout)
     except:
         print("git installation not detected on your computer, please install git and try again.", file=sys.stderr)
         traceback.print_exc()
@@ -612,6 +622,7 @@ def check_commands():
     else:
         print('git command found in PATH.')
         print('Done.\n')
+
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:  # To see if the command is present.

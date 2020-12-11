@@ -85,6 +85,7 @@ Please notice that most of the AWS services are regional-independent. That means
 - US East (Ohio)
 - US West (N. California)
 - US West (Oregon)
+- Asia Pacific (Hong Kong)
 - Asia Pacific (Mumbai)
 - Asia Pacific (Seoul)
 - Aisa Pacific (Singapore)
@@ -93,8 +94,11 @@ Please notice that most of the AWS services are regional-independent. That means
 - Canada (Central)
 - Europe (Frankfurt)
 - Europe (Ireland)
+- Europe (Milan)
+- Europe (Paris)
 - Europe (London)
 - Europe (Stockholm)
+- Middle East (Bahrain)
 </details>
 
 And you can select the region from the list bar at the top right corner. Please do this **BEFORE** creating the endpoint.
