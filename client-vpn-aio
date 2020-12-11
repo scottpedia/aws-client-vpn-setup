@@ -205,7 +205,7 @@ def terminate_endpoint() -> None:
     client_cf.delete_stack(
         StackName='ovpn-{}'.format(PROPERTIES['friendlyName'])
     )
-    for i in range(12):
+    for _ in range(12):
         print('>', end='')
         if client_cf.describe_stacks(StackName=PROPERTIES['cloudformationStackId'])["Stacks"][0]['StackStatus'] == 'DELETE_COMPLETE':
             print('\nDone\n')
@@ -527,7 +527,7 @@ def deploy_cloudformation_template():
     )
     PROPERTIES['cloudformationStackId'] = response['StackId']
     print("Deployment initiated. The program will refresh every 3 seconds to check the progress of deployment. The timeout is 5 mimutes.")
-    for i in range(100):
+    for _ in range(100):
         time.sleep(3)
         response = client_cf.describe_stacks(
             StackName='ovpn-{}'.format(PROPERTIES['friendlyName'])
