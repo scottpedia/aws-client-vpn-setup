@@ -362,7 +362,7 @@ def get_properties():
     print(availableRegions)
     while True:
         regionNumber = input(
-            "Please select one from the list above. Enter the number only:\n[no Default] <1-{}> ".format(len(regionsMapping) - 1)
+            "Please select one from the list above. Enter the number only:\n[no Default] <1-{}> ".format(len(regionsMapping) - 1))
         try:
             regionNumberInteger = int(regionNumber)
             if regionNumberInteger <= (len(regionsMapping) - 1) and regionNumberInteger >= 1:
