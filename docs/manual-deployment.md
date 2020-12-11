@@ -95,6 +95,7 @@ Please notice that most of the AWS services are regional-independent. That means
 - Europe (Ireland)
 - Europe (London)
 - Europe (Stockholm)
+- ***New***: Asia Pacific (Hong Kong)
 </details>
 
 And you can select the region from the list bar at the top right corner. Please do this **BEFORE** creating the endpoint.
