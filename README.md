@@ -1,7 +1,7 @@
 # Create Your Private OpenVPN Service with AWS Client VPN Endpoint
 
 > **Any help to improve this project is welcomed!**  
-> **Update:** AWS recently made Client VPN Endpoint available across **ALL 18 Regions.** Newly added regions include HongKong(ap-east-1), Milan(eu-south-1), Paris(eu-west-3) and Bahrain(me-south-1).
+> **Update:** AWS recently made Client VPN Endpoint available across **ALL 18 Regions.** Newly added regions include HongKong(ap-east-1), Milan(eu-south-1), Paris(eu-west-3) and Bahrain(me-south-1). **However**, these regions are disabled by AWS by default, so you need to enable them on [this page](https://console.aws.amazon.com/billing/home?#/account) before deployment.
 
 An auto-deployment script to deploy and manage your own OpenVPN server with AWS Client VPN Endpoint.
 
