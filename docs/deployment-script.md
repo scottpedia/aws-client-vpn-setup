@@ -13,6 +13,7 @@ Though it is a python script, there are bash commands called within the program,
 - pip
 - aws cli
 - boto3 (python library)
+- An Internet Connection
 
 Also please note that you need to have your aws account set up with the aws cli before you can run this program. To do so, run the following command:
 
