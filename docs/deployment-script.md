@@ -69,3 +69,14 @@ NOTE: PLEASE HAVE YOUR AWS CLI SETUP WITH YOUR AWS ACCOUNT BEFORE YOU RUN THIS S
     If the file is not speficied, the program will automatically look for one under the current working directory.
     If multiple profiles are found under the CWD, should the most recent one be used.
 ```
+## Troubleshooting
+
+  - `botocore.exceptions.ClientError: An error occurred (UnrecognizedClientException) when calling the ImportCertificate operation: The security token included in the request is invalid.`  
+  If you get this error, you are probably trying to deploy the endpoint in a region that is not enabled. Go to your account [page](https://console.aws.amazon.com/billing/home?#/account) and enable the AWS region of your choice under **"AWS Regions"** section. Wait for a few minutes and try again, and you should be able to initiate the deployment at that time.
+
+  - `subprocess.CalledProcessError: Command '['git', 'clone', 'https://github.com/openvpn/easy-rsa.git', '.easy-rsa-XiJ7jjh11b']' returned non-zero exit status 128.`  
+    If you get this error, it means that the command to fetch the open-rsa utility failed. There are two possibility in this case.  
+
+    Check your command output. If you find `fatal: unable to access 'https://github.com/openvpn/easy-rsa.git/': Could not resolve host: github.com`, then it should be your internet connection that caused the problem.
+
+    If you find `git: command not found`, you may not have `git` installed on your system.
