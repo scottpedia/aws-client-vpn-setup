@@ -644,6 +644,9 @@ def check_commands():
 
 
 if __name__ == "__main__":
+    print('Copyright 2020-2021 Scott X. Liang')
+    print('To contact the author, please send emails to me@theanonymity.de')
+    print('This program is licensed under GNU General Public License Version 3. For more information, please refer to /COPYING.')
     if len(sys.argv) > 1:  # To see if the command is present.
         try:
             get_configuration()
