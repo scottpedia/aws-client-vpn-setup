@@ -25,9 +25,11 @@ Traditionally, people build their own VPN servers with VMs on the cloud.(e.g. AW
 
 This project, however, utilizes AWS Client VPN Endpoint, a service already integrated into AWS VPC. There are many advantages of that. First, we are billed for the outbound data usage the same way as the VM-based VPN Services while we enjoy almost unlimited bandwidth of AWS networking infrastructures. Also, the service has better reliability as it is managed by AWS. We are only billed for the connection time, not the active VM uptime as in the traditional method.
 
-# Author
+# Author and License
 
-Copyright (C) 2020 [Scott X. Liang](https://github.com/scottpedia)
+Copyright 2020-2021 [Scott X. Liang](https://github.com/scottpedia) me@theanonymity.de   
+[![GPL logo with text](img/gplv3-with-text-84x42.png)](https://www.gnu.org/licenses/gpl-3.0.txt)  
+Unless otherwise noted, the work in this repository is licensed under [GNU General Public License Version 3](https://www.gnu.org/licenses/gpl-3.0.txt).
 
 # See also
 
