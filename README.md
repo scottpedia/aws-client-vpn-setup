@@ -1,11 +1,8 @@
 # Create Your Private OpenVPN Service with AWS Client VPN Endpoint
 
-> **Any help to improve this project is welcomed!**  
-> **Update:** AWS recently made Client VPN Endpoint available across **ALL 18 Regions.** Newly added regions include HongKong(ap-east-1), Milan(eu-south-1), Paris(eu-west-3) and Bahrain(me-south-1). **However**, these regions are disabled by AWS by default, so you need to enable them on [this page](https://console.aws.amazon.com/billing/home?#/account) before deployment.
+Python script to rapidly deploy and manage a high-performance OpenVPN server on AWS, with AWS Client VPN Endpoint.
 
-An auto-deployment script to deploy and manage your own OpenVPN server with AWS Client VPN Endpoint.
-
-**To quickly deploy an OpenVPN server:**
+**To quickly deploy an OpenVPN server on AWS:**
 
 ```bash
 git clone https://github.com/scottpedia/aws-client-vpn-setup.git && \
@@ -13,11 +10,13 @@ cd aws-client-vpn-setup && \
 ./client-vpn-aio
 ```
 
-Then wait for the script to complete. If it is successful, you can now connect to the endpoint with your client software. **Do not forget to turn the endpoint off after using it! Otherwise you will receive a huge bill over time.**
+Then wait for the script to complete.
 
-- **For more information about the script(including how to turn off the endpoint with it), please go to [this page](docs/deployment-script.md).**
+After that, you need to activate the endpoint before you can connect to it with client software. Please see [this page](docs/deployment-script.md) for how to use the script to manage a deployed OpenVPN endpoint, including how to activate it.
 
-- **For detailed instructions on how to create the OpenVPN Server manually, please refer to [this page](/docs/manual-deployment.md).**
+**Do not forget to turn the endpoint off after using it! Otherwise you will receive a huge bill over time.**
+
+> **Note:** To deploy to newly-available AWS regions, you need to enable them first on AWS console. Follow this [link](https://console.aws.amazon.com/billing/home?#/account) to your account settings, and enable the region where you wish to deploy the OpenVPN server, under **"AWS Regions"** section. After that, the new region would be ready to use in a few minutes.
 
 # Overview
 
@@ -27,7 +26,7 @@ This project, however, utilizes AWS Client VPN Endpoint, a service already integ
 
 # Author and License
 
-Copyright 2020-2021 [Scott X. Liang](https://github.com/scottpedia) me@theanonymity.de   
+Copyright 2020-2021 [Scott X. Liang](https://github.com/scottpedia) me@theanonymity.de  
 [![GPL logo with text](img/gplv3-with-text-84x42.png)](https://www.gnu.org/licenses/gpl-3.0.txt)  
 Unless otherwise noted, the work in this repository is licensed under [GNU General Public License Version 3](https://www.gnu.org/licenses/gpl-3.0.txt).
 
