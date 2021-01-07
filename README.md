@@ -18,6 +18,8 @@ After that, you need to activate the endpoint before you can connect to it with 
 
 > **Note:** To deploy to newly-available AWS regions, you need to enable them first on AWS console. Follow this [link](https://console.aws.amazon.com/billing/home?#/account) to your account settings, and enable the region where you wish to deploy the OpenVPN server, under **"AWS Regions"** section. After that, the new region would be ready to use in a few minutes.
 
+For a step-to-step tutorial on how to create an OpenVPN endpoint with Client VPN Endpoint on AWS, and how to configure the client, go to this [page](docs/manual-deployment.md).
+
 # Overview
 
 Traditionally, people build their own VPN servers with VMs on the cloud.(e.g. AWS EC2, Azure VMs, etc). In that context, we need to run installation and setup scripts directly on the server. And we are billed according to the hours the VM has been running, and the outbound internet traffic. The instance type determines the computing power(number of simultaneous users) and also the internet bandwidth(the bandwidth of the VPN).
