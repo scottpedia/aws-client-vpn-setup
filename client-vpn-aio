@@ -80,10 +80,6 @@ NOTE: PLEASE HAVE YOUR AWS CLI SETUP WITH YOUR AWS ACCOUNT BEFORE YOU RUN THIS S
 
 ***TO DEPLOY A NEW VPN SERVICE, please run the script without any command.***
 
-    -a
-    Add this flag to indicate that you want the endpoint to be enabled right after a successful deployment. 
-    By default, the endpoint is off upon a successful deployment.
-
 ***TO MANAGE AN EXISTING ENDPOINT, please use the following commands:***
     status    :   Output the current status of the specified VPN Endpoint.
     on        :   Turn on the VPN
