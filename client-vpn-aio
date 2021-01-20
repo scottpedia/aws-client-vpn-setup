@@ -45,6 +45,7 @@ PROPERTIES = {
     "clientCertificateArn": "",
     "subnetId": "",
     "dateOfCreation": "",
+    "networkProtocol": "",
 }
 
 REGION_NAME_MAPPING = {
@@ -376,6 +377,28 @@ def get_properties():
                 "Do you want to enable split tunnel for your VPN?\n[Default: Nn] <Yy or Nn> "
             ).capitalize()
 
+    networkProtocol = input(
+        "Please choose the network protocol you want the server to use.\n- TCP: works better in an unstable networking environment, with a lower speed.\n - UDP: works better in a stable networking environment, with high speed.\n[Default: udp] <udp or tcp> "
+    ).lower()
+    while True:
+        if networkProtocol == "udp":
+            PROPERTIES["networkProtocol"] = "udp"
+            print("The VPN will use UDP protocol.")
+            break
+        elif networkProtocol == "tcp":
+            PROPERTIES["networkProtocol"] = "tcp"
+            print("The VPN will use TCP protocol.")
+            break
+        elif networkProtocol == "":
+            PROPERTIES["networkProtocol"] = "udp"
+            print("The VPN will use UDP protocol by default.")
+            break
+        else:
+            print("Unrecognized input, please try again!")
+            networkProtocol = input(
+                "Please choose the network protocol you want the server to use.\n- TCP: works better in an unstable networking environment, with a lower speed.\n - UDP: works better in a stable networking environment, with high speed.\n[Default: udp] <udp or tcp> "
+            ).lower()
+
     print("The following AWS regions support Client VPN Endpoint:")
     availableRegions = """
     1. US East (N. Virginia)
@@ -608,6 +631,10 @@ def deploy_cloudformation_template():
             {
                 "ParameterKey": "FriendlyName",
                 "ParameterValue": PROPERTIES["friendlyName"],
+            },
+            {
+                "ParameterKey": "NetworkProtocol",
+                "ParameterValue": PROPERTIES["networkProtocol"],
             },
         ],
         TimeoutInMinutes=15,

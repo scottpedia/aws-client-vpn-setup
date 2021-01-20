@@ -401,7 +401,9 @@
         "SplitTunnel": {
           "Ref": "isSplitTunnelled"
         },
-        "TransportProtocol": "udp",
+        "TransportProtocol": {
+          "Ref": "NetworkProtocol"
+        },
         "VpcId": {
           "Ref": "EC2VPC4E833"
         }
@@ -452,6 +454,15 @@
       ],
       "Default": "false",
       "Description": "If VPN endpoint enables split tunneling. Select \"false\" if you don't know what it is."
+    },
+    "NetworkProtocol": {
+      "Type": "String",
+      "Description": "The network protocol used by the VPN server. Allowed values are TCP and UDP. Choose TCP for a more stable connection. Choose UDP for a faster connection.",
+      "AllowedValues": [
+        "tcp",
+        "udp"
+      ],
+      "Default": "udp"
     },
     "FriendlyName": {
       "Type": "String",
