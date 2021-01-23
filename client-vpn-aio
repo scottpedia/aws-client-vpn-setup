@@ -469,7 +469,7 @@ def get_properties():
 
     print("Please review your settings:\n {}".format(dumps(PROPERTIES, indent=1)))
     if (
-        input("Please press ENTER to proceed, any other key to abort.\n> ").capitalize()
+        input("Please press ENTER to proceed, or any other key + ENTER to abort.\n> ").capitalize()
         != ""
     ):
         print("Abort.")
