@@ -240,6 +240,10 @@ def terminate_endpoint() -> None:
             sys.exit(0)
         else:
             print("Unexpected answer detected. Please enter again.")
+    if is_associated() == True:
+        print("The endpoint is already associated. Disassociating...")
+        disassociate()
+        print("The Endpoint is now ready to be terminated...")
     print("\nTerminating the cloudformation deployment...")
     client_cf.delete_stack(StackName="ovpn-{}".format(PROPERTIES["friendlyName"]))
     for _ in range(12):
