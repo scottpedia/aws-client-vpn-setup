@@ -244,6 +244,8 @@ def terminate_endpoint() -> None:
         print("The endpoint is already associated. Disassociating...")
         disassociate()
         print("The Endpoint is now ready to be terminated...")
+        print("Giving it 30 seconds to disassociate...")
+        time.sleep(30)
     print("\nTerminating the cloudformation deployment...")
     client_cf.delete_stack(StackName="ovpn-{}".format(PROPERTIES["friendlyName"]))
     for _ in range(12):
