@@ -193,7 +193,7 @@ def turn_on() -> None:
     )
     print("The timeout is 20 minutes.")
     for _i in range(100):
-        print(">", end="")
+        print(">", end="", flush=True)
         if get_association_state() != "pending-associate":
             print(
                 "\nThe target subnet is now associated with the endpoint. You can now connect to the endpoint with your client software.\n"
@@ -248,8 +248,8 @@ def terminate_endpoint() -> None:
         time.sleep(30)
     print("\nTerminating the cloudformation deployment...")
     client_cf.delete_stack(StackName="ovpn-{}".format(PROPERTIES["friendlyName"]))
-    for _ in range(12):
-        print(">", end="")
+    for _ in range(60):
+        print(">", end="", flush=True)
         if (
             client_cf.describe_stacks(StackName=PROPERTIES["cloudformationStackId"])[
                 "Stacks"
@@ -300,7 +300,7 @@ def get_configuration():
     else:
         # profile specified via -f flag.
         try:
-            fileName = sys.argv[sys.argv.index("-f")]
+            fileName = sys.argv[sys.argv.index("-f") + 1]
         except IndexError:
             print("No filename found.", file=sys.stderr)
             traceback.print_exc()
@@ -668,7 +668,7 @@ def deploy_cloudformation_template():
             print("The stack deployment failed.")
             raise Exception("The stack deployment failed.")
         elif response["Stacks"][0]["StackStatus"] == "CREATE_IN_PROGRESS":
-            print(">", end="")  # As a progress bar
+            print(">", end="", flush=True)  # As a progress bar
         else:
             raise Exception("Unexpected stack status detected.")
     else:
