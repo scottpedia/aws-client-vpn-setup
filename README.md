@@ -4,7 +4,7 @@ This project helps you to quickly set up a working OpenVPN server on AWS, using 
 
 ## Overview
 
-This project helps you deploy a working OpenVPN server by using AWS Client VPN. It is a built-in service of AWS VPC that is typically used by developers to securely connect to resources within the VPC network. But it can also be used to access the public internet, just like any typical VPN service. Deploying a VPN server this way has many advantages. For example, the bandwidth is not limited by the networking performance of the instance type.
+This project helps you deploy a working OpenVPN server by using AWS Client VPN. It is a built-in service of AWS VPC that is typically used by developers to securely connect to resources within the VPC network. But it can also be used to access the public internet, just like any typical VPN service. Deploying a VPN server this way has many advantages over the traditional way of deploying a VPN server on an ec2 instance. For example, the bandwidth is not limited by the networking performance of the instance type.
 
 This project provides a python script that does the deployment automatically. Due to the distinct nature of this deployment method, it is recommended to understand how it works in detail before using the script. To do so, you can read through the manual deployment tutorial [here](docs/manual-deployment.md). Also, for more information on how to use the script, see this [page](docs/deployment-script.md).
 
