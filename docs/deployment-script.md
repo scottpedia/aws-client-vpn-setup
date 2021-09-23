@@ -54,13 +54,15 @@ During the deployment process, you will be asked the following customization opt
 
 2. **whether to enable [split tunnel](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/split-tunnel-vpn.html) on your VPN server**. Enable this feature if you want to access network resources inside your **Local Area Network** while connected to the VPN. If left blank, this feature will be disabled by default.
 
-3. **network protocol to use to connect to your VPN server**. Two options are `tcp`, and `udp`. Choose `tcp` for a more stable connection, and choose `udp` for a faster connection.
+3. **whether to enable AP Isolation**, if enabled, the clients connected to the endpoint would not be able to reach one anothers via the endpoint subnet, vice versa.
 
-4. **AWS region** to deploy the VPN server.
+4. **network protocol to use to connect to your VPN server**. Two options are `tcp`, and `udp`. Choose `tcp` for a more stable connection, and choose `udp` for a faster connection.
 
-5. **review and confirm the parameters**. At this step, press `Enter` to confirm the settings. Press any other key + `Enter` to abort the deployment.
+5. **AWS region** to deploy the VPN server.
 
-6. **you will be asked permission to download a git repository under the current directory**. Press `Enter` to confirm the action.
+6. **review and confirm the parameters**. At this step, press `Enter` to confirm the settings. Press any other key + `Enter` to abort the deployment.
+
+7. **you will be asked permission to download a git repository under the current directory**. Press `Enter` to confirm the action.
 
 ## To Manage an Existing Server Deployment
 
