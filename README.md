@@ -10,8 +10,6 @@ This project provides a python script that does the deployment automatically. Du
 
 This project aims to mainly help the people in China, People's Republic of, to gain free(as in freedom) access to the World Wide Web without being censored by the GFW(Great Fire Wall). In the name of Freedom, I wish this project makes itself useful to those in countries where Internet is censored. 
 
-Also there is a known issue about the endpoint deployment which is detailed in the "Issues" section of the project page on Github. Anyone interested would be welcome to help. (I don't have a lot of time to fix it myself)
-
 # Author and License
 
 Copyright (C) 2020-2021 [Scott X. Liang](https://github.com/scottpedia) \<scott.liang@pm.me\>   
