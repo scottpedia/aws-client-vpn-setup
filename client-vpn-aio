@@ -38,6 +38,7 @@ client_cf = None
 PROPERTIES = {
     "friendlyName": "",
     "isSplitTunneled": False,
+    "isApIsolated": True,
     "region": "",
     "cloudformationStackId": "",
     "clientVpnEndpointId": "",
@@ -151,6 +152,21 @@ def create_internet_routing_rule() -> None:
         )
 
 
+def create_link_local_routing_rule() -> None:
+    response = client_ec2.create_client_vpn_route(
+        ClientVpnEndpointId=PROPERTIES["clientVpnEndpointId"],
+        # The CIDR block that allows the traffic to travel within the endpoint subnet(between connected clients)
+        DestinationCidrBlock="10.0.0.0/16",
+        TargetVpcSubnetId=PROPERTIES["subnetId"],
+    )
+    if response["Status"]["Code"] != "creating":
+        raise Exception(
+            "Unexpected state detected after creating the route : {}".format(
+                response["Status"]["Code"]
+            )
+        )
+
+
 def get_current_association_id():
     response = client_ec2.describe_client_vpn_target_networks(
         ClientVpnEndpointId=PROPERTIES["clientVpnEndpointId"]
@@ -185,6 +201,8 @@ def turn_on() -> None:
     associate_target_network()
     print("... ... ...")
     create_internet_routing_rule()
+    if PROPERTIES['isApIsolated'] == False:
+        create_link_local_routing_rule()
     print("Done.\n")
 
     print("The target subnet is being associated...")
@@ -212,7 +230,8 @@ def get_status() -> None:
     )
     print("... ... ...")
     print(
-        "Currently, and state of association is : \n{}".format(get_association_state())
+        "Currently, and state of association is : \n{}".format(
+            get_association_state())
     )
     print("Done.")
 
@@ -247,7 +266,8 @@ def terminate_endpoint() -> None:
         print("Giving it 30 seconds to disassociate...")
         time.sleep(30)
     print("\nTerminating the cloudformation deployment...")
-    client_cf.delete_stack(StackName="ovpn-{}".format(PROPERTIES["friendlyName"]))
+    client_cf.delete_stack(
+        StackName="ovpn-{}".format(PROPERTIES["friendlyName"]))
     for _ in range(60):
         print(">", end="", flush=True)
         if (
@@ -264,8 +284,10 @@ def terminate_endpoint() -> None:
         raise TimeoutError()
 
     print("Deleting ACM Certificates...")
-    client_acm.delete_certificate(CertificateArn=PROPERTIES["serverCertificateArn"])
-    client_acm.delete_certificate(CertificateArn=PROPERTIES["clientCertificateArn"])
+    client_acm.delete_certificate(
+        CertificateArn=PROPERTIES["serverCertificateArn"])
+    client_acm.delete_certificate(
+        CertificateArn=PROPERTIES["clientCertificateArn"])
     print("Done.\n")
 
     print("Deleting ovpn profiles...")
@@ -361,10 +383,10 @@ def get_properties():
         print("Your current VPN friendly name is:\n{}".format(friendlyName))
     PROPERTIES["friendlyName"] = friendlyName
 
-    isSplitTunneled = input(
-        "Do you want to enable split tunnel for your VPN?\n[Default: Nn] <Yy or Nn> "
-    ).capitalize()
     while True:
+        isSplitTunneled = input(
+            "Do you want to enable split tunnel for your VPN?\n[Default: Nn] <Yy or Nn> "
+        ).capitalize()
         if isSplitTunneled == "Y":
             PROPERTIES["isSplitTunneled"] = True
             print("The VPN will be split-tunnel enabled.")
@@ -379,9 +401,23 @@ def get_properties():
             break
         else:
             print("Unrecognized input, please try again!")
-            isSplitTunneled = input(
-                "Do you want to enable split tunnel for your VPN?\n[Default: Nn] <Yy or Nn> "
-            ).capitalize()
+
+    while True:
+        isApIsolated = input(
+            "Do you want connected clients to be able to reach each others over within the endpoint subnet?\n[Default: Nn] <Yy or Nn> "
+        ).capitalize()
+        if isApIsolated == "Y":
+            print("The VPN will NOT be having a link-local route.")
+            break
+        elif isApIsolated == "N":
+            PROPERTIES["isApIsolated"] = False
+            print("The VPN will be having a link-local route.")
+            break
+        elif isApIsolated == "":
+            print("The VPN will NOT be having a link-local route by default.")
+            break
+        else:
+            print("Unrecognized input, please try again!")
 
     networkProtocol = input(
         "Please choose the network protocol you want the server to use.\n- TCP: works better in an unstable networking environment, with a lower speed.\n - UDP: works better in a stable networking environment, with high speed.\n[Default: udp] <udp or tcp> "
@@ -497,7 +533,8 @@ def generate_credentials():
         "git clone https://github.com/openvpn/easy-rsa.git .easy-rsa-{}".format(
             PROPERTIES["friendlyName"]
         ),
-        ".easy-rsa-{}/easyrsa3/easyrsa init-pki".format(PROPERTIES["friendlyName"]),
+        ".easy-rsa-{}/easyrsa3/easyrsa init-pki".format(
+            PROPERTIES["friendlyName"]),
         ".easy-rsa-{}/easyrsa3/easyrsa build-ca nopass".format(
             PROPERTIES["friendlyName"]
         ),
@@ -582,14 +619,16 @@ def generate_credentials():
         Certificate=SERVER_CERT,
         PrivateKey=SERVER_KEY,
         CertificateChain=CA_CERT,
-        Tags=[{"Key": "deploymentFriendlyName", "Value": PROPERTIES["friendlyName"]}],
+        Tags=[{"Key": "deploymentFriendlyName",
+               "Value": PROPERTIES["friendlyName"]}],
     )["CertificateArn"]
     # Import Client Certificate
     PROPERTIES["clientCertificateArn"] = client_acm.import_certificate(
         Certificate=CLIENT_CERT,
         PrivateKey=CLIENT_KEY,
         CertificateChain=CA_CERT,
-        Tags=[{"Key": "deploymentFriendlyName", "Value": PROPERTIES["friendlyName"]}],
+        Tags=[{"Key": "deploymentFriendlyName",
+               "Value": PROPERTIES["friendlyName"]}],
     )["CertificateArn"]
     print("Done.\n")
 
@@ -611,7 +650,8 @@ def download_cloudformation_template():
                 stdout=sys.stdout,
             )
     else:
-        raise Exception("Failed to find and download the cloudformation template.")
+        raise Exception(
+            "Failed to find and download the cloudformation template.")
 
 
 def deploy_cloudformation_template():
@@ -644,7 +684,8 @@ def deploy_cloudformation_template():
             },
         ],
         TimeoutInMinutes=15,
-        Tags=[{"Key": "deploymentFriendlyName", "Value": PROPERTIES["friendlyName"]}],
+        Tags=[{"Key": "deploymentFriendlyName",
+               "Value": PROPERTIES["friendlyName"]}],
     )
     PROPERTIES["cloudformationStackId"] = response["StackId"]
     print(
@@ -779,7 +820,8 @@ if __name__ == "__main__":
             get_configuration()
             client_ec2 = boto3.client("ec2", region_name=PROPERTIES["region"])
             client_acm = boto3.client("acm", region_name=PROPERTIES["region"])
-            client_cf = boto3.client("cloudformation", region_name=PROPERTIES["region"])
+            client_cf = boto3.client(
+                "cloudformation", region_name=PROPERTIES["region"])
             manage()
         except Exception as e:
             print("Errors occured.", file=sys.stderr)
@@ -802,7 +844,8 @@ if __name__ == "__main__":
         try:
             client_ec2 = boto3.client("ec2", region_name=PROPERTIES["region"])
             client_acm = boto3.client("acm", region_name=PROPERTIES["region"])
-            client_cf = boto3.client("cloudformation", region_name=PROPERTIES["region"])
+            client_cf = boto3.client(
+                "cloudformation", region_name=PROPERTIES["region"])
             generate_credentials()
             download_cloudformation_template(),
             # save the aws-generated private keys at the same time.
