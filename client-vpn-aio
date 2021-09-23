@@ -407,10 +407,10 @@ def get_properties():
             "Do you want connected clients to be able to reach each others over within the endpoint subnet?\n[Default: Nn] <Yy or Nn> "
         ).capitalize()
         if isApIsolated == "Y":
+            PROPERTIES["isApIsolated"] = False
             print("The VPN will NOT be having a link-local route.")
             break
         elif isApIsolated == "N":
-            PROPERTIES["isApIsolated"] = False
             print("The VPN will be having a link-local route.")
             break
         elif isApIsolated == "":
