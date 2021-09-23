@@ -408,10 +408,10 @@ def get_properties():
         ).capitalize()
         if isApIsolated == "Y":
             PROPERTIES["isApIsolated"] = False
-            print("The VPN will NOT be having a link-local route.")
+            print("The VPN will be having a link-local route.")
             break
         elif isApIsolated == "N":
-            print("The VPN will be having a link-local route.")
+            print("The VPN will NOT be having a link-local route.")
             break
         elif isApIsolated == "":
             print("The VPN will NOT be having a link-local route by default.")
