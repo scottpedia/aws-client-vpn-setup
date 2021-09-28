@@ -8,8 +8,6 @@ This project helps you deploy a working OpenVPN server by using AWS Client VPN. 
 
 This project provides a python script that does the deployment automatically. Due to the distinct nature of this deployment method, it is recommended to understand how it works in detail before using the script. To do so, you can read through the manual deployment tutorial [here](docs/manual-deployment.md). Also, for more information on how to use the script, see this [page](docs/deployment-script.md).
 
-This project aims to mainly help the people in China, People's Republic of, to gain free(as in freedom) access to the World Wide Web without being censored by the GFW(Great Fire Wall). In the name of Freedom, I wish this project makes itself useful to those in countries where Internet is censored. 
-
 # Author and License
 
 Copyright (C) 2020-2021 [Scott X. Liang](https://github.com/scottpedia) \<scott.liang@pm.me\>   
