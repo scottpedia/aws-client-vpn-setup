@@ -82,8 +82,6 @@ And you can select the region from the list bar at the top right corner. Please 
 
 Usually, it highly depends on your current geolocation and that of the destination you want to access. For example, I am now living in Canada and wanting to access a Japanese video website that is exclusive to users in Japan. In that case, I would certainly select Asia Pacific (Tokyo) as my VPN region. 
 
-Also, for a lot of Chinese users, the VPN is used to bypass the [GFW](https://en.wikipedia.org/wiki/Great_Firewall)(Great Firewall). So simply all the regions are suitable for this scenario, as the ones closer to China may have lower latencies. 
-
 For simply encrypting the web traffic, the endpoint that is closest to you would be ideal as the latency is minimized.
 
 **In this tutorial, we are going to create the VPN endpoint in the AWS region of Oregon. (US-West-2)**
@@ -533,8 +531,6 @@ We can find the pricing information of AWS Client VPN Endpoint on [this page](ht
 **It is also a very high-performance solution.** The available bandwidth of the VPN directly depends on that of your internet connection. I have personally not experienced the bandwidth of the VPN being throttled, as it is being described on the AWS website:
 <a href="https://aws.amazon.com/vpn/features/#AWS_Client_VPN_features">
 > It is elastic, and automatically scales to meet your demand. </a>
-
-<font color="red">**For the users in China who wish to bypass the GFW**</font>, this is a very good option as well, as there is absolutely no way the government can ban the DNS and IP addresses of public cloud platforms like AWS. So it is a very stable solution. Its performance, according to my experience using it in China, is not bad. Both downlink and uplink bandwidth can go up to **5MB/s** easily with a good Internet connection.
 
 I will try to write a script to simplify the process to set up a VPN like this, and also to easily turn it on and off as well.
 
