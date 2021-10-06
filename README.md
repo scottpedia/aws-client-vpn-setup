@@ -8,7 +8,19 @@ This project helps you deploy a working OpenVPN server by using AWS Client VPN. 
 
 This project provides a python script that does the deployment automatically. Due to the distinct nature of this deployment method, it is recommended to understand how it works in detail before using the script. To do so, you can read through the manual deployment tutorial [here](docs/manual-deployment.md). Also, for more information on how to use the script, see this [page](docs/deployment-script.md).
 
-# Author and License
+## Comparison with Traditional VM-based Deployment Method
+
+I personally came up with this idea of deploying a VPN server as a workabout of the traditional VM-based solution, in order to better fit my usage scenario. But this deployment method also has its own drawbacks. Below is a clear comparison between the two.
+
+| | Traditional VM-based Deployment(on AWS and similar cloud platforms) | AWS Client VPN-based Deployment(this project) |
+| --- | --- | --- |
+| VPN protocol(s) | not limited | OpenVPN |
+| Billing Scheme  | instance uptime + outbound traffic | endpoint association time + connection time per user + outbound traffic |
+| Deployment Time | minutes depending on the instance type and other factors | 15 minutes maximum |
+| Networking Performance | solely depending on the instance type used | automatically scalable | 
+| Regions | all service regions where VM service is available | All AWS regions |
+
+## Author and License
 
 Copyright (C) 2020-2021 [Scott X. Liang](https://github.com/scottpedia) \<scott.liang@pm.me\>   
 [![GPL logo with text](img/gplv3-with-text-84x42.png)](https://www.gnu.org/licenses/gpl-3.0.txt)  
