@@ -12,7 +12,7 @@ This project provides a python script that does the deployment automatically. Du
 
 I personally came up with this idea of deploying a VPN server as a workabout of the traditional VM-based solution, in order to better fit my usage scenario. But this deployment method also has its own drawbacks. Below is a clear comparison between the two.
 
-| | Traditional VM-based Deployment(on AWS and similar cloud platforms) | AWS Client VPN-based Deployment(this project) |
+| | Traditional VM-based Script Deployment(on AWS and similar cloud platforms) | AWS Client VPN-based Deployment(this project) |
 | --- | --- | --- |
 | VPN protocol(s)\* | not limited | OpenVPN |
 | Billing Scheme  | instance uptime + outbound traffic | endpoint association time\*\* + connection time per user + outbound traffic |
