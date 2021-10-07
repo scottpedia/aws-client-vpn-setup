@@ -14,11 +14,21 @@ I personally came up with this idea of deploying a VPN server as a workabout of 
 
 | | Traditional VM-based Deployment(on AWS and similar cloud platforms) | AWS Client VPN-based Deployment(this project) |
 | --- | --- | --- |
-| VPN protocol(s) | not limited | OpenVPN |
+| VPN protocol(s)[\*](#vpn-protocol-note) | not limited | OpenVPN |
 | Billing Scheme  | instance uptime + outbound traffic | endpoint association time + connection time per user + outbound traffic |
-| Deployment Time | minutes depending on the instance type and other factors | 15 minutes maximum |
+| Deployment Time[\*\*](#deployment-time-note) | minutes depending on the instance type and other factors | 15 minutes maximum |
 | Networking Performance | solely depending on the instance type used | automatically scalable | 
 | Regions | all service regions where VM service is available | All AWS regions |
+
+<a name="#vpn-protocol-note"></a>
+\* hello
+
+<details>
+
+<a name="deployment-time-note"></a>
+\*\* hello2
+
+</details>
 
 ## Author and License
 
