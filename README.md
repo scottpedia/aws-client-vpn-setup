@@ -14,14 +14,29 @@ I personally came up with this idea of deploying a VPN server as a workabout of 
 
 | | Traditional VM-based Deployment(on AWS and similar cloud platforms) | AWS Client VPN-based Deployment(this project) |
 | --- | --- | --- |
-| VPN protocol(s)[\*](#vpn-protocol-note) | not limited | OpenVPN |
-| Billing Scheme  | instance uptime + outbound traffic | endpoint association time + connection time per user + outbound traffic |
-| Deployment Time | minutes depending on the instance type and other factors | 15 minutes maximum |
-| Networking Performance | solely depending on the instance type used | automatically scalable | 
-| Regions | all service regions where VM service is available | All AWS regions |
+| VPN protocol(s)\* | not limited | OpenVPN |
+| Billing Scheme  | instance uptime + outbound traffic | endpoint association time\*\* + connection time per user + outbound traffic |
+| Deployment Time\*\*\* | minutes depending on the instance type and other factors | 15 minutes maximum |
+| Networking Performance | solely depending on the instance type used | automatically scalable\*\*\*\* | 
+| Regions | all service regions where VM service is available | all AWS regions |
+| Free Plan\*\*\*\*\* | 750 hours of free usage of `t2.micro` per month in the leading 12 months since account creation | no free plan eligible
 
-<a name="#vpn-protocol-note"></a>
-\* hello
+<details>
+<summary>
+Expand this section to see the notes.
+</summary>
+
+**\*** You can choose whatever protocols of VPN to install on your VM, such as IPSec, Shadowsocks. But when using the Client VPN, your choice is limited to only OpenVPN.
+
+**\*\*** The "association time" stands for the time when the endpoint is associated with the target subnet, not to be confused with when time when the user's client is connected to the endpoint, which in this case is "connection time per user".
+
+**\*\*\*** To install a VPN server on a EC2-like VM, it takes time for the operating system to process the required software components.(e.g. compilation, certificate generations) Therefore the overall deployment time varies, as more powerful systems perform such tasks faster.
+
+**\*\*\*\*** According to AWS, the networking performance of Client VPN is elastic, and automatically scales to your demand. In my personal experiences, the bandwidth available when using Client VPN directly depends on that of your home network bandwidth.
+
+**\*\*\*\*\*** See [this page](https://aws.amazon.com/free/) for more info on AWS Free Plan.
+
+</details>
 
 ## Author and License
 
