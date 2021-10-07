@@ -28,7 +28,7 @@ Expand this section to see the notes.
 
 **\*** You can choose whatever protocols of VPN to install on your VM, such as IPSec, Shadowsocks. But when using the Client VPN, your choice is limited to only OpenVPN.
 
-**\*\*** The "association time" stands for the time when the endpoint is associated with the target subnet, not to be confused with when time when the user's client is connected to the endpoint, which in this case is "connection time per user".
+**\*\*** The "association time" stands for the time when the endpoint is associated with the target subnet, not to be confused with the time when the user's client is connected to the endpoint, which in this case is "connection time per user".
 
 **\*\*\*** To install a VPN server on a EC2-like VM, it takes time for the operating system to process the required software components.(e.g. compilation, certificate generations) Therefore the overall deployment time varies, as more powerful systems perform such tasks faster.
 
