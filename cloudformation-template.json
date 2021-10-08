@@ -122,12 +122,9 @@
         "z": 4,
         "parent": "3634cfa6-2a26-4b44-a576-26245017c35d",
         "embeds": [],
-        "isassociatedwith": [
-          "dd235e9a-8c65-4a14-a5ab-2ba9a55690fc"
-        ],
         "dependson": [
-          "dd235e9a-8c65-4a14-a5ab-2ba9a55690fc",
-          "3634cfa6-2a26-4b44-a576-26245017c35d"
+          "3634cfa6-2a26-4b44-a576-26245017c35d",
+          "dd235e9a-8c65-4a14-a5ab-2ba9a55690fc"
         ]
       },
       "c84493c1-c56a-4da9-b86e-3e3a7c36ff5e": {
@@ -162,69 +159,6 @@
         "dependson": [
           "dd235e9a-8c65-4a14-a5ab-2ba9a55690fc"
         ]
-      },
-      "1550d28b-36c4-4bed-9996-26e383629ef1": {
-        "source": {
-          "id": "dd235e9a-8c65-4a14-a5ab-2ba9a55690fc"
-        },
-        "target": {
-          "id": "1efa03a0-8c3b-4574-8bf1-c527d341980b"
-        },
-        "z": 5
-      },
-      "d9b5d84b-a216-4944-8093-ae1a2a21bb2f": {
-        "source": {
-          "id": "65c92c16-19c6-4be3-b9a8-e565a8d6c223"
-        },
-        "target": {
-          "id": "dd235e9a-8c65-4a14-a5ab-2ba9a55690fc"
-        },
-        "z": 6
-      },
-      "48127034-4642-467c-ada4-992658abd15f": {
-        "source": {
-          "id": "0e9d63ac-8857-450a-9196-9f053c4cf2f4"
-        },
-        "target": {
-          "id": "dd235e9a-8c65-4a14-a5ab-2ba9a55690fc"
-        },
-        "z": 7
-      },
-      "974adff3-5859-45da-9e2c-90c3618d08a4": {
-        "source": {
-          "id": "c84493c1-c56a-4da9-b86e-3e3a7c36ff5e"
-        },
-        "target": {
-          "id": "dd235e9a-8c65-4a14-a5ab-2ba9a55690fc"
-        },
-        "z": 8
-      },
-      "99e5527f-8724-47e7-8c2c-a73b33cd516b": {
-        "source": {
-          "id": "c84493c1-c56a-4da9-b86e-3e3a7c36ff5e"
-        },
-        "target": {
-          "id": "3cbbb558-df3b-4dd1-bf67-e01cd8224bf0"
-        },
-        "z": 9
-      },
-      "4d30c667-b785-4272-8e97-14f3432a8112": {
-        "source": {
-          "id": "65c92c16-19c6-4be3-b9a8-e565a8d6c223"
-        },
-        "target": {
-          "id": "3634cfa6-2a26-4b44-a576-26245017c35d"
-        },
-        "z": 10
-      },
-      "5a1c6f62-c8b8-4731-b82d-52cd00a08cde": {
-        "source": {
-          "id": "3634cfa6-2a26-4b44-a576-26245017c35d"
-        },
-        "target": {
-          "id": "3cbbb558-df3b-4dd1-bf67-e01cd8224bf0"
-        },
-        "z": 11
       }
     }
   },
@@ -303,22 +237,6 @@
       "Metadata": {
         "AWS::CloudFormation::Designer": {
           "id": "930dc9ca-7be8-4be6-94d7-9319daf25e46"
-        }
-      }
-    },
-    "EC2VPCG1ZB1T": {
-      "Type": "AWS::EC2::VPCGatewayAttachment",
-      "Properties": {
-        "VpcId": {
-          "Ref": "EC2VPC4E833"
-        },
-        "InternetGatewayId": {
-          "Ref": "EC2IG4CT3V"
-        }
-      },
-      "Metadata": {
-        "AWS::CloudFormation::Designer": {
-          "id": "719769dc-322f-469d-abe0-9ede3cbc3d24"
         }
       }
     },

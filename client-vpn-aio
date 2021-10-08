@@ -157,7 +157,7 @@ def create_link_local_routing_rule() -> None:
         ClientVpnEndpointId=PROPERTIES["clientVpnEndpointId"],
         # The CIDR block that allows the traffic to travel within the endpoint subnet(between connected clients)
         DestinationCidrBlock="10.0.0.0/16",
-        TargetVpcSubnetId=PROPERTIES["subnetId"],
+        TargetVpcSubnetId='local',
     )
     if response["Status"]["Code"] != "creating":
         raise Exception(
