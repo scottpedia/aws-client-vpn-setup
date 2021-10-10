@@ -10,7 +10,7 @@ This project provides a python script that does the deployment automatically. Du
 
 ## Comparison with Traditional VM-based Deployment Method
 
-I personally came up with this idea of deploying a VPN server as a workabout of the traditional VM-based solution, in order to better fit my usage scenario. But this deployment method also has its own drawbacks. Below is a clear comparison between the two.
+I personally came up with this idea of deploying a VPN server as a workaround of the traditional VM-based solution, in order to better fit my usage scenario. But this deployment method also has its own drawbacks. Below is a clear comparison between the two.
 
 | | Traditional VM-based Script Deployment(on AWS and similar cloud platforms) | AWS Client VPN-based Deployment(this project) |
 | --- | --- | --- |
