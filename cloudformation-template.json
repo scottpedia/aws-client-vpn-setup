@@ -240,22 +240,6 @@
         }
       }
     },
-    "EC2SRTA52XYX": {
-      "Type": "AWS::EC2::SubnetRouteTableAssociation",
-      "Properties": {
-        "RouteTableId": {
-          "Ref": "EC2RTC7I3"
-        },
-        "SubnetId": {
-          "Ref": "EC2S2DKY4"
-        }
-      },
-      "Metadata": {
-        "AWS::CloudFormation::Designer": {
-          "id": "edae6296-b675-4763-87f2-049ff9f5986d"
-        }
-      }
-    },
     "EC2SRTAKX44": {
       "Type": "AWS::EC2::SubnetRouteTableAssociation",
       "Properties": {

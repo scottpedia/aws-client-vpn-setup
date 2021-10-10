@@ -703,15 +703,13 @@ def deploy_cloudformation_template():
             PROPERTIES["clientVpnEndpointId"] = outputs[0]["OutputValue"]
             PROPERTIES["subnetId"] = outputs[1]["OutputValue"]
             break
-        elif response["Stacks"][0]["StackStatus"] == (
-            "CREATE_FAILED" or "ROLLBACK_IN_PROGRESS"
-        ):
+        elif response["Stacks"][0]["StackStatus"] == "CREATE_FAILED" or response["Stacks"][0]["StackStatus"] == "ROLLBACK_IN_PROGRESS":
             print("The stack deployment failed.")
             raise Exception("The stack deployment failed.")
         elif response["Stacks"][0]["StackStatus"] == "CREATE_IN_PROGRESS":
             print(">", end="", flush=True)  # As a progress bar
         else:
-            raise Exception("Unexpected stack status detected.")
+            raise Exception("Unexpected stack status \"{}\" detected.".format(response["Stacks"][0]["StackStatus"]))
     else:
         raise Exception("Deployment timed out.")
 
