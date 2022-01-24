@@ -117,7 +117,7 @@ NOTE: PLEASE HAVE YOUR AWS CLI SETUP WITH YOUR AWS ACCOUNT BEFORE YOU RUN THIS S
   If you get this error, you are probably trying to deploy the endpoint in a region that is not enabled. Go to your account [page](https://console.aws.amazon.com/billing/home?#/account) and enable the AWS region of your choice under **"AWS Regions"** section. Wait for a few minutes and try again, and you should be able to initiate the deployment at that time.
 
   - `subprocess.CalledProcessError: Command '['git', 'clone', 'https://github.com/openvpn/easy-rsa.git', '.easy-rsa-XiJ7jjh11b']' returned non-zero exit status 128.`  
-    If you get this error, it means that the command to fetch the open-rsa utility failed. There are two possibility in this case.  
+    If you get this error, it means that the command to fetch the open-rsa utility failed. There are two possibilities in this case.  
 
     Check your command output. If you find `fatal: unable to access 'https://github.com/openvpn/easy-rsa.git/': Could not resolve host: github.com`, then it should be your internet connection that caused the problem.
 
