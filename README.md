@@ -1,6 +1,6 @@
 # AWS Client VPN Setup
 
-*In other languages: [简体中文](./README.md)*
+*In other languages: [简体中文](./README-zh.md)*
 
 This project helps you to quickly set up a working OpenVPN server on AWS, using [AWS Client VPN](https://aws.amazon.com/vpn/client-vpn/). 
 
