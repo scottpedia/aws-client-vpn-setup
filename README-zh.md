@@ -4,6 +4,8 @@
 
 此项目帮助你使用 [AWS Client VPN](https://aws.amazon.com/vpn/client-vpn/) 服务快速在 AWS 云平台上搭建一个 OpenVPN 服务器。
 
+<a href="https://aws.amazon.com/vpn/"><img src="img/client-vpn.png" width="120" align="right"></a>
+
 ## 略览
 
 此项目帮助你使用 AWS Client VPN 服务快速在 AWS 云平台上搭建一个 OpenVPN 服务器。 AWS Client VPN 服务是一个 AWS VPC 内置的附属服务，其用途是安全的访问到在指定 VPC 网域内的资源。但是此服务也可被用于来访问公网资源，类似于人们常用的 VPN 类型。利用以下方式部署一个 VPN 服务器相比基于 ec2 实例的传统部署方式有很多优点。比如， VPN 带宽不受指定实例类型的网络性能所限制。
