@@ -312,13 +312,16 @@ def get_configuration():
                 "No .ovpnsetup file found under the current working directory.",
                 file=sys.stderr,
             )
-            sys.exit(1)
-        configs = []
-        for f in files:
-            configs.append(load(open(f, "r")))
-        configs.sort(key=lambda x: x["dateOfCreation"])
-        theLatestConfig = configs[-1]
-        PROPERTIES = theLatestConfig
+            return 1
+        else: 
+            configs = []
+            for f in files:
+                configs.append(load(open(f, "r")))
+            configs.sort(key=lambda x: x["dateOfCreation"])
+            theLatestConfig = configs[-1]
+            PROPERTIES = theLatestConfig
+            print("Profile obtained.\nDone.\n")
+            return 0
     else:
         # profile specified via -f flag.
         try:
@@ -333,7 +336,8 @@ def get_configuration():
             print("Failed to parse the profile specified.", file=sys.stderr)
             traceback.print_exc()
             sys.exit(1)
-    print("Profile obtained.\nDone.\n")
+        print("Profile obtained.\nDone.\n")
+        return 0
 
 
 def manage():
@@ -815,11 +819,11 @@ if __name__ == "__main__":
     )
     if len(sys.argv) > 1:  # To see if the command is present.
         try:
-            get_configuration()
-            client_ec2 = boto3.client("ec2", region_name=PROPERTIES["region"])
-            client_acm = boto3.client("acm", region_name=PROPERTIES["region"])
-            client_cf = boto3.client(
-                "cloudformation", region_name=PROPERTIES["region"])
+            if get_configuration() == 0:
+                client_ec2 = boto3.client("ec2", region_name=PROPERTIES["region"])
+                client_acm = boto3.client("acm", region_name=PROPERTIES["region"])
+                client_cf = boto3.client(
+                    "cloudformation", region_name=PROPERTIES["region"])
             manage()
         except Exception as e:
             print("Errors occured.", file=sys.stderr)
