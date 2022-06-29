@@ -1,7 +1,5 @@
 # [client-vpn-aio](../client-vpn-aio)
-
-*In other languages: [简体中文](./deployment-script-zh.md)*
-
+s
 This page explains how to use the script to, create a new OpenVPN server deployment, or manage an existing OpenVPN server deployment.
 
 ## On This Page
