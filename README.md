@@ -1,6 +1,6 @@
 # AWS Client VPN Setup
 
-<a href="https://aws.amazon.com/vpn/"><img src="img/client-vpn.png" width="120" align="right"></a>
+<a href="https://aws.amazon.com/vpn/"><img src="img/client-vpn.png" width="120" align="right" alt="AWS VPN logo" title="AWS VPN"></a>
 
 This project helps you to quickly set up a working OpenVPN server on AWS, using [AWS Client VPN](https://aws.amazon.com/vpn/client-vpn/). 
 
