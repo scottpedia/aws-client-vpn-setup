@@ -1,5 +1,7 @@
 # How to manually deploy the OpenVPN server with AWS Client VPN Endpoint
 
+> ## <strong>WARNING: </strong> This tutorial was written in poor English. A re-write is needed.
+
 This is the tutorial that walks you through the steps to manually create a OpenVPN Server on AWS with AWS Client VPN Endpoint. You can also deploy the server with the setup script [here](deployment-script.md). 
 
 Table of Contents
