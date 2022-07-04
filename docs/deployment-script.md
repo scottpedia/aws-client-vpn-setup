@@ -1,5 +1,5 @@
 # [client-vpn-aio](../client-vpn-aio)
-s
+
 This page explains how to use the script to, create a new OpenVPN server deployment, or manage an existing OpenVPN server deployment.
 
 ## On This Page
