@@ -54,7 +54,7 @@ During the deployment process, you will be asked the following customization opt
 
 2. **whether to enable [split tunnel](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/split-tunnel-vpn.html) on your VPN server**. Enable this feature if you want to access network resources inside your **Local Area Network** while connected to the VPN. If left blank, this feature will be disabled by default.
 
-3. **whether to enable AP Isolation**, if enabled, the clients connected to the endpoint would not be able to reach one anothers via the endpoint subnet. By default, this feature is disabled.
+3. **whether to allow intra-subnet communication between connected clients**. If enabled, the clients connected to the endpoint would not be able reach on another via the endpoint subnet. By default, this feature is disabled.
 
 4. **network protocol to use to connect to your VPN server**. Two options are `tcp`, and `udp`. Choose `tcp` for a more stable connection, and choose `udp` for a faster connection. By default, the script will use `udp`.
 
