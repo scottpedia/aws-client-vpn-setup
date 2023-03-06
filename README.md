@@ -42,6 +42,6 @@ Expand this section to see the notes.
 
 ## Author and License
 
-Copyright (C) 2020-2022 [Scott X. Liang](https://github.com/scottpedia) \<scott.liang@pm.me\>   
+Copyright (C) 2020-2023 [Scott X. Liang](https://github.com/scottpedia) \<scott.liang@pm.me\>   
 [![GPL logo with text](img/gplv3-with-text-84x42.png)](https://www.gnu.org/licenses/gpl-3.0.txt)  
 Unless otherwise noted, the work in this repository is licensed under [GNU General Public License Version 3](https://www.gnu.org/licenses/gpl-3.0.txt).
