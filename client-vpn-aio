@@ -157,7 +157,7 @@ def create_link_local_routing_rule() -> None:
         ClientVpnEndpointId=PROPERTIES["clientVpnEndpointId"],
         # The CIDR block that allows the traffic to travel within the endpoint subnet(between connected clients)
         DestinationCidrBlock="10.0.0.0/16",
-        TargetVpcSubnetId='local',
+        TargetVpcSubnetId="local",
     )
     if response["Status"]["Code"] != "creating":
         raise Exception(
@@ -201,7 +201,7 @@ def turn_on() -> None:
     associate_target_network()
     print("... ... ...")
     create_internet_routing_rule()
-    if PROPERTIES['isApIsolated'] == False:
+    if PROPERTIES["isApIsolated"] == False:
         create_link_local_routing_rule()
     print("Done.\n")
 
@@ -230,8 +230,7 @@ def get_status() -> None:
     )
     print("... ... ...")
     print(
-        "Currently, and state of association is : \n{}".format(
-            get_association_state())
+        "Currently, and state of association is : \n{}".format(get_association_state())
     )
     print("Done.")
 
@@ -266,8 +265,7 @@ def terminate_endpoint() -> None:
         print("Giving it 30 seconds to disassociate...")
         time.sleep(30)
     print("\nTerminating the cloudformation deployment...")
-    client_cf.delete_stack(
-        StackName="ovpn-{}".format(PROPERTIES["friendlyName"]))
+    client_cf.delete_stack(StackName="ovpn-{}".format(PROPERTIES["friendlyName"]))
     for _ in range(60):
         print(">", end="", flush=True)
         if (
@@ -284,10 +282,8 @@ def terminate_endpoint() -> None:
         raise TimeoutError()
 
     print("Deleting ACM Certificates...")
-    client_acm.delete_certificate(
-        CertificateArn=PROPERTIES["serverCertificateArn"])
-    client_acm.delete_certificate(
-        CertificateArn=PROPERTIES["clientCertificateArn"])
+    client_acm.delete_certificate(CertificateArn=PROPERTIES["serverCertificateArn"])
+    client_acm.delete_certificate(CertificateArn=PROPERTIES["clientCertificateArn"])
     print("Done.\n")
 
     print("Deleting ovpn profiles...")
@@ -313,7 +309,7 @@ def get_configuration():
                 file=sys.stderr,
             )
             return 1
-        else: 
+        else:
             configs = []
             for f in files:
                 configs.append(load(open(f, "r")))
@@ -515,7 +511,9 @@ def get_properties():
 
     print("Please review your settings:\n {}".format(dumps(PROPERTIES, indent=1)))
     if (
-        input("Please press ENTER to proceed, or any other key + ENTER to abort.\n> ").capitalize()
+        input(
+            "Please press ENTER to proceed, or any other key + ENTER to abort.\n> "
+        ).capitalize()
         != ""
     ):
         print("Abort.")
@@ -534,11 +532,12 @@ def generate_credentials():
         "In the process, you will be prompted to enter the DN for your CA. You can just leave it blank and press enter.\nPlease type enter to confirm > "
     )
     commandsToRun = [
-        "git clone https://github.com/openvpn/easy-rsa.git .easy-rsa-{}".format(
-            PROPERTIES["friendlyName"]
-        ),
-        ".easy-rsa-{}/easyrsa3/easyrsa init-pki".format(
-            PROPERTIES["friendlyName"]),
+        # "git clone https://github.com/openvpn/easy-rsa.git .easy-rsa-{}".format(
+        #     PROPERTIES["friendlyName"]
+        # ),
+        # for temporary setup
+        "cp -R /Users/black/code/easy-rsa .easy-rsa-{}".format(PROPERTIES["friendlyName"]),
+        ".easy-rsa-{}/easyrsa3/easyrsa init-pki".format(PROPERTIES["friendlyName"]),
         ".easy-rsa-{}/easyrsa3/easyrsa build-ca nopass".format(
             PROPERTIES["friendlyName"]
         ),
@@ -623,16 +622,14 @@ def generate_credentials():
         Certificate=SERVER_CERT,
         PrivateKey=SERVER_KEY,
         CertificateChain=CA_CERT,
-        Tags=[{"Key": "deploymentFriendlyName",
-               "Value": PROPERTIES["friendlyName"]}],
+        Tags=[{"Key": "deploymentFriendlyName", "Value": PROPERTIES["friendlyName"]}],
     )["CertificateArn"]
     # Import Client Certificate
     PROPERTIES["clientCertificateArn"] = client_acm.import_certificate(
         Certificate=CLIENT_CERT,
         PrivateKey=CLIENT_KEY,
         CertificateChain=CA_CERT,
-        Tags=[{"Key": "deploymentFriendlyName",
-               "Value": PROPERTIES["friendlyName"]}],
+        Tags=[{"Key": "deploymentFriendlyName", "Value": PROPERTIES["friendlyName"]}],
     )["CertificateArn"]
     print("Done.\n")
 
@@ -654,8 +651,7 @@ def download_cloudformation_template():
                 stdout=sys.stdout,
             )
     else:
-        raise Exception(
-            "Failed to find and download the cloudformation template.")
+        raise Exception("Failed to find and download the cloudformation template.")
 
 
 def deploy_cloudformation_template():
@@ -688,8 +684,7 @@ def deploy_cloudformation_template():
             },
         ],
         TimeoutInMinutes=15,
-        Tags=[{"Key": "deploymentFriendlyName",
-               "Value": PROPERTIES["friendlyName"]}],
+        Tags=[{"Key": "deploymentFriendlyName", "Value": PROPERTIES["friendlyName"]}],
     )
     PROPERTIES["cloudformationStackId"] = response["StackId"]
     print(
@@ -707,13 +702,20 @@ def deploy_cloudformation_template():
             PROPERTIES["clientVpnEndpointId"] = outputs[0]["OutputValue"]
             PROPERTIES["subnetId"] = outputs[1]["OutputValue"]
             break
-        elif response["Stacks"][0]["StackStatus"] == "CREATE_FAILED" or response["Stacks"][0]["StackStatus"] == "ROLLBACK_IN_PROGRESS":
+        elif (
+            response["Stacks"][0]["StackStatus"] == "CREATE_FAILED"
+            or response["Stacks"][0]["StackStatus"] == "ROLLBACK_IN_PROGRESS"
+        ):
             print("The stack deployment failed.")
             raise Exception("The stack deployment failed.")
         elif response["Stacks"][0]["StackStatus"] == "CREATE_IN_PROGRESS":
             print(">", end="", flush=True)  # As a progress bar
         else:
-            raise Exception("Unexpected stack status \"{}\" detected.".format(response["Stacks"][0]["StackStatus"]))
+            raise Exception(
+                'Unexpected stack status "{}" detected.'.format(
+                    response["Stacks"][0]["StackStatus"]
+                )
+            )
     else:
         raise Exception("Deployment timed out.")
 
@@ -823,7 +825,8 @@ if __name__ == "__main__":
                 client_ec2 = boto3.client("ec2", region_name=PROPERTIES["region"])
                 client_acm = boto3.client("acm", region_name=PROPERTIES["region"])
                 client_cf = boto3.client(
-                    "cloudformation", region_name=PROPERTIES["region"])
+                    "cloudformation", region_name=PROPERTIES["region"]
+                )
             manage()
         except Exception as e:
             print("Errors occured.", file=sys.stderr)
@@ -846,8 +849,7 @@ if __name__ == "__main__":
         try:
             client_ec2 = boto3.client("ec2", region_name=PROPERTIES["region"])
             client_acm = boto3.client("acm", region_name=PROPERTIES["region"])
-            client_cf = boto3.client(
-                "cloudformation", region_name=PROPERTIES["region"])
+            client_cf = boto3.client("cloudformation", region_name=PROPERTIES["region"])
             generate_credentials()
             download_cloudformation_template(),
             # save the aws-generated private keys at the same time.
