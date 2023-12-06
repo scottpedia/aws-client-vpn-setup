@@ -34,9 +34,10 @@ $ aws configure
   ```shell
   $ cd aws-client-vpn-setup
   ```
+  > You probably would want to make the file executable before proceeding.
 - Run the script.
   ```shell
-  ./client-vpn-aio
+  $ ./client-vpn-aio
   ```
   > **Note:** Be aware that the script will generate a temproray folder under the current working directory during deployment, which is deleted when the process completes. If the deployment is successful, you will also get two output files under CWD. So please make sure that you have the write permission to the current working directory.
 - You will be then interactively asked for [the customization parameters](#deployment-parameters) for the VPN server.
