@@ -40,6 +40,10 @@ Expand this section to see the notes.
 
 </details>
 
+## Contributing
+
+Due to the changing nature of the AWS services that are being updated constantly(new regions, new functionalities, etc...), we need to ensure that the script is compatible with the latest developments of the AWS services. You are welcome to make contributions to the project because that would really help.
+
 ## Author and License
 
 Copyright (C) 2020-2023 [Scott X. Liang](https://github.com/scottpedia) \<scott.liang@pm.me\>   
