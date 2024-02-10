@@ -274,7 +274,8 @@
       },
       "DependsOn": [
         "EC2IG4CT3V",
-        "EC2RTC7I3"
+        "EC2RTC7I3",
+        "EC2VPCG147NO"
       ]
     },
     "EC2CVE11MMM": {
