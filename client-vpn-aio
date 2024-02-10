@@ -532,10 +532,9 @@ def generate_credentials():
         "In the process, you will be prompted to enter the DN for your CA. You can just leave it blank and press enter.\nPlease type enter to confirm > "
     )
     commandsToRun = [
-        "git clone --branch v3.0.6 https://github.com/openvpn/easy-rsa.git .easy-rsa-{}".format(
+        "git clone https://github.com/openvpn/easy-rsa.git .easy-rsa-{}".format(
             PROPERTIES["friendlyName"]
         ),
-        "cp -R /Users/black/code/easy-rsa .easy-rsa-{}".format(PROPERTIES["friendlyName"]),
         ".easy-rsa-{}/easyrsa3/easyrsa init-pki".format(PROPERTIES["friendlyName"]),
         ".easy-rsa-{}/easyrsa3/easyrsa build-ca nopass".format(
             PROPERTIES["friendlyName"]
