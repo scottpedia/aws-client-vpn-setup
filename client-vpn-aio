@@ -70,6 +70,7 @@ REGION_NAME_MAPPING = {
     "me-south-1": "bahrain-bh",
 }
 
+VPN_PORT = 1194 # Valid Options: 443 | 1194
 TEMPLATE_CONTENT = ""
 CLIENT_CERT = ""
 CLIENT_KEY = ""
@@ -686,13 +687,13 @@ def deploy_cloudformation_template():
                 "ParameterValue": str(PROPERTIES["isSplitTunneled"]).lower(),
             },
             {
-                "ParameterKey": "FriendlyName",
-                "ParameterValue": PROPERTIES["friendlyName"],
-            },
-            {
                 "ParameterKey": "NetworkProtocol",
                 "ParameterValue": PROPERTIES["networkProtocol"],
             },
+            {
+                "ParameterKey": "VpnPort",
+                "ParameterValue": VPN_PORT,
+            }
         ],
         TimeoutInMinutes=15,
         Tags=[{"Key": "deploymentFriendlyName", "Value": PROPERTIES["friendlyName"]}],
@@ -750,7 +751,7 @@ def download_connection_profile():
         ).lower()
         + "."
         + conn_fragments[3].split(" ")[1]
-        + " 443"
+        + " {}".format(VPN_PORT)
     )
 
     conn_fragments.insert(-2, "<key>")

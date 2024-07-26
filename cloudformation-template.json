@@ -309,6 +309,9 @@
         },
         "VpcId": {
           "Ref": "EC2VPC4E833"
+        },
+        "VpnPort": {
+          "Ref": "VpnPort"
         }
       },
       "Metadata": {
@@ -367,9 +370,14 @@
       ],
       "Default": "udp"
     },
-    "FriendlyName": {
-      "Type": "String",
-      "Description": "The friendly name you should assign to your deployment."
+    "VpnPort": {
+      "Type": "Number",
+      "Description": "The VPN port to use, either 443 or 1194.",
+      "AllowedValues": [
+        443,
+        1194
+      ],
+      "Default": 443
     }
   },
   "Outputs": {
