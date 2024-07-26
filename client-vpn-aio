@@ -528,29 +528,42 @@ def generate_credentials():
     global CLIENT_KEY
     global PROPERTIES
     print("Generating credentials...")
+    # Verify if a cached easy-rsa exists on local disk.
+    print("Looking for easy-rsa on local disks...")
+    localEasyRsa=Path("easy-rsa-copy")
+    downloadEasyRsaCommand = ''
+    if localEasyRsa.exists() == False:
+        print("NOT_FOUND\nRetrieving easy-rsa from github.com...") 
+        downloadEasyRsaCommand =  "git clone https://github.com/openvpn/easy-rsa.git .easy-rsa-{}".format(
+            PROPERTIES["friendlyName"]
+        )
+    else:
+        print("LOCAL_COPY_FOUND\nUsing the cached copy...")
+        downloadEasyRsaCommand =  "cp -r ./easy-rsa-copy ./.easy-rsa-{}".format(
+            PROPERTIES["friendlyName"]
+        )
+
     input(
         "In the process, you will be prompted to enter the DN for your CA. You can just leave it blank and press enter.\nPlease type enter to confirm > "
     )
     commandsToRun = [
-        "git clone https://github.com/openvpn/easy-rsa.git .easy-rsa-{}".format(
-            PROPERTIES["friendlyName"]
-        ),
+        downloadEasyRsaCommand,
         ".easy-rsa-{}/easyrsa3/easyrsa init-pki".format(PROPERTIES["friendlyName"]),
         ".easy-rsa-{}/easyrsa3/easyrsa build-ca nopass".format(
             PROPERTIES["friendlyName"]
         ),
         ".easy-rsa-{}/easyrsa3/easyrsa build-server-full server-{} nopass".format(
-            PROPERTIES["friendlyName"], PROPERTIES["friendlyName"]
+            PROPERTIES["friendlyName"], PROPERTIES["friendlyName"] + ".domain.tld"
         ),
         ".easy-rsa-{}/easyrsa3/easyrsa build-client-full {}.domain.tld nopass".format(
             PROPERTIES["friendlyName"], PROPERTIES["friendlyName"]
         ),
         "mkdir {}.ovpnsetup".format(PROPERTIES["friendlyName"]),
         "cp pki/ca.crt ./{}.ovpnsetup".format(PROPERTIES["friendlyName"]),
-        "cp pki/issued/server-{}.crt ./{}.ovpnsetup".format(
+        "cp pki/issued/server-{}.domain.tld.crt ./{}.ovpnsetup".format(
             PROPERTIES["friendlyName"], PROPERTIES["friendlyName"]
         ),
-        "cp pki/private/server-{}.key ./{}.ovpnsetup".format(
+        "cp pki/private/server-{}.domain.tld.key ./{}.ovpnsetup".format(
             PROPERTIES["friendlyName"], PROPERTIES["friendlyName"]
         ),
         "cp pki/issued/{}.domain.tld.crt ./{}.ovpnsetup".format(
@@ -576,7 +589,7 @@ def generate_credentials():
     )
     SERVER_CERT = (
         open(
-            f"./{PROPERTIES['friendlyName']}.ovpnsetup/server-{PROPERTIES['friendlyName']}.crt",
+            f"./{PROPERTIES['friendlyName']}.ovpnsetup/server-{PROPERTIES['friendlyName']}.domain.tld.crt",
             "r",
         )
         .read()
@@ -584,7 +597,7 @@ def generate_credentials():
     )
     SERVER_KEY = (
         open(
-            f"./{PROPERTIES['friendlyName']}.ovpnsetup/server-{PROPERTIES['friendlyName']}.key",
+            f"./{PROPERTIES['friendlyName']}.ovpnsetup/server-{PROPERTIES['friendlyName']}.domain.tld.key",
             "r",
         )
         .read()
