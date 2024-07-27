@@ -71,7 +71,6 @@ REGION_NAME_MAPPING = {
 }
 
 VPN_PORT = 1194 # Valid Options: 443 | 1194
-TEMPLATE_CONTENT = ""
 CLIENT_CERT = ""
 CLIENT_KEY = ""
 HELP_SCRIPT = """
@@ -96,6 +95,202 @@ NOTE: PLEASE HAVE YOUR AWS CLI SETUP WITH YOUR AWS ACCOUNT BEFORE YOU RUN THIS S
     Thus you can have multiple deployments active at the same time, and manage each of them with its profile.
     If the file is not speficied, the program will automatically look for one under the current working directory.
     If multiple profiles are found under the CWD, the most recent one will be used.
+"""
+
+CFN_TEMPLATE_CONTENT= """
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Metadata": {},
+  "Resources": {
+    "EC2VPC4E833": {
+      "Type": "AWS::EC2::VPC",
+      "Properties": {
+        "CidrBlock": "10.1.0.0/16"
+      }
+    },
+    "EC2S2DKY4": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "CidrBlock": "10.1.0.0/16",
+        "VpcId": {
+          "Ref": "EC2VPC4E833"
+        },
+        "AvailabilityZone": {
+          "Fn::Select": [
+            "0",
+            {
+              "Fn::GetAZs": ""
+            }
+          ]
+        }
+      }
+    },
+    "EC2RTC7I3": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "EC2VPC4E833"
+        }
+      },
+      "DependsOn": [
+        "EC2S2DKY4"
+      ]
+    },
+    "EC2IG4CT3V": {
+      "Type": "AWS::EC2::InternetGateway",
+      "Properties": {},
+      "Metadata": {
+        "DependsOn": [
+          "EC2VPC4E833"
+        ]
+      }
+    },
+      "EC2VPCG147NO": {
+        "Type": "AWS::EC2::VPCGatewayAttachment",
+        "Properties": {
+          "VpcId": {
+            "Ref": "EC2VPC4E833"
+          },
+          "InternetGatewayId": {
+            "Ref": "EC2IG4CT3V"
+          }
+        }
+      },
+      "EC2SRTAKX44": {
+        "Type": "AWS::EC2::SubnetRouteTableAssociation",
+        "Properties": {
+          "RouteTableId": {
+            "Ref": "EC2RTC7I3"
+          },
+          "SubnetId": {
+            "Ref": "EC2S2DKY4"
+          }
+        }
+      },
+      "EC2R1LNRL": {
+        "Type": "AWS::EC2::Route",
+        "Properties": {
+          "DestinationCidrBlock": "0.0.0.0/0",
+          "RouteTableId": {
+            "Ref": "EC2RTC7I3"
+          },
+          "GatewayId": {
+            "Ref": "EC2IG4CT3V"
+          }
+        },
+        "DependsOn": [
+          "EC2IG4CT3V",
+          "EC2RTC7I3",
+          "EC2VPCG147NO"
+        ]
+      },
+      "EC2CVE11MMM": {
+        "Type": "AWS::EC2::ClientVpnEndpoint",
+        "Properties": {
+          "AuthenticationOptions": [
+            {
+              "MutualAuthentication": {
+                "ClientRootCertificateChainArn": {
+                  "Ref": "ClientCertificateArn"
+                }
+              },
+              "Type": "certificate-authentication"
+            }
+          ],
+          "ClientCidrBlock": "10.0.0.0/16",
+          "ConnectionLogOptions": {
+            "Enabled": false
+          },
+          "DnsServers": [
+            "8.8.8.8"
+          ],
+          "ServerCertificateArn": {
+            "Ref": "ServerCertificateArn"
+          },
+          "SplitTunnel": {
+            "Ref": "isSplitTunnelled"
+          },
+          "TransportProtocol": {
+            "Ref": "NetworkProtocol"
+          },
+          "VpcId": {
+            "Ref": "EC2VPC4E833"
+          },
+          "VpnPort": {
+            "Ref": "VpnPort"
+          }
+        },
+        "DependsOn": [
+          "EC2IG4CT3V",
+          "EC2S2DKY4"
+        ]
+      },
+      "EC2CVAR34CED": {
+        "Type": "AWS::EC2::ClientVpnAuthorizationRule",
+        "Properties": {
+          "ClientVpnEndpointId": {
+            "Ref": "EC2CVE11MMM"
+          },
+          "TargetNetworkCidr": "0.0.0.0/0",
+          "AuthorizeAllGroups": true
+        },
+        "DependsOn": [
+          "EC2IG4CT3V"
+        ]
+      }
+    },
+    "Parameters": {
+      "ClientCertificateArn": {
+        "Type": "String",
+        "Description": "The ARN of the pre-imported client-side certificate found in ACM."
+      },
+      "ServerCertificateArn": {
+        "Type": "String",
+        "Description": "The ARN of the pre-imported server-side certificate found in ACM."
+      },
+      "isSplitTunnelled": {
+        "Type": "String",
+        "AllowedValues": [
+          "true",
+          "false"
+        ],
+        "Default": "false",
+        "Description": "If VPN endpoint enables split tunneling. Select \"false\" if you don't know what it is."
+      },
+      "NetworkProtocol": {
+        "Type": "String",
+        "Description": "The network protocol used by the VPN server. Allowed values are TCP and UDP. Choose TCP for a more stable connection. Choose UDP for a faster connection.",
+        "AllowedValues": [
+          "tcp",
+          "udp"
+        ],
+        "Default": "udp"
+      },
+      "VpnPort": {
+        "Type": "Number",
+        "Description": "The VPN port to use, either 443 or 1194.",
+        "AllowedValues": [
+          443,
+          1194
+        ],
+        "Default": 443
+      }
+    },
+    "Outputs": {
+      "ClientVPNEndpointId": {
+        "Value": {
+          "Ref": "EC2CVE11MMM"
+        },
+        "Description": "The Client VPN Endpoint ID"
+      },
+      "SubnetId": {
+        "Value": {
+          "Ref": "EC2S2DKY4"
+        },
+        "Description": "The Subnet Id"
+      }
+    }
+  }
 """
 
 # *** THE MANAGEMENT CODE SECTION STARTS ***
@@ -649,21 +844,27 @@ def generate_credentials():
 # This function downloads the cloudformation template if one is not found under the CWD.
 def download_cloudformation_template():
     cfTemplate = Path("cloudformation-template.json")
-    global TEMPLATE_CONTENT
-    for _ in range(3):
-        if cfTemplate.exists():
-            TEMPLATE_CONTENT = cfTemplate.open("r").read()
-            break
+    global CFN_TEMPLATE_CONTENT
+    if CFN_TEMPLATE_CONTENT == "": # if the cloudformation template is not embedded inline.
+        print("Cloudformation template NOT_FOUND inline, looking for it under CWD...")
+        for _ in range(3):
+            if cfTemplate.exists():
+                print("Cloudformation template FOUND under CWD...")
+                CFN_TEMPLATE_CONTENT = cfTemplate.open("r").read()
+                break
+            else:
+                print("NOT_FOUND under CWD, downloading the template from online sources...")
+                subprocess.run(
+                    "wget 'https://raw.githubusercontent.com/Scottpedia/vpn-toggle-utility/master/cloudformation-template.json' -O cloudformation-template.json".split(
+                        " "
+                    ),
+                    check=True,
+                    stdout=sys.stdout,
+                )
         else:
-            subprocess.run(
-                "wget 'https://raw.githubusercontent.com/Scottpedia/vpn-toggle-utility/master/cloudformation-template.json' -O cloudformation-template.json".split(
-                    " "
-                ),
-                check=True,
-                stdout=sys.stdout,
-            )
+            raise Exception("Failed to find and download the cloudformation template.")
     else:
-        raise Exception("Failed to find and download the cloudformation template.")
+        print("Cloudformation template FOUND inline, proceeding...")
 
 
 def deploy_cloudformation_template():
@@ -672,7 +873,7 @@ def deploy_cloudformation_template():
     print("Deploying...")
     response = client_cf.create_stack(
         StackName="ovpn-{}".format(PROPERTIES["friendlyName"]),
-        TemplateBody=TEMPLATE_CONTENT,
+        TemplateBody=CFN_TEMPLATE_CONTENT,
         Parameters=[
             {
                 "ParameterKey": "ClientCertificateArn",
