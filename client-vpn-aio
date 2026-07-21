@@ -31,6 +31,10 @@ from json import load, dumps
 import os
 import glob
 
+# The script by default uses the CloudFormation template that is embedded within the code. 
+# Change the option below to download the template file from Github during runtime.
+TO_USE_INLINE_CFN_TEMPLATE = True
+
 client_ec2 = None
 client_acm = None
 client_cf = None
@@ -841,19 +845,19 @@ def generate_credentials():
     print("Done.\n")
 
 
-# This function downloads the cloudformation template if one is not found under the CWD.
+# This function downloads the cloudformation template per user's request.
 def download_cloudformation_template():
-    cfTemplate = Path("cloudformation-template.json")
+    cfTemplate = Path("cloudformation-template-tmp.json")
     global CFN_TEMPLATE_CONTENT
-    if CFN_TEMPLATE_CONTENT == "": # if the cloudformation template is not embedded inline.
-        print("Cloudformation template NOT_FOUND inline, looking for it under CWD...")
-        for _ in range(3):
+    if TO_USE_INLINE_CFN_TEMPLATE == False: # if user chooses to use a freshly downloaded template instead of one embedded inline.
+        print("Proceeding to download Cloudformation from Github...")
+        for _ in range(3): # looks for the temporary template file and if such not found downloads one to be overwriting the CFN_TEMPLATE_CONTENT.
             if cfTemplate.exists():
-                print("Cloudformation template FOUND under CWD...")
+                print("Temporary Cloudformation template FOUND under CWD, overwriting the incline template source...")
                 CFN_TEMPLATE_CONTENT = cfTemplate.open("r").read()
                 break
             else:
-                print("NOT_FOUND under CWD, downloading the template from online sources...")
+                print("temporary template NOT_FOUND under CWD, retrieving the template from online sources...")
                 subprocess.run(
                     "wget 'https://raw.githubusercontent.com/Scottpedia/vpn-toggle-utility/master/cloudformation-template.json' -O cloudformation-template.json".split(
                         " "
@@ -862,9 +866,9 @@ def download_cloudformation_template():
                     stdout=sys.stdout,
                 )
         else:
-            raise Exception("Failed to find and download the cloudformation template.")
+            raise Exception("Failed to download the cloudformation template.")
     else:
-        print("Cloudformation template FOUND inline, proceeding...")
+        print("Proceeding to use inline CloudFormation template...")
 
 
 def deploy_cloudformation_template():
