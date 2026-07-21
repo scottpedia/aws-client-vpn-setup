@@ -48,6 +48,6 @@ Due to the changing nature of the AWS services that are being updated constantly
 
 ## Author and License
 
-Copyright (C) 2020-2024 [Scott X. Liang](https://github.com/scottpedia) \<scott.liang@pm.me\>   
+Copyright (C) est. 2020 [Scott X. L.](https://github.com/scottpedia) \<scott@ncf.ca\>   
 [![GPL logo with text](img/gplv3-with-text-84x42.png)](https://www.gnu.org/licenses/gpl-3.0.txt)  
 Unless otherwise noted, the work in this repository is licensed under [GNU General Public License Version 3](https://www.gnu.org/licenses/gpl-3.0.txt).
