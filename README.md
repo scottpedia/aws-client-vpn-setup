@@ -4,6 +4,8 @@
 
 This project helps you to quickly set up a working OpenVPN server on AWS, using [AWS Client VPN](https://aws.amazon.com/vpn/client-vpn/). 
 
+> Currently considering to migrate this project to a whole-CloudFormation template setup, eliminating the need of a script to be run on user-end computers. That is to say the manual deployment documentation will remain as is, ideally with many of the wordings corrected and improved.
+
 ## Overview
 
 This project helps you deploy a working OpenVPN server by using AWS Client VPN. It is a built-in service of AWS VPC that is typically used by developers to securely connect to resources within the VPC network. But it can also be used to access the public internet, just like any typical VPN service. Deploying a VPN server this way has many advantages over the traditional way of deploying a VPN server on an ec2 instance. For example, the bandwidth is not limited by the networking performance of the instance type.
