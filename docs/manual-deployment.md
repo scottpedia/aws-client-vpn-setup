@@ -1,8 +1,6 @@
-# How to manually deploy the OpenVPN server with AWS Client VPN Endpoint
+# How to manually deploy an OpenVPN server with AWS Client VPN Endpoint
 
-> ## <strong>WARNING: </strong> This tutorial was written in poor English. A re-write is needed.
-
-This is the tutorial that walks you through the steps to manually create a OpenVPN Server on AWS with AWS Client VPN Endpoint. You can also deploy the server with the setup script [here](deployment-script.md). 
+This is the tutorial that walks you through the steps to manually create a OpenVPN Server with AWS Client VPN Endpoint. You can also do the same thing with the [setup script](deployment-script.md). 
 
 Table of Contents
 =================
@@ -11,7 +9,7 @@ Table of Contents
 
 
 <!--ts-->
-   * [How to manually deploy the OpenVPN server with AWS Client VPN Endpoint](#how-to-manually-deploy-the-openvpn-server-with-aws-client-vpn-endpoint)
+   * [How to manually deploy an OpenVPN server with AWS Client VPN Endpoint](#how-to-manually-deploy-an-openvpn-server-with-aws-client-vpn-endpoint)
    * [Table of Contents](#table-of-contents)
       * [What are AWS and AWS Client VPN Endpoint?](#what-are-aws-and-aws-client-vpn-endpoint)
       * [Step 1 : Create an AWS Account](#step-1--create-an-aws-account)
@@ -56,45 +54,45 @@ One of the services being provided by AWS is Client VPN Endpoint. It helps to cr
 
 > If you already have a working AWS account, you can skip to [Step 3](#step-3--select-the-region-in-which-you-want-to-set-up-your-service).
 
-So the first step would be creating an AWS account. We need to have a working AWS account to create resources on the platform. Go to [the sign-up website](https://portal.aws.amazon.com/billing/signup#/start) to create a free account. Fill in the information forms as instructed.
+So the first step would be creating an AWS account. We need to have a working AWS account to create resources on the platform. Go to [the sign-up website](https://portal.aws.amazon.com/billing/signup#/start) to create a free account. Fill in the registration information as instructed.
 
 ![the sign-up website](../img/aws-signup.png)
 
-> Note that by creating a free AWS account, you are automatically granted free access to some of its services for the first year following the sign-up date. Go to [this page](https://aws.amazon.com/free) to get more information.  
+> Note that by creating a free AWS account, you are automatically granted free access to some of its services for the first year following the sign-up date. Visit [this page](https://aws.amazon.com/free) for more information.
 
 ## Step 2 : Sign in to the Console with your AWS account
 
-Sign in to the AWS Management Console with the account you just created on [on this page](https://console.aws.amazon.com/). Select **"Root User"** and enter the email address, then click "Next". Enter the password on the following page and click "Sign in".
+Sign in to the AWS Management Console with the account you just created on [this page](https://console.aws.amazon.com/). Select **"Root User"** and enter the Email address, then click "Next". Enter the password on the following page and click "Sign in".
 
 ![the sign-in page](../img/aws-signin.png)
 
-You should be on this page after signing in. This is the main page of the AWS Management Console where you can find the index of all the services on this platform.
+You should be on this page after signing in. This is the main page of AWS Management Console where you can find the index of all the services on the platform.
 
 ![AWS Management Console](../img/aws-management-console.png)
 
 ## Step 3 : Select the Region in which You Want to Set up Your Service
 
-Please notice that most of the AWS services are regional-independent. That means that two services of the same particular kind in two different regions are completely isolated. The same applies to the Client VPN Endpoints. So we need to decide which region you want you deploy your service to. 
+Please note that most of the AWS services are region-independent. That means two services of the same kind in two different regions are completely isolated. The same applies to AWS Client VPN. So we need to decide beforehand which region you want you deploy your service to. 
 
-And you can select the region from the list bar at the top right corner. Please do this **BEFORE** creating the endpoint.
+And you can select the region from the list at the top right corner of the console web page. Please do this **BEFORE** creating the endpoint.
 
 ![Select the region you prefer](../img/region-selection.png)
 
 ### **How to select the region for your VPN Service?**
 
-Usually, it highly depends on your current geolocation and that of the destination you want to access. For example, I am now living in Canada and wanting to access a Japanese video website that is exclusive to users in Japan. In that case, I would certainly select Asia Pacific (Tokyo) as my VPN region. 
+It highly depends on your current geolocation and what websites or Internet services you want to access. For example, I now live in Canada and want to access a Japanese video website that is only providing services to users in Japan. In that case, I would certainly select Asia Pacific (Tokyo) as the region to deploy my VPN server, because I would then access the video website in Canada as if I am in Japan.
 
-For simply encrypting the web traffic, the endpoint that is closest to you would be ideal as the latency is minimized.
+For simply encrypting the Internet traffic, an endpoint that is closest to you would be ideal as the latency is minimized. For example, I would use the AWS Centre (Montreal) region if I live in Eastern Canada, with the goal of simply encrypting my Internet traffic.
 
 **In this tutorial, we are going to create the VPN endpoint in the AWS region of Oregon. (US-West-2)**
 
 ## Step 4 : Create the server and client certificates for AWS Certificate Manager
 
-We need to create the certificates for both the clients and the server. We are going to first generate the keys and the certificates locally on our computer and then uploading them to the Certificate Manager via either the web console or AWS CLI. 
+We need to create the certificates for both the clients and the server. We are going to first generate the keys and the certificates locally on our computer and then upload them to the Certificate Manager via either the web console or AWS CLI. 
 
 > For now, this article only demonstrates how to create keys and certificates on computers running **Unix-like systems**. For how to create keys and certificates for AWS Certificate Manager on Windows, see **[this page](https://docs.aws.amazon.com/vpn/latest/clientvpn-admin/client-authentication.html#windows)**. 
 
-**To generate the server and client certificates and keys and upload them to ACM(AWS Certificate Manager)**
+**To generate the server & client credentials and upload them to ACM(AWS Certificate Manager)**
 
 1. Open your favorite terminal emulator and select a directory you want to use. Clone the OpenVPN `easy-rsa` repo to your local computer and navigate to the `easy-rsa/easyrsa3` folder. 
 
