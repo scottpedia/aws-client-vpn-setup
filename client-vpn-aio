@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #
-# Copyright 2020-2024 Scott X. Liang and other contributors.
-# To contact the author, please send emails to scott.liang@pm.me.
+# Copyright 2020-2026 Scott X. Liang and other contributors.
+# To contact the author, please send emails to <scott@ncf.ca>.
 #
 # This file is part of aws-client-vpn-setup.
 #
@@ -42,7 +42,7 @@ client_cf = None
 PROPERTIES = {
     "friendlyName": "",
     "isSplitTunneled": False,
-    "isApIsolated": True,
+    "isSubnetIsolated": True,
     "region": "",
     "cloudformationStackId": "",
     "clientVpnEndpointId": "",
@@ -79,12 +79,13 @@ CLIENT_CERT = ""
 CLIENT_KEY = ""
 HELP_SCRIPT = """
 Usage: ./client-vpn-aio [command] -f [the_config_file]
-The python script to deploy and manage the vpn service based on AWS Client VPN Endpoints.
+Python script to deploy and manage OpenVPN service based on AWS Client VPN,
+    as part of the aws-client-vpn project, the source code of which can be found at <https://github.com/scottpedia/aws-client-vpn>.
 
-NOTE: PLEASE HAVE YOUR AWS CLI SETUP WITH YOUR AWS ACCOUNT BEFORE YOU RUN THIS SCRIPT.
-      THE SCRIPT WILL NOT RUN WITHOUT AN AWS ACCOUNT SETUP WITH THE CLI.
+NOTE: PLEASE HAVE YOUR LOCAL AWS CLI SET UP WITH YOUR AWS ACCOUNT BEFORE RUNNING THIS SCRIPT.
+      THE SCRIPT WILL NOT RUN WITHOUT A PROPERLY INSTALLED AWS CLI SET UP WITH YOUR AWS ACCOUNT.
 
-***TO DEPLOY A NEW VPN SERVICE, please run the script without any command.***
+***TO DEPLOY A NEW VPN SERVICE, please run the script naked without any command.***
 
 ***TO MANAGE AN EXISTING ENDPOINT, please use the following commands:***
     status    :   Output the current status of the specified VPN Endpoint.
@@ -101,6 +102,8 @@ NOTE: PLEASE HAVE YOUR AWS CLI SETUP WITH YOUR AWS ACCOUNT BEFORE YOU RUN THIS S
     If multiple profiles are found under the CWD, the most recent one will be used.
 """
 
+# CloudFormation deployment template to be used.
+# Should be kept updated to the standalone file hosted on GitHub.
 CFN_TEMPLATE_CONTENT= """
 {
   "AWSTemplateFormatVersion": "2010-09-09",
@@ -401,7 +404,7 @@ def turn_on() -> None:
     associate_target_network()
     print("... ... ...")
     create_internet_routing_rule()
-    if PROPERTIES["isApIsolated"] == False:
+    if PROPERTIES["isSubnetIsolated"] == False:
         create_link_local_routing_rule()
     print("Done.\n")
 
@@ -603,17 +606,17 @@ def get_properties():
             print("Unrecognized input, please try again!")
 
     while True:
-        isApIsolated = input(
+        isSubnetIsolated = input(
             "Do you want connected clients to be able to reach each others over within the endpoint subnet?\n[Default: Nn] <Yy or Nn> "
         ).capitalize()
-        if isApIsolated == "Y":
-            PROPERTIES["isApIsolated"] = False
+        if isSubnetIsolated == "Y":
+            PROPERTIES["isSubnetIsolated"] = False
             print("The VPN will be having a link-local route.")
             break
-        elif isApIsolated == "N":
+        elif isSubnetIsolated == "N":
             print("The VPN will NOT be having a link-local route.")
             break
-        elif isApIsolated == "":
+        elif isSubnetIsolated == "":
             print("The VPN will NOT be having a link-local route by default.")
             break
         else:
@@ -737,6 +740,11 @@ def generate_credentials():
         downloadEasyRsaCommand =  "git clone https://github.com/openvpn/easy-rsa.git .easy-rsa-{}".format(
             PROPERTIES["friendlyName"]
         )
+        # There is a problem with the latest version of easy-rsa which I last tested.
+        # When this script was first written, the easy-rsa used a version (latest at that time) that did not prompt the user yes/no during one of the steps to generate the certificates.
+        # To improvise, I solved the problem on my Mac by pre-shipping an older version of easy-rsa under the project folder.
+        # The exact version number that I traced back to, which was working correctly without the mentioned "yes/no prompt" cannot be clearly recalled.
+        # For users using this script, be advised to check the easy-rsa component should you encounter any problems.
     else:
         print("LOCAL_COPY_FOUND\nUsing the cached copy...")
         downloadEasyRsaCommand =  "cp -r ./easy-rsa-copy ./.easy-rsa-{}".format(
@@ -859,7 +867,7 @@ def download_cloudformation_template():
             else:
                 print("temporary template NOT_FOUND under CWD, retrieving the template from online sources...")
                 subprocess.run(
-                    "wget 'https://raw.githubusercontent.com/Scottpedia/vpn-toggle-utility/master/cloudformation-template.json' -O cloudformation-template.json".split(
+                    "wget 'https://raw.githubusercontent.com/scottpedia/aws-client-vpn-setup/refs/heads/main/cloudformation-template.json' -O cloudformation-template-tmp.json".split(
                         " "
                     ),
                     check=True,
@@ -1031,8 +1039,8 @@ def check_commands():
 
 
 if __name__ == "__main__":
-    print("Copyright 2020-2024 Scott X. Liang")
-    print("To contact the author, please send emails to scott.liang@pm.me")
+    print("Copyright 2020-2026 Scott X. Liang")
+    print("To contact the author, please send emails to scott@ncf.ca")
     print(
         "This program is licensed under GNU General Public License Version 3. For more information, please refer to /COPYING."
     )
